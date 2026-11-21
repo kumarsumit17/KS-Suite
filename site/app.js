@@ -295,7 +295,8 @@
     for (const node of document.querySelectorAll("[data-t]")) node.textContent = t(node.dataset.t);
     for (const node of document.querySelectorAll("[data-t-label]")) node.setAttribute("aria-label", t(node.dataset.tLabel));
     const choice = savedChoice();
-    for (const b of document.querySelectorAll(".lang-switch button")) b.setAttribute("aria-pressed", String(b.dataset.lang === choice));
+    const langSelect = document.getElementById("lang-select");
+    if (langSelect) langSelect.value = choice;
     const theme = savedTheme();
     for (const b of document.querySelectorAll("[data-theme-choice]")) b.setAttribute("aria-pressed", String(b.dataset.themeChoice === theme));
 
@@ -325,14 +326,12 @@
   async function start() {
     state.language = resolveLanguage(savedChoice(), navigator.languages);
 
-    for (const b of document.querySelectorAll(".lang-switch button")) {
-      b.addEventListener("click", () => {
-        const choice = parseChoice(b.dataset.lang);
-        saveChoice(choice);
-        state.language = resolveLanguage(choice, navigator.languages);
-        draw();
-      });
-    }
+    document.getElementById("lang-select")?.addEventListener("change", (e) => {
+      const choice = parseChoice(e.target.value);
+      saveChoice(choice);
+      state.language = resolveLanguage(choice, navigator.languages);
+      draw();
+    });
 
     for (const b of document.querySelectorAll("[data-theme-choice]")) {
       if (LUCIDE[b.dataset.icon]) b.replaceChildren(icon(b.dataset.icon));

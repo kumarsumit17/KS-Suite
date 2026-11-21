@@ -25,10 +25,15 @@
           <button type="button" data-theme-choice="light" aria-pressed="false" aria-label="Light" data-t-label="theme.light" data-icon="sun"></button>
           <button type="button" data-theme-choice="dark" aria-pressed="false" aria-label="Dark" data-t-label="theme.dark" data-icon="moon"></button>
         </div>
-        <div class="switch lang-switch" role="group" aria-label="Language" data-t-label="nav.language">
-          <button type="button" data-lang="system" aria-pressed="true" data-t="lang.system">System</button>
-          <button type="button" data-lang="en" lang="en" aria-pressed="false">English</button>
-          <button type="button" data-lang="hi" lang="hi" aria-pressed="false">हिंदी</button>
+        <div class="lang-select">
+          <label for="lang-select" class="visually-hidden" data-t="nav.language">Language</label>
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+          <select id="lang-select">
+            <option value="system" data-t="lang.system">System</option>
+            <option value="en" lang="en">English</option>
+            <option value="hi" lang="hi">हिंदी</option>
+          </select>
+          <svg class="icon chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m6 9 6 6 6-6"/></svg>
         </div>
       </div>
     </div>

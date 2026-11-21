@@ -35,7 +35,7 @@ No framework, build step or package install. Everything is served from the Pages
 ## Layout (text sketch)
 ```
 ┌──────────────────────────────────────────────────────────┐
-│ [KS logo] KS-Suite           [System | English | हिंदी]  │  header; 3-button group (the language rule)
+│ [KS logo] KS-Suite      [◐ ☀ ☾]  [🌐 English ▾]       │  header: theme switch, language dropdown
 ├──────────────────────────────────────────────────────────┤
 │  Free, private apps for the TV, the desktop and phone.   │  hero: tagline + 3 short points
 │  · Private by default · No ads or tracking · Open source │  (private / lean / one standard)
@@ -108,12 +108,12 @@ The page checks each entry on load. An entry with a missing field or an unknown 
 
 ## Languages
 - Text in `site/lang/en.json` and `site/lang/hi.json` in the [suite translation format](https://github.com/kumarsumit17/ks-utility/blob/main/specs/translation-format.md); Hindi follows the [Hindi style guide](https://github.com/kumarsumit17/ks-utility/blob/main/specs/hindi-style.md). App taglines live in `apps.json`.
-- The [language rule](https://github.com/kumarsumit17/ks-utility/blob/main/specs/languages.md): follow `navigator.languages` with no choice made, the header switch offers System, English and Hindi, the choice is saved in `localStorage` and wins from then on; an unknown saved value counts as "same as the system". The page sets `<html lang>`.
+- The [language rule](https://github.com/kumarsumit17/ks-utility/blob/main/specs/languages.md): follow `navigator.languages` with no choice made, a language dropdown in the header (a native `<select>`, whose list opens vertically) offers Same as system, English and हिंदी; the choice is saved in `localStorage` and wins from then on; an unknown saved value counts as "same as the system". The page sets `<html lang>`.
 - Latin digits in both: all numbers and dates go through `Intl` with `numberingSystem: "latn"`.
 
 ## Theme and access
 - `theme.css` holds every colour, the font stack, the type scale, spacing, radii and motion durations as custom properties, each colour written once as `light-dark(light, dark)`. The page follows the system; a header switch (System, Light, Dark) sets `data-theme` on `<html>`, is remembered in `localStorage` (`ks-suite.theme`), and is applied before first paint by `theme-init.js`, so there is no flash. All text and badge pairs checked for WCAG AA (4.5:1 body, 3:1 large text and focus rings).
-- Keyboard: real `<a>` and `<button>` elements, a visible `:focus-visible` ring, a "Skip to apps" link, logical tab order. The language switch uses `aria-pressed`.
+- Keyboard: real `<a>` and `<button>` elements, a visible `:focus-visible` ring, a "Skip to apps" link, logical tab order. The theme switch uses `aria-pressed`; the language dropdown is a labelled native `<select>`.
 - `prefers-reduced-motion: reduce` turns off all transitions.
 - Mobile first: one column under 640 px, buttons at least 44 px tall, no horizontal scroll at 320 px.
 - Without JavaScript, a `<noscript>` block lists every app with a link to its Releases page.
