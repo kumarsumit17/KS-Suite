@@ -1,5 +1,6 @@
 # 2026-11-22
 
+* **Update**: [Landing page](landing-page.md): CSS and JavaScript links carry `?v=__VERSION__`, stamped with the commit id by the Pages workflow, after a cached old `app.js` left the apps empty for a visitor.
 * **Update**: [Landing page](landing-page.md): the Pages workflow is split into `build` and `deploy` jobs, after single-job deploys failed to find the just-uploaded artifact.
 * **Update**: [Landing page](landing-page.md): apps grouped into sections (`groups` in `apps.json`); cards take an optional `accent` colour, `featured` flag and `highlights`; the apps and install notes show only at `#apps`, opened by a new "See the apps" button.
 * **Update**: [Landing page](landing-page.md): flat monochrome zinc look; intro with a small circular profile picture beside the title, a lead line and a repository button; cards show the repository id and an optional `stack` line from `apps.json`; new Quick install notes section; footer credits GitHub Actions and Lucide.
