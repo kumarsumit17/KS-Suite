@@ -23,6 +23,13 @@
     smartphone: '<rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><path d="M12 18h.01"/>',
     plug: '<path d="M12 22v-5"/><path d="M9 8V2"/><path d="M15 8V2"/><path d="M18 8v5a4 4 0 0 1-4 4h-4a4 4 0 0 1-4-4V8Z"/>',
     layers: '<path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z"/><path d="M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12"/><path d="M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17"/>',
+    arrowUpRight: '<path d="M7 7h10v10"/><path d="M7 17 17 7"/>',
+    lock: '<rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>',
+    playCircle: '<circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/>',
+    clapperboard: '<path d="M20.2 6 3 11l-.9-2.4c-.3-1.1.3-2.2 1.3-2.5l13.5-4c1.1-.3 2.2.3 2.5 1.3Z"/><path d="m6.2 5.3 3.1 3.9"/><path d="m12.4 3.4 3.1 4"/><path d="M3 11h18v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/>',
+    wallet: '<path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"/><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"/>',
+    shieldCheck: '<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/>',
+    hardDriveDownload: '<path d="M12 2v8"/><path d="m16 6-4 4-4-4"/><rect width="20" height="8" x="2" y="14" rx="2"/><path d="M6 18h.01"/><path d="M10 18h.01"/>',
     grid: '<rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/>',
     folderGit: '<path d="M9 20H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h3.9a2 2 0 0 1 1.69.9l.81 1.2a2 2 0 0 0 1.67.9H20a2 2 0 0 1 2 2v5"/><circle cx="13" cy="12" r="2"/><path d="M18 19c-2.8 0-5-2.2-5-5v8"/><circle cx="20" cy="19" r="2"/>',
     sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/>',
@@ -148,7 +155,8 @@
     if (typeof a.id !== "string" || !/^[a-z0-9-]+$/.test(a.id)) problems.push("id");
     if (typeof a.name !== "string" || !a.name) problems.push("name");
     if (typeof a.repo !== "string" || !/^[\w.-]+\/[\w.-]+$/.test(a.repo)) problems.push("repo");
-    if (typeof a.icon !== "string" || !/^[\w.-]+\.svg$/.test(a.icon)) problems.push("icon");
+    if (typeof a.icon !== "string" || !(a.icon in LUCIDE)) problems.push("icon");
+    if (a.restricted != null && typeof a.restricted !== "boolean") problems.push("restricted");
     if (!STATUSES.includes(a.status)) problems.push("status");
     if (!Array.isArray(a.platforms) || !a.platforms.length || !a.platforms.every((p) => p in PLATFORMS)) problems.push("platforms");
     if (a.stack != null && typeof a.stack !== "string") problems.push("stack");
@@ -238,63 +246,62 @@
     return `https://github.com/${app.repo}/releases`;
   }
 
-  function downloadsBlock(app) {
-    const box = el("div", { class: "downloads", "aria-live": "polite" });
-    if (app.status === "coming-soon") {
-      box.append(el("p", { class: "muted" }, t("soon.note")));
+  // The right side of the card's footer: download buttons, or a link when there are none.
+  function actions(app) {
+    const box = el("div", { class: "actions", "aria-live": "polite" });
+    const source = () => el("a", { class: "btn btn-outline btn-small", href: `https://github.com/${app.repo}` }, icon("code"), el("span", null, t("link.source")));
+    if (app.restricted) {
+      box.append(el("span", { class: "lock-note" }, icon("lock"), el("span", null, t("access.private"))));
       return box;
     }
-    if (!state.releases.has(app.id)) {
-      box.append(el("p", { class: "muted" }, t("release.checking")));
-      return box;
-    }
+    if (app.status === "coming-soon") { box.append(source()); return box; }
+    if (!state.releases.has(app.id)) { box.append(el("span", { class: "muted" }, t("release.checking"))); return box; }
     const release = state.releases.get(app.id);
     if (!release) {
-      box.append(el("a", { class: "btn btn-plain", href: releasesUrl(app) }, icon("external"), t("release.fallback")));
+      box.append(el("a", { class: "btn btn-outline btn-small", href: releasesUrl(app) }, el("span", null, t("release.fallback")), icon("arrowUpRight")));
       return box;
     }
     for (const d of release.downloads) {
-      const kind = KINDS.find((k) => k.id === d.kind);
-      const platform = t(kind.key);
+      const platform = t(KINDS.find((k) => k.id === d.kind).key);
       const size = formatSize(d.size);
-      box.append(
-        el("a", { class: "btn", href: d.url, "aria-label": t("download.button", { platform, size }) },
-          icon("download"), el("span", null, platform), el("span", { class: "size" }, size))
-      );
+      box.append(el("a", { class: "btn btn-small", href: d.url, "aria-label": t("download.button", { platform, size }) },
+        icon("download"), el("span", null, platform), el("span", { class: "size" }, size)));
     }
+    box.append(el("a", { class: "btn btn-outline btn-small", href: `${releasesUrl(app)}/latest` }, el("span", null, t("release.latest")), icon("arrowUpRight")));
     return box;
   }
 
   function card(app) {
     const release = state.releases.get(app.id);
-    const badges = el("div", { class: "badges" }, badge(app.status, statusKey(app.status)));
-    if (release && release.prerelease && app.status !== "beta") badges.append(badge("prerelease", "status.prerelease"));
+    const badges = el("span", { class: "badges" },
+      app.restricted ? badge("beta", "access.privateBadge") : badge(app.status, statusKey(app.status)));
+    if (!app.restricted && release && release.prerelease && app.status !== "beta") badges.append(badge("prerelease", "status.prerelease"));
 
-    const chips = el("ul", { class: "chips", "aria-label": t("platforms.label") },
-      ...app.platforms.map((p) => el("li", null, icon(PLATFORMS[p].icon), t(PLATFORMS[p].key))));
+    const platforms = el("span", { class: "platform-pill" },
+      el("span", { class: "visually-hidden" }, `${t("platforms.label")}: `),
+      app.platforms.map((p) => t(PLATFORMS[p].key)).join(" · "));
 
     const titleId = `app-${app.id}`;
     const head = el("div", { class: "card-head" },
       el("div", { class: "card-title" },
-        el("img", { src: `icons/${app.icon}`, alt: "", width: "40", height: "40" }),
-        el("div", null, el("h4", { id: titleId }, app.name), el("p", { class: "repo-id" }, app.id))),
-      badges);
+        el("span", { class: "icon-box" }, icon(app.icon)),
+        el("div", null,
+          el("div", { class: "name-row" }, el("h4", { id: titleId }, app.name), badges),
+          el("a", { class: "repo-id", href: `https://github.com/${app.repo}` }, app.id))),
+      platforms);
 
-    // Footer of the card: tech stack and release, then the downloads, then links.
     const meta = el("p", { class: "card-meta" });
     if (app.stack) meta.append(el("span", null, app.stack));
     if (release) {
       const date = formatDate(release.date);
       meta.append(el("span", null, date ? t("release.info", { version: release.version, date }) : release.version));
     }
-    const links = el("p", { class: "links" });
-    if (release) links.append(el("a", { href: releasesUrl(app) }, icon("external"), t("release.all")));
-    links.append(el("a", { href: `https://github.com/${app.repo}` }, icon("code"), t("link.source")));
-    const foot = el("div", { class: "card-foot" }, meta.childNodes.length ? meta : null, downloadsBlock(app), links);
 
     return el("li", { "data-app": app.id },
       el("article", { class: "card", "aria-labelledby": titleId },
-        head, el("p", { lang: state.language }, app.tagline[state.language]), chips, foot));
+        head,
+        el("p", { class: "tagline", lang: state.language }, app.tagline[state.language]),
+        el("div", { class: "card-foot" }, meta, actions(app))));
   }
 
   function drawStatic() {
@@ -401,7 +408,7 @@
     draw();
     applyView(true); // a shared link ending in #apps opens straight on the apps, once they are drawn
 
-    await Promise.all(state.apps.filter((a) => a.status !== "coming-soon").map(async (app) => {
+    await Promise.all(state.apps.filter((a) => a.status !== "coming-soon" && !a.restricted).map(async (app) => {
       state.releases.set(app.id, await fetchRelease(app.repo));
       // Replace only this card, so focus elsewhere on the page is kept.
       document.querySelector(`[data-app="${app.id}"]`)?.replaceWith(card(app));

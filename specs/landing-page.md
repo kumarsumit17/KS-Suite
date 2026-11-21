@@ -27,7 +27,7 @@ site/
   apps.json         the app list (the page is drawn entirely from it)
   lang/en.json      interface text, suite translation format
   lang/hi.json
-  icons/            our own app icons (SVG) and avatar.jpg, the owner's GitHub profile picture (a local copy; replace the file to change it); Lucide icons are inlined in app.js
+  icons/            ks-suite.svg (logo and favicon) and avatar.jpg, the owner's GitHub profile picture (a local copy; replace the file to change it); Lucide icons are inlined in app.js
 .github/workflows/pages.yml
 ```
 No framework, build step or package install. Everything is served from the Pages origin: system font stack, no remote fonts, scripts, images or analytics. A `Content-Security-Policy` meta tag allows only `'self'` plus `connect-src https://api.github.com`.
@@ -62,9 +62,10 @@ No framework, build step or package install. Everything is served from the Pages
 ```
 
 ## apps.json
-Order in the file is the order on the page. `icon` is a file in `site/icons/`. `platforms` uses fixed ids, whose labels are in the language files. `tagline` has one text per language. `status` is `released`, `beta` or `coming-soon`. `stack` (optional) is a short tech line shown at the foot of the card, not translated.
+Order in the file is the order on the page. `icon` is the name of a Lucide icon inlined in `app.js` (`tv`, `playCircle`, `clapperboard`, `wallet`, `shieldCheck`, `hardDriveDownload`, …); add the icon's paths there to use a new one. `platforms` uses fixed ids, whose labels are in the language files. `tagline` has one text per language. `status` is `released`, `beta` or `coming-soon`. `stack` (optional) is a short tech line shown at the foot of the card, not translated.
 
-Grouping in `apps.json`:
+Grouping and access in `apps.json`:
+- `restricted` (optional, `true`): for an app whose repository is private. The card shows a "Private" badge and a lock note, and no download or release links, so visitors never meet a 404. No app sets it today: every repository is public.
 - `group` (required): the id of an entry in the top-level `groups` list. Each group has an `id`, a `title` and an optional `note`, both in English and Hindi. The page shows one section per group, in the order of `groups`; an empty group is skipped.
 
 ## Views
@@ -79,7 +80,7 @@ The page opens on the intro only. The apps and the install notes show when the a
       "name": "KS Download Manager",
       "group": "desktop",
       "repo": "kumarsumit17/ks-download-manager",
-      "icon": "ks-download-manager.svg",
+      "icon": "hardDriveDownload",
       "status": "coming-soon",
       "platforms": ["windows", "macos"],
       "stack": "Rust · Tauri",

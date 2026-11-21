@@ -1,5 +1,6 @@
 # 2026-11-22
 
+* **Update**: [Landing page](landing-page.md): closer to the owner's shadcn-style design: "KS-Suite" title with a release-hub label, "Applications" heading, monochrome Lucide icons in bordered boxes (`icon` is now a Lucide name; the app SVGs are removed), one platform pill per card, and a footer row with the tech line and release on the left and download / "Latest release" (`/releases/latest`) buttons on the right. New optional `restricted` field.
 * **Update**: [Landing page](landing-page.md): back to the plain zinc cards (owner's choice); the `accent`, `featured` and `highlights` fields are removed. Groups and the `#apps` view stay.
 * **Update**: [Landing page](landing-page.md): CSS and JavaScript links carry `?v=__VERSION__`, stamped with the commit id by the Pages workflow, after a cached old `app.js` left the apps empty for a visitor.
 * **Update**: [Landing page](landing-page.md): the Pages workflow is split into `build` and `deploy` jobs, after single-job deploys failed to find the just-uploaded artifact.
