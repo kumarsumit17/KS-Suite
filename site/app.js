@@ -354,8 +354,12 @@
 
   // ---------- Start ----------
 
+  // The Pages workflow replaces __VERSION__ with the commit id. A page cached from an
+  // earlier deploy then asks for that deploy's data files, never newer ones it cannot read.
+  const DATA_VERSION = "__VERSION__";
+
   async function loadJson(path) {
-    const res = await fetch(path, { cache: "no-cache" });
+    const res = await fetch(`${path}?v=${DATA_VERSION}`);
     if (!res.ok) throw new Error(`${path}: ${res.status}`);
     return res.json();
   }
