@@ -90,12 +90,17 @@ Each app repository contains:
 ├── .claude/                        ← graphify setup (ks-tv-launcher: scripts/kb.py instead)
 ├── CLAUDE.md                       ← stack, platform constraints, build commands
 ├── ks-utility/                     ← git submodule: shared generic utilities (Kotlin apps)
-├── app/ (or shared/ + platform apps)
+├── tv/google-tv/                   ← platform folders, the same in every app repo
+├── desktop/mac/  desktop/windows/
+├── mobile/android/  mobile/ios/
+├── app/ (or shared/ + platform apps) ← existing code, not yet moved into the platform folders
 ├── docs/
 ├── specs/                          ← specs (OKF bundle)
 ├── LICENSE
 └── README.md
 ```
+
+Every app repository has all five platform folders, including those for platforms it does not target yet; `ks-utility` keeps its own layout. The rules and each app's targets are in [specs/platform-folders.md](specs/platform-folders.md).
 
 ---
 
