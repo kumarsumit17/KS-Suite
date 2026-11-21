@@ -22,6 +22,7 @@ site/
   index.html        page shell: header, hero, empty app grid, footer, <noscript> link list
   theme.css         the only place for colours, type, spacing, radii, motion (CSS custom properties)
   style.css         layout and components; uses theme.css variables only, no literal colours
+  theme-init.js     applies the saved theme before the page is drawn
   app.js            loads apps.json and lang/*.json, draws cards, fetches releases
   apps.json         the app list (the page is drawn entirely from it)
   lang/en.json      interface text, suite translation format
@@ -111,7 +112,7 @@ The page checks each entry on load. An entry with a missing field or an unknown 
 - Latin digits in both: all numbers and dates go through `Intl` with `numberingSystem: "latn"`.
 
 ## Theme and access
-- `theme.css` holds every colour, the font stack, the type scale, spacing, radii and motion durations as custom properties, with a light set and a dark set under `prefers-color-scheme: dark`. All text and badge pairs checked for WCAG AA (4.5:1 body, 3:1 large text and focus rings).
+- `theme.css` holds every colour, the font stack, the type scale, spacing, radii and motion durations as custom properties, each colour written once as `light-dark(light, dark)`. The page follows the system; a header switch (System, Light, Dark) sets `data-theme` on `<html>`, is remembered in `localStorage` (`ks-suite.theme`), and is applied before first paint by `theme-init.js`, so there is no flash. All text and badge pairs checked for WCAG AA (4.5:1 body, 3:1 large text and focus rings).
 - Keyboard: real `<a>` and `<button>` elements, a visible `:focus-visible` ring, a "Skip to apps" link, logical tab order. The language switch uses `aria-pressed`.
 - `prefers-reduced-motion: reduce` turns off all transitions.
 - Mobile first: one column under 640 px, buttons at least 44 px tall, no horizontal scroll at 320 px.

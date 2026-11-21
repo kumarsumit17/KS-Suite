@@ -4,6 +4,8 @@
 
 (() => {
   const STORAGE_LANGUAGE = "ks-suite.language";
+  const STORAGE_THEME = "ks-suite.theme"; // also read by theme-init.js
+  const THEMES = ["light", "dark"];
   const CACHE_PREFIX = "ks-suite.release.";
   const CACHE_MS = 10 * 60 * 1000;
   const FETCH_TIMEOUT_MS = 8000;
@@ -21,6 +23,8 @@
     smartphone: '<rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><path d="M12 18h.01"/>',
     plug: '<path d="M12 22v-5"/><path d="M9 8V2"/><path d="M15 8V2"/><path d="M18 8v5a4 4 0 0 1-4 4h-4a4 4 0 0 1-4-4V8Z"/>',
     shield: '<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/>',
+    sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/>',
+    moon: '<path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>',
     zap: '<path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/>',
   };
 
@@ -70,6 +74,21 @@
       if (choice === "system") localStorage.removeItem(STORAGE_LANGUAGE);
       else localStorage.setItem(STORAGE_LANGUAGE, choice);
     } catch { /* storage blocked: the choice lasts for this visit only */ }
+  }
+
+  // ---------- Theme (same shape as the language rule: system, or a remembered choice) ----------
+
+  function savedTheme() {
+    try { const v = localStorage.getItem(STORAGE_THEME); return THEMES.includes(v) ? v : "system"; } catch { return "system"; }
+  }
+
+  function applyTheme(choice) {
+    try {
+      if (choice === "system") localStorage.removeItem(STORAGE_THEME);
+      else localStorage.setItem(STORAGE_THEME, choice);
+    } catch { /* storage blocked: the choice lasts for this visit only */ }
+    if (choice === "system") delete document.documentElement.dataset.theme;
+    else document.documentElement.dataset.theme = choice;
   }
 
   function locale() {
@@ -277,6 +296,8 @@
     for (const node of document.querySelectorAll("[data-t-label]")) node.setAttribute("aria-label", t(node.dataset.tLabel));
     const choice = savedChoice();
     for (const b of document.querySelectorAll(".lang-switch button")) b.setAttribute("aria-pressed", String(b.dataset.lang === choice));
+    const theme = savedTheme();
+    for (const b of document.querySelectorAll("[data-theme-choice]")) b.setAttribute("aria-pressed", String(b.dataset.themeChoice === theme));
 
     const points = document.getElementById("points");
     points.replaceChildren(
@@ -310,6 +331,14 @@
         saveChoice(choice);
         state.language = resolveLanguage(choice, navigator.languages);
         draw();
+      });
+    }
+
+    for (const b of document.querySelectorAll("[data-theme-choice]")) {
+      if (LUCIDE[b.dataset.icon]) b.replaceChildren(icon(b.dataset.icon));
+      b.addEventListener("click", () => {
+        applyTheme(THEMES.includes(b.dataset.themeChoice) ? b.dataset.themeChoice : "system");
+        drawStatic();
       });
     }
 

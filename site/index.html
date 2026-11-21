@@ -10,6 +10,7 @@
   <link rel="icon" href="icons/ks-suite.svg" type="image/svg+xml">
   <link rel="stylesheet" href="theme.css">
   <link rel="stylesheet" href="style.css">
+  <script src="theme-init.js"></script>
   <script src="app.js" defer></script>
 </head>
 <body>
@@ -18,22 +19,38 @@
   <header class="site-header">
     <div class="wrap">
       <a class="brand" href="./"><img src="icons/ks-suite.svg" alt="">KS-Suite</a>
-      <div class="lang-switch" role="group" aria-label="Language" data-t-label="nav.language">
-        <button type="button" data-lang="system" aria-pressed="true" data-t="lang.system">System</button>
-        <button type="button" data-lang="en" lang="en" aria-pressed="false">English</button>
-        <button type="button" data-lang="hi" lang="hi" aria-pressed="false">हिंदी</button>
+      <div class="controls">
+        <div class="switch theme-switch" role="group" aria-label="Theme" data-t-label="theme.label">
+          <button type="button" data-theme-choice="system" aria-pressed="true" aria-label="System" data-t-label="theme.system" data-icon="monitor"></button>
+          <button type="button" data-theme-choice="light" aria-pressed="false" aria-label="Light" data-t-label="theme.light" data-icon="sun"></button>
+          <button type="button" data-theme-choice="dark" aria-pressed="false" aria-label="Dark" data-t-label="theme.dark" data-icon="moon"></button>
+        </div>
+        <div class="switch lang-switch" role="group" aria-label="Language" data-t-label="nav.language">
+          <button type="button" data-lang="system" aria-pressed="true" data-t="lang.system">System</button>
+          <button type="button" data-lang="en" lang="en" aria-pressed="false">English</button>
+          <button type="button" data-lang="hi" lang="hi" aria-pressed="false">हिंदी</button>
+        </div>
       </div>
     </div>
   </header>
 
   <main>
-    <section class="hero wrap">
-      <h1 data-t="hero.title">Free, private apps for the TV, the desktop and the phone.</h1>
-      <ul class="points" id="points"></ul>
+    <section class="hero">
+      <div class="wrap">
+        <p class="eyebrow" data-t="hero.eyebrow">Free and open source</p>
+        <h1 data-t="hero.title">Free, private apps for the TV, the desktop and the phone.</h1>
+        <p class="hero-actions">
+          <a class="btn btn-large" href="#apps" data-t="hero.cta">See the apps</a>
+        </p>
+        <ul class="points" id="points"></ul>
+      </div>
     </section>
 
     <section class="apps wrap" id="apps" tabindex="-1" aria-labelledby="apps-heading">
-      <h2 id="apps-heading" data-t="apps.heading">Apps</h2>
+      <div class="section-head">
+        <h2 id="apps-heading" data-t="apps.heading">Apps</h2>
+        <p class="muted" data-t="apps.intro">Each card shows the newest release. Downloads come straight from GitHub.</p>
+      </div>
       <ul class="grid" id="grid"></ul>
       <noscript>
         <p>This page needs JavaScript to list the apps. The same list, with links to each app's releases, is in the <a href="https://github.com/kumarsumit17/KS-Suite#readme">README</a>.</p>

@@ -1,6 +1,10 @@
 /* KS-Suite theme: every colour, font, size, space and motion value of the page.
    Restyle the page here; style.css uses these variables only.
-   Colour pairs are checked for WCAG AA (4.5:1 text, 3:1 large text and focus ring). */
+
+   Colours are written once as light-dark(LIGHT, DARK). The page follows the system
+   (color-scheme: light dark); the theme switch sets data-theme="light" or "dark" on
+   <html>, which forces one side. Colour pairs are checked for WCAG AA
+   (4.5:1 text, 3:1 large text and focus ring). */
 
 :root {
   color-scheme: light dark;
@@ -10,10 +14,12 @@
   --font-size-small: 0.875rem;
   --font-size-body: 1rem;
   --font-size-large: 1.25rem;
-  --font-size-title: clamp(1.75rem, 4vw + 1rem, 2.75rem);
+  --font-size-hero: clamp(2.1rem, 5vw + 1rem, 3.75rem);
   --font-weight-strong: 650;
+  --font-weight-hero: 800;
+  --letter-spacing-hero: -0.025em;
   --line-height: 1.55;
-  --line-height-tight: 1.2;
+  --line-height-tight: 1.15;
 
   /* Spacing */
   --space-1: 0.25rem;
@@ -23,60 +29,59 @@
   --space-5: 1.5rem;
   --space-6: 2rem;
   --space-7: 3rem;
+  --space-8: 5rem;
   --page-width: 72rem;
   --card-min: 19rem;
   --touch: 2.75rem; /* 44 px minimum tap target */
 
   /* Shape */
-  --radius-small: 0.5rem;
-  --radius: 1rem;
+  --radius-small: 0.6rem;
+  --radius: 1.1rem;
+  --radius-large: 1.5rem;
   --radius-pill: 999px;
   --border-width: 1px;
   --focus-width: 3px;
+  --icon-app: 3.5rem;
 
   /* Motion (turned off under prefers-reduced-motion in style.css) */
-  --motion: 150ms ease-out;
+  --motion: 180ms ease-out;
+  --lift: -3px;
 
-  /* Colours: light */
-  --color-bg: #f6f7f9;
-  --color-surface: #ffffff;
-  --color-border: #d5d9e1;
-  --color-text: #14171f;
-  --color-muted: #4a5263;
-  --color-accent: #1d5bc9;
-  --color-accent-hover: #164aa6;
-  --color-on-accent: #ffffff;
-  --color-link: #1d5bc9;
-  --color-focus: #1d5bc9;
-  --color-shadow: rgb(20 23 31 / 0.08);
+  /* Colours: light-dark(light, dark) */
+  --color-bg: light-dark(#f5f6fa, #0b0e14);
+  --color-surface: light-dark(#ffffff, #151a23);
+  --color-surface-2: light-dark(#eef1f7, #1c2230);
+  --color-header: light-dark(rgb(245 246 250 / 0.82), rgb(11 14 20 / 0.78));
+  --color-border: light-dark(#d9dee8, #2a3242);
+  --color-border-strong: light-dark(#b9c2d3, #3d4760);
+  --color-text: light-dark(#121620, #e9ecf3);
+  --color-muted: light-dark(#4a5263, #a9b1c2);
+  --color-accent: light-dark(#1d5bc9, #86aeff);
+  --color-accent-hover: light-dark(#164aa6, #a9c5ff);
+  --color-on-accent: light-dark(#ffffff, #0b0e14);
+  --color-link: light-dark(#1d5bc9, #8fb4ff);
+  --color-focus: light-dark(#1d5bc9, #8fb4ff);
+  --color-eyebrow-bg: light-dark(#e3ebfb, #1b2640);
+  --color-eyebrow-text: light-dark(#1a4fae, #a9c5ff);
 
-  --badge-released-bg: #dcf3e4;
-  --badge-released-text: #135229;
-  --badge-beta-bg: #fdefd2;
-  --badge-beta-text: #6e4300;
-  --badge-soon-bg: #e9ecf1;
-  --badge-soon-text: #3d4452;
+  /* Hero background glows (decoration only, no text sits on the strongest part) */
+  --glow-1: light-dark(rgb(29 91 201 / 0.18), rgb(70 120 255 / 0.22));
+  --glow-2: light-dark(rgb(124 58 237 / 0.14), rgb(160 90 255 / 0.18));
+  --glow-3: light-dark(rgb(15 138 95 / 0.10), rgb(30 180 130 / 0.12));
+
+  --shadow-card: 0 1px 2px light-dark(rgb(18 22 32 / 0.06), rgb(0 0 0 / 0.4)),
+                 0 4px 16px light-dark(rgb(18 22 32 / 0.05), rgb(0 0 0 / 0.25));
+  --shadow-hover: 0 2px 4px light-dark(rgb(18 22 32 / 0.06), rgb(0 0 0 / 0.45)),
+                  0 14px 34px light-dark(rgb(29 91 201 / 0.14), rgb(0 0 0 / 0.5));
+  --shadow-icon: 0 6px 16px light-dark(rgb(18 22 32 / 0.18), rgb(0 0 0 / 0.5));
+
+  --badge-released-bg: light-dark(#dcf3e4, #123321);
+  --badge-released-text: light-dark(#135229, #92e2b0);
+  --badge-beta-bg: light-dark(#fdefd2, #3b2c0c);
+  --badge-beta-text: light-dark(#6e4300, #ffd68c);
+  --badge-soon-bg: light-dark(#e9ecf1, #262c39);
+  --badge-soon-text: light-dark(#3d4452, #c9ceda);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-bg: #0e1117;
-    --color-surface: #171b23;
-    --color-border: #2e3543;
-    --color-text: #e8eaf0;
-    --color-muted: #a9b0bf;
-    --color-accent: #82abff;
-    --color-accent-hover: #a5c2ff;
-    --color-on-accent: #0e1117;
-    --color-link: #8fb4ff;
-    --color-focus: #8fb4ff;
-    --color-shadow: rgb(0 0 0 / 0.35);
-
-    --badge-released-bg: #123321;
-    --badge-released-text: #92e2b0;
-    --badge-beta-bg: #3b2c0c;
-    --badge-beta-text: #ffd68c;
-    --badge-soon-bg: #272d39;
-    --badge-soon-text: #c9ceda;
-  }
-}
+:root[data-theme="light"] { color-scheme: light; }
+:root[data-theme="dark"] { color-scheme: dark; }

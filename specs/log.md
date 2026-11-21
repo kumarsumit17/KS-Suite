@@ -1,5 +1,6 @@
 # 2026-11-22
 
+* **Update**: [Landing page](landing-page.md): new look (hero with glows, feature tiles, lifting cards, sticky header) and a System/Light/Dark theme switch that is remembered; colours now use `light-dark()`.
 * **Update**: [Landing page](landing-page.md) built in `site/` with the Pages workflow; now a Specification. The language switch has a System option (the language rule), and the Windows file rule skips bundled tools such as `ffmpeg.exe`. README points to the page.
 * **Creation**: [Landing page](landing-page.md) plan added (draft, waiting for owner approval).
 
