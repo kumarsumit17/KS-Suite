@@ -27,7 +27,7 @@ site/
   apps.json         the app list (the page is drawn entirely from it)
   lang/en.json      interface text, suite translation format
   lang/hi.json
-  icons/            our own app icons (SVG); Lucide icons are inlined in app.js
+  icons/            our own app icons (SVG) and avatar.jpg, the owner's GitHub profile picture (a local copy; replace the file to change it); Lucide icons are inlined in app.js
 .github/workflows/pages.yml
 ```
 No framework, build step or package install. Everything is served from the Pages origin: system font stack, no remote fonts, scripts, images or analytics. A `Content-Security-Policy` meta tag allows only `'self'` plus `connect-src https://api.github.com`.

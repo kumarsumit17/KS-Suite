@@ -293,6 +293,7 @@
     document.title = t("page.title");
     document.querySelector('meta[name="description"]')?.setAttribute("content", t("page.description"));
     for (const node of document.querySelectorAll("[data-t]")) node.textContent = t(node.dataset.t);
+    for (const node of document.querySelectorAll("[data-t-alt]")) node.setAttribute("alt", t(node.dataset.tAlt));
     for (const node of document.querySelectorAll("[data-t-label]")) node.setAttribute("aria-label", t(node.dataset.tLabel));
     const choice = savedChoice();
     const langSelect = document.getElementById("lang-select");

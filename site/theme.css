@@ -42,6 +42,8 @@
   --border-width: 1px;
   --focus-width: 3px;
   --icon-app: 3.5rem;
+  --avatar-size: clamp(7.5rem, 18vw, 10rem);
+  --avatar-ring: 4px;
 
   /* Motion (turned off under prefers-reduced-motion in style.css) */
   --motion: 180ms ease-out;
@@ -73,6 +75,9 @@
                  0 4px 16px light-dark(rgb(18 22 32 / 0.05), rgb(0 0 0 / 0.25));
   --shadow-hover: 0 2px 4px light-dark(rgb(18 22 32 / 0.06), rgb(0 0 0 / 0.45)),
                   0 14px 34px light-dark(rgb(29 91 201 / 0.14), rgb(0 0 0 / 0.5));
+  --avatar-ring-color: light-dark(#ffffff, #151a23);
+  --avatar-glow: 0 0 0 calc(var(--avatar-ring) + 3px) light-dark(rgb(29 91 201 / 0.25), rgb(134 174 255 / 0.35)),
+                 0 18px 40px light-dark(rgb(18 22 32 / 0.18), rgb(0 0 0 / 0.55));
   --shadow-icon: 0 6px 16px light-dark(rgb(18 22 32 / 0.18), rgb(0 0 0 / 0.5));
 
   --badge-released-bg: light-dark(#dcf3e4, #123321);
