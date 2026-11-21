@@ -1,7 +1,8 @@
 # KS-Suite
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-![Kotlin](https://img.shields.io/badge/Kotlin-only-7F52FF?logo=kotlin&logoColor=white)
+![Kotlin](https://img.shields.io/badge/Kotlin-Android%20%26%20TV%20apps-7F52FF?logo=kotlin&logoColor=white)
+![Rust](https://img.shields.io/badge/Rust%20%2B%20Tauri-desktop-DEA584?logo=rust&logoColor=white)
 ![No tracking](https://img.shields.io/badge/Analytics%20%26%20ads-none-success)
 
 **KS-Suite** is a family of free, privacy-focused apps for the living room, the desktop, and your pocket.
@@ -37,7 +38,7 @@ This repository is the suite's front door: it links to every app, and holds the 
 | `ks-streamflix` | Kotlin · Jetpack Compose for TV · Media3/ExoPlayer · Room · Hilt |
 | `ks-vault` | Kotlin · Jetpack Compose · Room + SQLCipher · Android Keystore · BiometricPrompt |
 | `ks-expense-manager` | Kotlin · Jetpack Compose · Room · Vico · DataStore |
-| `ks-download-manager` | Kotlin · desktop UI and download engine to be decided |
+| `ks-download-manager` | Rust · Tauri · TypeScript + React (Chrome extension: TypeScript, Manifest V3) |
 
 ---
 
@@ -53,7 +54,7 @@ for app in ks-tv-launcher ks-jaiplayer ks-streamflix ks-vault ks-expense-manager
 done
 ```
 
-The app folders are git-ignored here, so this repository never tracks their contents. Builds need **JDK 17**; each app's own `README.md` has its build and install steps.
+The app folders are git-ignored here, so this repository never tracks their contents. The Kotlin apps need **JDK 17**; `ks-download-manager` needs Rust and Node.js. Each app's own `README.md` has its build and install steps.
 
 ---
 
@@ -130,7 +131,7 @@ graph LR
 
 | Concern | Convention | Defined in |
 |---|---|---|
-| Language / build | Kotlin, Gradle KTS, version catalog, JDK 17 | root `CLAUDE.md` |
+| Language / build | Kotlin, Gradle KTS, version catalog, JDK 17. Exception: `ks-download-manager` (desktop only) uses Rust, Tauri and TypeScript | root `CLAUDE.md` |
 | Package root | `com.ks.<app>` | root `CLAUDE.md` |
 | TV UX | D-pad first, 48dp/27dp overscan margins | `ks-tv-launcher`, `ks-streamflix`, `ks-jaiplayer` `CLAUDE.md` |
 | Privacy | No analytics/ads SDKs; vault and expense apps have no `INTERNET` permission | each `CLAUDE.md` |
