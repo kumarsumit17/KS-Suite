@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self' https://api.github.com; img-src 'self' data:; style-src 'self'; script-src 'self'; base-uri 'none'; form-action 'none'">
+  <meta name="referrer" content="no-referrer">
+  <title>KS-Suite: free, private apps</title>
+  <meta name="description" content="Free, privacy-focused apps for the TV, the desktop and the phone. No ads, no tracking.">
+  <link rel="icon" href="icons/ks-suite.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="theme.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#apps" data-t="nav.skip">Skip to apps</a>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="./"><img src="icons/ks-suite.svg" alt="">KS-Suite</a>
+      <div class="lang-switch" role="group" aria-label="Language" data-t-label="nav.language">
+        <button type="button" data-lang="system" aria-pressed="true" data-t="lang.system">System</button>
+        <button type="button" data-lang="en" lang="en" aria-pressed="false">English</button>
+        <button type="button" data-lang="hi" lang="hi" aria-pressed="false">हिंदी</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero wrap">
+      <h1 data-t="hero.title">Free, private apps for the TV, the desktop and the phone.</h1>
+      <ul class="points" id="points"></ul>
+    </section>
+
+    <section class="apps wrap" id="apps" tabindex="-1" aria-labelledby="apps-heading">
+      <h2 id="apps-heading" data-t="apps.heading">Apps</h2>
+      <ul class="grid" id="grid"></ul>
+      <noscript>
+        <p>This page needs JavaScript to list the apps. The same list, with links to each app's releases, is in the <a href="https://github.com/kumarsumit17/KS-Suite#readme">README</a>.</p>
+      </noscript>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>
+        <a href="https://github.com/kumarsumit17/KS-Suite/blob/main/LICENSE" data-t="footer.licence">MIT licence</a>
+        <a href="https://github.com/kumarsumit17/KS-Suite" data-t="link.source">Source on GitHub</a>
+        <span class="muted" data-t="footer.privacy">This page has no analytics and sets no cookies.</span>
+      </p>
+    </div>
+  </footer>
+</body>
+</html>

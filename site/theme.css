@@ -1,0 +1,82 @@
+/* KS-Suite theme: every colour, font, size, space and motion value of the page.
+   Restyle the page here; style.css uses these variables only.
+   Colour pairs are checked for WCAG AA (4.5:1 text, 3:1 large text and focus ring). */
+
+:root {
+  color-scheme: light dark;
+
+  /* Type */
+  --font-body: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", "Noto Sans Devanagari", sans-serif;
+  --font-size-small: 0.875rem;
+  --font-size-body: 1rem;
+  --font-size-large: 1.25rem;
+  --font-size-title: clamp(1.75rem, 4vw + 1rem, 2.75rem);
+  --font-weight-strong: 650;
+  --line-height: 1.55;
+  --line-height-tight: 1.2;
+
+  /* Spacing */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --page-width: 72rem;
+  --card-min: 19rem;
+  --touch: 2.75rem; /* 44 px minimum tap target */
+
+  /* Shape */
+  --radius-small: 0.5rem;
+  --radius: 1rem;
+  --radius-pill: 999px;
+  --border-width: 1px;
+  --focus-width: 3px;
+
+  /* Motion (turned off under prefers-reduced-motion in style.css) */
+  --motion: 150ms ease-out;
+
+  /* Colours: light */
+  --color-bg: #f6f7f9;
+  --color-surface: #ffffff;
+  --color-border: #d5d9e1;
+  --color-text: #14171f;
+  --color-muted: #4a5263;
+  --color-accent: #1d5bc9;
+  --color-accent-hover: #164aa6;
+  --color-on-accent: #ffffff;
+  --color-link: #1d5bc9;
+  --color-focus: #1d5bc9;
+  --color-shadow: rgb(20 23 31 / 0.08);
+
+  --badge-released-bg: #dcf3e4;
+  --badge-released-text: #135229;
+  --badge-beta-bg: #fdefd2;
+  --badge-beta-text: #6e4300;
+  --badge-soon-bg: #e9ecf1;
+  --badge-soon-text: #3d4452;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #0e1117;
+    --color-surface: #171b23;
+    --color-border: #2e3543;
+    --color-text: #e8eaf0;
+    --color-muted: #a9b0bf;
+    --color-accent: #82abff;
+    --color-accent-hover: #a5c2ff;
+    --color-on-accent: #0e1117;
+    --color-link: #8fb4ff;
+    --color-focus: #8fb4ff;
+    --color-shadow: rgb(0 0 0 / 0.35);
+
+    --badge-released-bg: #123321;
+    --badge-released-text: #92e2b0;
+    --badge-beta-bg: #3b2c0c;
+    --badge-beta-text: #ffd68c;
+    --badge-soon-bg: #272d39;
+    --badge-soon-text: #c9ceda;
+  }
+}

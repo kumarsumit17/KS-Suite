@@ -6,6 +6,12 @@
 ![No tracking](https://img.shields.io/badge/Analytics%20%26%20ads-none-success)
 
 **KS-Suite** is a family of free, privacy-focused apps for the living room, the desktop, and your pocket.
+
+> ## ⬇️ Get the apps
+> **[kumarsumit17.github.io/KS-Suite](https://kumarsumit17.github.io/KS-Suite/)** lists every app with download buttons for the newest release, in English and Hindi.
+>
+> Everything below is for developers.
+
 This repository is the suite's front door: it links to every app, and holds the conventions they all share. Each app lives in its own repository, and so does [`ks-utility`](https://github.com/kumarsumit17/ks-utility), the generic utility code every app depends on.
 
 - **Private by default.** Your data stays on your device unless you choose otherwise.

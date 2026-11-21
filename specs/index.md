@@ -9,6 +9,10 @@ okf_version: "0.2"
 * [Dependencies](dependencies.md) - Third-party dependencies are kept to the minimum; the order of preference and what must be reported for each new one.
 * [Platform folders](platform-folders.md) - The platform folders every KS-Suite app repository has, which platforms each app targets, and the shared/ folder for code several platforms use.
 
+# Specifications
+
+* [Landing page](landing-page.md) - The KS-Suite landing page in site/, drawn from site/apps.json with downloads from the GitHub releases API, served by GitHub Pages.
+
 # Reference
 
 * [Cross-repository relationships](cross-repo.md) - How the KS-Suite apps link to each other through user-started Android intents, and the contract on each edge.

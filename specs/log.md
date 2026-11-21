@@ -1,3 +1,8 @@
+# 2026-11-22
+
+* **Update**: [Landing page](landing-page.md) built in `site/` with the Pages workflow; now a Specification. The language switch has a System option (the language rule), and the Windows file rule skips bundled tools such as `ffmpeg.exe`. README points to the page.
+* **Creation**: [Landing page](landing-page.md) plan added (draft, waiting for owner approval).
+
 # 2026-11-21
 
 * **Update**: workspace `CLAUDE.md`: every app supports English and Hindi through `ks-utility` (format, shared catalogue, language rule, Hindi style guide, language-file check; ks-utility `v0.2.0`).
