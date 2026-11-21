@@ -7,6 +7,7 @@ Six independent apps, each its own git repo, plus `ks-utility`, a repo of generi
 - One topic per file. Every file except `index.md` and `log.md` starts with YAML frontmatter: `type` (required: `Specification`, `Policy`, `Plan`, `Playbook` or `Reference`), `title`, `description` (one sentence), `tags`.
 - When a spec is added: list it in `specs/index.md` with its description. When a spec is added or changed: add a line under today's date (`# YYYY-MM-DD`, newest first) in `specs/log.md`.
 - Link between specs with relative markdown links (`[Dependencies](dependencies.md)`), so they also work on GitHub.
+- Links to another repository use the full GitHub URL; relative links are only for files inside this repository.
 
 ## Rules that apply to every repo
 - Exception: `ks-download-manager` has no Android version, so the Kotlin, Gradle and package-root rules below do not apply to it. Its own `CLAUDE.md` defines its stack. All other rules (signing material, tag versions, Conventional Commits, no analytics or ads) still apply.

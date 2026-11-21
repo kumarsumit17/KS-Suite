@@ -14,15 +14,15 @@ okf_version: "0.2"
 
 # Apps
 
-Each app is its own git repository with its own bundle; these links work in a full workspace checkout.
+Each app is its own git repository with its own bundle; these links point to each app's repository on GitHub.
 
-* [ks-tv-launcher](../ks-tv-launcher/specs/index.md) - The specs of `ks-tv-launcher`.
-* [ks-jaiplayer](../ks-jaiplayer/specs/index.md) - The specs of `ks-jaiplayer`.
-* [ks-streamflix](../ks-streamflix/specs/index.md) - The specs of `ks-streamflix`.
-* [ks-vault](../ks-vault/specs/index.md) - The specs of `ks-vault`.
-* [ks-expense-manager](../ks-expense-manager/specs/index.md) - The specs of `ks-expense-manager`.
-* [ks-download-manager](../ks-download-manager/specs/index.md) - The specs of `ks-download-manager`.
+* [ks-tv-launcher](https://github.com/kumarsumit17/ks-tv-launcher/blob/dev/specs/index.md) - The specs of `ks-tv-launcher`.
+* [ks-jaiplayer](https://github.com/kumarsumit17/ks-jaiplayer/blob/main/specs/index.md) - The specs of `ks-jaiplayer`.
+* [ks-streamflix](https://github.com/kumarsumit17/ks-streamflix/blob/main/specs/index.md) - The specs of `ks-streamflix`.
+* [ks-vault](https://github.com/kumarsumit17/ks-vault/blob/main/specs/index.md) - The specs of `ks-vault`.
+* [ks-expense-manager](https://github.com/kumarsumit17/ks-expense-manager/blob/main/specs/index.md) - The specs of `ks-expense-manager`.
+* [ks-download-manager](https://github.com/kumarsumit17/ks-download-manager/blob/dev/specs/index.md) - The specs of `ks-download-manager`.
 
 # Shared code
 
-* [ks-utility](../ks-utility/specs/index.md) - The specs of `ks-utility`, the generic utilities every app depends on.
+* [ks-utility](https://github.com/kumarsumit17/ks-utility/blob/main/specs/index.md) - The specs of `ks-utility`, the generic utilities every app depends on.

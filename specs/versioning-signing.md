@@ -7,7 +7,7 @@ tags: [versioning, signing, release, ci]
 
 # CI/CD: semantic versioning and automated signing
 
-Every Kotlin app repository ships the same GitHub Actions pipeline in `.github/workflows/release.yml`. `ks-download-manager` has no release workflow yet; it is added in Stage 9 of its [build stages](../ks-download-manager/specs/stages.md).
+Every Kotlin app repository ships the same GitHub Actions pipeline in `.github/workflows/release.yml`. `ks-download-manager` has no release workflow yet; it is added in Stage 9 of its [build stages](https://github.com/kumarsumit17/ks-download-manager/blob/dev/specs/stages.md).
 
 ## 1. Versioning (SemVer 2.0)
 
