@@ -38,7 +38,7 @@ This repository is the suite's front door: it links to every app, and holds the 
 | `ks-streamflix` | Kotlin · Jetpack Compose for TV · Media3/ExoPlayer · Room · Hilt |
 | `ks-vault` | Kotlin · Jetpack Compose · Room + SQLCipher · Android Keystore · BiometricPrompt |
 | `ks-expense-manager` | Kotlin · Jetpack Compose · Room · Vico · DataStore |
-| `ks-download-manager` | Rust · Tauri · TypeScript + React (Chrome extension: TypeScript, Manifest V3) |
+| `ks-download-manager` | Rust · Tauri · TypeScript + React · shadcn/ui (Chrome extension: TypeScript, Manifest V3) |
 
 ---
 
