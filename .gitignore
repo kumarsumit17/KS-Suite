@@ -57,3 +57,6 @@ desktop.ini
 
 # ---- Shared utilities (its own repository) ----
 /ks-utility/
+
+# ---- graphify: generated output ----
+graphify-out/

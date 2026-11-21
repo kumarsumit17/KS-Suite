@@ -25,4 +25,4 @@ Each app is its own git repository with its own bundle; these links work in a fu
 
 # Shared code
 
-* [ks-utility](../ks-utility/specs/index.md) - The specs of `ks-utility`, the generic utilities the apps can copy from.
+* [ks-utility](../ks-utility/specs/index.md) - The specs of `ks-utility`, the generic utilities every app depends on.

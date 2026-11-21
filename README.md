@@ -6,7 +6,7 @@
 ![No tracking](https://img.shields.io/badge/Analytics%20%26%20ads-none-success)
 
 **KS-Suite** is a family of free, privacy-focused apps for the living room, the desktop, and your pocket.
-This repository is the suite's front door: it links to every app, and holds the conventions they all share. Each app lives in its own repository, and so does [`ks-utility`](https://github.com/kumarsumit17/ks-utility), the generic utility code the apps can copy from.
+This repository is the suite's front door: it links to every app, and holds the conventions they all share. Each app lives in its own repository, and so does [`ks-utility`](https://github.com/kumarsumit17/ks-utility), the generic utility code every app depends on.
 
 - **Private by default.** Your data stays on your device unless you choose otherwise.
 - **Lean and fast.** No bloat, no ads and no tracking SDKs, with UIs tuned for the device in your hand or the remote on your couch.
@@ -42,7 +42,7 @@ This repository is the suite's front door: it links to every app, and holds the 
 
 ### Shared utilities
 
-[**ks-utility**](https://github.com/kumarsumit17/ks-utility) holds common, generic utility functions for the suite. A utility there can be dragged and dropped into any app; application-specific logic stays in the app. Status: 🛠 Planned.
+[**ks-utility**](https://github.com/kumarsumit17/ks-utility) holds common, generic utility functions for the suite. Every app takes it as a dependency pinned to a commit: the Kotlin apps as a git submodule built by Gradle, `ks-download-manager` through `package.json` and `Cargo.toml`. Application-specific logic stays in the app. Status: 🛠 Planned.
 
 ---
 
@@ -54,11 +54,11 @@ Each app is a separate repository, so clone only what you need. To recreate the 
 git clone https://github.com/kumarsumit17/KS-Suite.git
 cd KS-Suite
 for app in ks-tv-launcher ks-jaiplayer ks-streamflix ks-vault ks-expense-manager ks-download-manager ks-utility; do
-  git clone "https://github.com/kumarsumit17/$app.git"
+  git clone --recurse-submodules "https://github.com/kumarsumit17/$app.git"
 done
 ```
 
-The app folders and `ks-utility` are git-ignored here, so this repository never tracks their contents. The Kotlin apps need **JDK 17**; `ks-download-manager` needs Rust and Node.js. Each app's own `README.md` has its build and install steps.
+The app folders and `ks-utility` are git-ignored here, so this repository never tracks their contents. The Kotlin apps need **JDK 17**; `ks-download-manager` needs Rust and Node.js. Each Kotlin app also carries `ks-utility` as a git submodule, which `--recurse-submodules` fetches. Each app's own `README.md` has its build and install steps.
 
 ---
 
@@ -69,6 +69,7 @@ KS-Suite/
 ├── README.md               ← you are here
 ├── CLAUDE.md               ← suite-wide rules for AI-assisted work
 ├── specs/                  ← suite-wide specs (OKF bundle)
+├── .claude/                ← graphify setup for AI-assisted work
 ├── LICENSE
 ├── .gitignore              ← ignores the app folders and ks-utility (each is its own repo)
 ├── ks-tv-launcher/         ← git repo
@@ -86,7 +87,9 @@ Each app repository contains:
 <app>/
 ├── .github/workflows/release.yml   ← standardized release pipeline (Kotlin apps)
 ├── .gitignore                      ← build output, .gradle/, keystores
+├── .claude/                        ← graphify setup
 ├── CLAUDE.md                       ← stack, platform constraints, build commands
+├── ks-utility/                     ← git submodule: shared generic utilities (Kotlin apps)
 ├── app/ (or shared/ + platform apps)
 ├── docs/
 ├── specs/                          ← specs (OKF bundle)
@@ -98,7 +101,7 @@ Each app repository contains:
 
 ## 🕸 Cross-Repository Relationships
 
-The apps share **no runtime services** and no build-time dependency on each other. Each one builds, ships, and works alone. Generic utility code is shared by copy only: an app copies a file in from [`ks-utility`](https://github.com/kumarsumit17/ks-utility). Every link between the apps is an explicit Android intent that the user starts. The diagram and the contract on each edge are in [specs/cross-repo.md](specs/cross-repo.md), and the conventions the repos share in [specs/conventions.md](specs/conventions.md).
+The apps share **no runtime services** and never depend on each other. Each one builds, ships, and works alone. The only shared code is generic utilities in [`ks-utility`](https://github.com/kumarsumit17/ks-utility), which every app takes as a dependency pinned to a commit. Every link between the apps is an explicit Android intent that the user starts. The diagram and the contract on each edge are in [specs/cross-repo.md](specs/cross-repo.md), and the conventions the repos share in [specs/conventions.md](specs/conventions.md).
 
 > When an edge contract changes, update [specs/cross-repo.md](specs/cross-repo.md) and the `CLAUDE.md` files on **both** sides in the same release cycle.
 

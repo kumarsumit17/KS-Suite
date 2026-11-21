@@ -7,7 +7,7 @@ tags: [cross-repo, intents, contracts]
 
 # Cross-repository relationships
 
-The apps share **no runtime services** and no build-time dependency on each other. Each one builds, ships, and works alone. Generic utility code is shared by copy only: an app copies a file in from [`ks-utility`](https://github.com/kumarsumit17/ks-utility).
+The apps share **no runtime services** and never depend on each other. Each one builds, ships, and works alone. The only shared code is generic utilities in [`ks-utility`](https://github.com/kumarsumit17/ks-utility), which every app takes as a dependency pinned to a commit.
 Every link between them is an explicit Android intent that the user starts. Each link is listed below so that a change to one side can be checked against the other.
 
 ```mermaid
@@ -42,6 +42,11 @@ graph LR
 | `ks-tv-launcher` ⇢ `ks-expense-manager` | `ACTION_SEND`, `text/csv` | Columns `name,amount_minor,currency,cycle,next_due` | Standard share sheet |
 | `ks-vault` | none | **Isolated by design**: no outbound links and no network | — |
 | `ks-download-manager` | none | Standalone: no links to other apps | — |
-| `ks-utility` → any app | Source copied into the app | Generic utilities only, standard library only; no build-time or run-time link | — |
+| `ks-utility` → Kotlin apps | Git submodule at `ks-utility/`, `includeBuild("ks-utility/kotlin")`, dependency `com.ks:utility` | Generic utilities only, standard library only, plain Kotlin/JVM; the app pins a commit | — |
+| `ks-utility` → `ks-download-manager` | Git dependencies in `package.json` and `src-tauri/Cargo.toml` | Root `package.json` exports `typescript/src/index.ts`; crate `ks-utility` in `rust/`; the app pins a commit | — |
 
 > When an edge contract changes, update this table and the `CLAUDE.md` files on **both** sides in the same release cycle.
+
+## Shared code
+
+`ks-utility` is a build-time dependency only: it adds no runtime link between apps. An app gets a change to it only when the app moves its pinned commit, so `ks-utility` never changes the meaning or signature of a function that is in use. The mechanism is described in [ks-utility's usage spec](../ks-utility/specs/usage.md).
