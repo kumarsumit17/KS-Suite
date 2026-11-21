@@ -25,9 +25,9 @@ This repository is the suite's front door: it links to every app, and holds the 
 | 🎬 [**ks-streamflix**](https://github.com/kumarsumit17/ks-streamflix) | Lean, D-pad optimized streaming media manager with fast focus navigation. | Android TV | 🛠 Planned |
 | 🔐 [**ks-vault**](https://github.com/kumarsumit17/ks-vault) | Fully offline secure vault and notekeeper behind pattern/password authentication, for notes, government IDs, and tickets. | Android | 🛠 Planned |
 | 💰 [**ks-expense-manager**](https://github.com/kumarsumit17/ks-expense-manager) | Minimalist, privacy-first personal finance and expense tracker. | Android | 🛠 Planned |
-| ⬇️ [**ks-download-manager**](https://github.com/kumarsumit17/ks-download-manager) | Free download manager for images, audio and video, with up to 20× faster downloads. | Windows · macOS (Chrome extension under consideration) | 🛠 Planned |
+| ⬇️ [**ks-download-manager**](https://github.com/kumarsumit17/ks-download-manager) | Free download manager for images, audio and video, with up to 20× faster downloads. | Windows · macOS (Chrome extension under consideration) | 🚧 In development · [stage 2 of 9](https://github.com/kumarsumit17/ks-download-manager/blob/dev/specs/stages.md) |
 
-"Planned" means the repository holds the project structure and its rules, with app code still to come.
+"Planned" means the repository holds the project structure and its rules, with app code still to come. "In development" means app code is being built in stages, with no release yet.
 
 ### Tech stacks
 
@@ -79,7 +79,7 @@ Each app repository contains:
 
 ```
 <app>/
-├── .github/workflows/release.yml   ← standardized release pipeline
+├── .github/workflows/release.yml   ← standardized release pipeline (Kotlin apps)
 ├── .gitignore                      ← build output, .gradle/, keystores
 ├── CLAUDE.md                       ← stack, platform constraints, build commands
 ├── app/ (or shared/ + platform apps)
@@ -101,7 +101,7 @@ The apps share **no code and no runtime services**. Each one builds, ships, and 
 
 ## 🚀 CI/CD: Semantic Versioning & Automated Signing
 
-Every repository ships the same GitHub Actions pipeline in `.github/workflows/release.yml`. Releases are triggered by an annotated `vMAJOR.MINOR.PATCH` tag, `versionName` and `versionCode` are derived from it, and signing keys come only from repository secrets. Details: [specs/versioning-signing.md](specs/versioning-signing.md).
+Every Kotlin app repository ships the same GitHub Actions pipeline in `.github/workflows/release.yml`; `ks-download-manager` gets its release workflow in its final build stage. Releases are triggered by an annotated `vMAJOR.MINOR.PATCH` tag, `versionName` and `versionCode` are derived from it, and signing keys come only from repository secrets. Details: [specs/versioning-signing.md](specs/versioning-signing.md).
 
 ---
 
