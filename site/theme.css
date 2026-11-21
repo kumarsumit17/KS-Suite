@@ -44,6 +44,9 @@
   --border-width: 1px;
   --focus-width: 3px;
   --icon-app: 2.5rem;
+  --toggle-width: 2.75rem;
+  --toggle-height: 1.5rem;
+  --toggle-gap: 3px;
   --avatar-size: 4.5rem;
   --avatar-ring: 1px;
 
@@ -76,6 +79,8 @@
   --title-start: light-dark(#6d28d9, #a78bfa);
   --title-end: light-dark(#db2777, #f472b6);
   --color-on-accent: #ffffff;
+  --toggle-off: light-dark(#4c4870, #bdb8e3);   /* switch track when off */
+  --toggle-knob: light-dark(#ffffff, #191536);  /* knob when off */
   --color-accent: var(--gradient-start);
   --color-accent-hover: var(--gradient-start-hover);
 

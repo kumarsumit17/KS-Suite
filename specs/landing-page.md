@@ -69,7 +69,7 @@ Grouping and access in `apps.json`:
 - `group` (required): the id of an entry in the top-level `groups` list. Each group has an `id`, a `title` and an optional `note`, both in English and Hindi. The page shows one section per group, in the order of `groups`; an empty group is skipped.
 
 ## Views
-The page opens on the intro only. The apps and the install notes show when the address ends in `#apps`: the "Show apps" button, the skip link, or a shared link. The button is a toggle (`aria-expanded`, `aria-controls`): while the apps are open it reads "Hide apps", and clicking it removes `#apps` from the address with `history.pushState`, so Back reopens them. `theme-init.js` sets `data-view` on `<html>` before first paint, so there is no flash; `app.js` follows `hashchange`, moves focus to the apps and scrolls to them, and the browser's Back button returns to the intro. Without JavaScript everything is visible.
+The page opens on the intro only. The apps and the install notes show when the address ends in `#apps`: the "Show apps" switch, the skip link, or a shared link. "Show apps" is a pill-shaped on/off switch with a round knob (`role="switch"`, `aria-checked`, `aria-controls`; Space or Enter toggles it). Turning it on sets `#apps`; turning it off removes it with `history.pushState`, so Back restores the previous state. Its size and colours are in `theme.css` (`--toggle-*`). `theme-init.js` sets `data-view` on `<html>` before first paint, so there is no flash; `app.js` follows `hashchange`, moves focus to the apps and scrolls to them, and the browser's Back button returns to the intro. Without JavaScript everything is visible.
 
 ```json
 {

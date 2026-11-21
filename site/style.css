@@ -137,7 +137,36 @@ a { color: var(--color-link); text-underline-offset: 0.18em; }
 }
 .lead { margin: 0; color: var(--color-muted); max-width: 42rem; }
 
-.intro-actions { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.intro-actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); }
+
+/* "Show apps": a pill-shaped on/off switch with a round knob */
+.toggle {
+  display: inline-flex; align-items: center; gap: var(--space-3);
+  min-height: var(--touch); padding: 0 var(--space-4) 0 var(--space-2);
+  border: var(--border-width) solid var(--color-border); border-radius: var(--radius-pill);
+  background: var(--color-surface); color: var(--color-heading);
+  font: inherit; font-size: var(--font-size-small); font-weight: var(--font-weight-strong);
+  cursor: pointer; transition: border-color var(--motion), background var(--motion);
+}
+.toggle:hover { border-color: var(--color-border-strong); background: var(--color-surface-2); }
+.toggle:focus-visible { border-radius: var(--radius-pill); }
+.toggle-track {
+  position: relative; flex: none; width: var(--toggle-width); height: var(--toggle-height);
+  border-radius: var(--radius-pill); background: var(--toggle-off);
+  transition: background var(--motion);
+}
+.toggle-knob {
+  position: absolute; top: var(--toggle-gap); left: var(--toggle-gap);
+  width: calc(var(--toggle-height) - 2 * var(--toggle-gap)); height: calc(var(--toggle-height) - 2 * var(--toggle-gap));
+  border-radius: 50%; background: var(--toggle-knob);
+  box-shadow: 0 1px 3px rgb(0 0 0 / 0.3);
+  transition: transform var(--motion);
+}
+.toggle[aria-checked="true"] .toggle-track { background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end)); }
+.toggle[aria-checked="true"] .toggle-knob {
+  background: #ffffff;
+  transform: translateX(calc(var(--toggle-width) - var(--toggle-height)));
+}
 
 /* The apps view: hidden until the address ends in #apps (theme-init.js and app.js set data-view) */
 html[data-view="home"] [data-part="apps"] { display: none; }
