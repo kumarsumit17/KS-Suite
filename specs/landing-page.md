@@ -11,7 +11,7 @@ Status: **built** (2026-11-22), following the recommended choice for each decisi
 
 ## Adding an app or restyling
 - **Add an app:** add an entry to `site/apps.json` and its icon to `site/icons/`. Nothing else changes. Use `"status": "coming-soon"` until it has a public release.
-- **Restyle:** edit `site/theme.css` only. Re-check contrast for any colour pair you change.
+- **Restyle:** edit `site/theme.css` only. The palette is violet and pink with a gradient on primary buttons and the title, and six app colours (`--hue-0` … `--hue-5`), given to cards in `apps.json` order for the icon and its backdrop. Re-check contrast for any colour pair you change.
 - **Change interface text:** edit `site/lang/en.json` and `site/lang/hi.json`, then run `node ks-utility/typescript/tools/lang.mjs check site/lang` from the workspace (Node 23.6+, nothing installed).
 
 One page that presents the suite and every app. Each app's card leads to its downloads. Restyling means editing one theme file; adding an app means adding one entry to `site/apps.json`.

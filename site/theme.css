@@ -3,7 +3,7 @@
 
    Colours are written once as light-dark(LIGHT, DARK). The page follows the system
    (color-scheme: light dark); the theme switch sets data-theme="light" or "dark" on
-   <html>, which forces one side. The look is flat (no shadows). Colour pairs are checked for WCAG AA
+   <html>, which forces one side. Colour pairs are checked for WCAG AA
    (4.5:1 text, 3:1 large text and focus ring). */
 
 :root {
@@ -50,36 +50,61 @@
   /* Motion (turned off under prefers-reduced-motion in style.css) */
   --motion: 180ms ease-out;
 
-  /* Colours: light-dark(light, dark). A monochrome zinc palette. */
-  --color-bg: light-dark(#fafafa, #09090b);
-  --color-surface: light-dark(#ffffff, #18181b);
-  --color-surface-2: light-dark(#f4f4f5, #1f1f23);
-  --color-header: light-dark(rgb(250 250 250 / 0.85), rgb(9 9 11 / 0.8));
-  --color-border: light-dark(#e4e4e7, #27272a);
-  --color-border-strong: light-dark(#a1a1aa, #3f3f46);
-  --color-text: light-dark(#09090b, #fafafa);
-  --color-heading: light-dark(#09090b, #ffffff);
-  --color-muted: light-dark(#52525b, #a1a1aa);
-  --color-subtle: light-dark(#3f3f46, #d4d4d8);
-  --color-accent: light-dark(#18181b, #fafafa);
-  --color-accent-hover: light-dark(#3f3f46, #e4e4e7);
-  --color-on-accent: light-dark(#fafafa, #09090b);
-  --color-link: light-dark(#18181b, #e4e4e7);
-  --color-focus: light-dark(#2563eb, #93c5fd);
-  --color-icon-box: light-dark(#f4f4f5, #09090b);
+  /* Colours: light-dark(light, dark). Bright violet and pink, with a colour per app. */
+  --color-bg: light-dark(#f6f5ff, #0e0b24);
+  --color-surface: light-dark(#ffffff, #191536);
+  --color-surface-2: light-dark(#efedff, #221d47);
+  --color-header: light-dark(rgb(246 245 255 / 0.85), rgb(14 11 36 / 0.8));
+  --color-border: light-dark(#e0dcfa, #2f2960);
+  --color-border-strong: light-dark(#a99cf0, #5b4fa8);
+  --color-text: light-dark(#16133a, #f5f3ff);
+  --color-heading: light-dark(#16133a, #ffffff);
+  --color-muted: light-dark(#4c4870, #bdb8e3);
+  --color-subtle: light-dark(#2f2a5c, #ddd6fe);
+  --color-link: light-dark(#5b2ee6, #c4b5fd);
+  --color-focus: light-dark(#db2777, #f9a8d4);
+  --color-icon-box: light-dark(#f3f1ff, #120f2c);
+  --color-group: light-dark(#6d28d9, #c4b5fd);
+  --color-eyebrow-bg: light-dark(#ede9fe, #2e1f66);
+  --color-eyebrow-text: light-dark(#5b21b6, #ddd6fe);
 
-  --shadow-card: none;
-  --shadow-hover: none;
+  /* Primary buttons and the title: a violet-to-pink gradient (white text passes AA on both ends) */
+  --gradient-start: light-dark(#6d28d9, #7c3aed);
+  --gradient-end: light-dark(#be185d, #db2777);
+  --gradient-start-hover: light-dark(#5b21b6, #6d28d9);
+  --gradient-end-hover: light-dark(#9d174d, #be185d);
+  --title-start: light-dark(#6d28d9, #a78bfa);
+  --title-end: light-dark(#db2777, #f472b6);
+  --color-on-accent: #ffffff;
+  --color-accent: var(--gradient-start);
+  --color-accent-hover: var(--gradient-start-hover);
+
+  /* Soft colour glows behind the intro (decoration only) */
+  --glow-1: light-dark(rgb(124 58 237 / 0.16), rgb(124 58 237 / 0.28));
+  --glow-2: light-dark(rgb(219 39 119 / 0.12), rgb(219 39 119 / 0.22));
+  --glow-3: light-dark(rgb(14 165 233 / 0.12), rgb(14 165 233 / 0.18));
+
+  /* One colour per app, given in apps.json order: icon colour and icon backdrop */
+  --hue-0-fg: light-dark(#2563eb, #60a5fa); --hue-0-bg: light-dark(#dbeafe, #14234d);
+  --hue-1-fg: light-dark(#047857, #34d399); --hue-1-bg: light-dark(#d1fae5, #062e22);
+  --hue-2-fg: light-dark(#c2410c, #fb923c); --hue-2-bg: light-dark(#ffedd5, #3a1708);
+  --hue-3-fg: light-dark(#7c3aed, #a78bfa); --hue-3-bg: light-dark(#ede9fe, #2a1563);
+  --hue-4-fg: light-dark(#be185d, #f472b6); --hue-4-bg: light-dark(#fce7f3, #4a0f2e);
+  --hue-5-fg: light-dark(#0e7490, #22d3ee); --hue-5-bg: light-dark(#cffafe, #08333f);
+
+  --shadow-card: 0 1px 2px light-dark(rgb(22 19 58 / 0.05), rgb(0 0 0 / 0.3));
+  --shadow-hover: 0 8px 24px light-dark(rgb(109 40 217 / 0.12), rgb(0 0 0 / 0.45));
   --shadow-icon: none;
-  --avatar-ring-color: light-dark(#e4e4e7, #27272a);
+  --avatar-ring-color: light-dark(#ffffff, #191536);
+  --avatar-glow: 0 0 0 3px light-dark(#c4b5fd, #7c3aed);
 
-  --badge-released-bg: light-dark(#dcfce7, rgb(34 197 94 / 0.12));
+  --badge-released-bg: light-dark(#dcfce7, #0f2e22);
   --badge-released-text: light-dark(#166534, #86efac);
-  --badge-beta-bg: light-dark(#fef3c7, rgb(245 158 11 / 0.12));
+  --badge-beta-bg: light-dark(#fef3c7, #33270a);
   --badge-beta-text: light-dark(#92400e, #fcd34d);
-  --badge-soon-bg: light-dark(#f4f4f5, #27272a);
-  --badge-soon-text: light-dark(#3f3f46, #d4d4d8);
-  --badge-border: light-dark(#e4e4e7, #27272a);
+  --badge-soon-bg: light-dark(#e0e7ff, #26245c);
+  --badge-soon-text: light-dark(#4338ca, #c7d2fe);
+  --badge-border: transparent;
 }
 
 :root[data-theme="light"] { color-scheme: light; }

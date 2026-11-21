@@ -297,7 +297,8 @@
       meta.append(el("span", null, date ? t("release.info", { version: release.version, date }) : release.version));
     }
 
-    return el("li", { "data-app": app.id },
+    const hue = `hue-${state.apps.indexOf(app) % 6}`; // one colour per app, in apps.json order
+    return el("li", { "data-app": app.id, class: hue },
       el("article", { class: "card", "aria-labelledby": titleId },
         head,
         el("p", { class: "tagline", lang: state.language }, app.tagline[state.language]),

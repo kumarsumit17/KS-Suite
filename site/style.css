@@ -15,7 +15,7 @@ body {
   -webkit-font-smoothing: antialiased;
   min-height: 100vh; min-height: 100dvh; display: flex; flex-direction: column;
 }
-main { flex: 1; }
+main { flex: 1; overflow-x: clip; } /* the intro glows reach past the edges; clipped here, so the page never gets wider than the screen */
 
 ::selection { background: var(--color-accent); color: var(--color-on-accent); }
 
@@ -100,7 +100,15 @@ a { color: var(--color-link); text-underline-offset: 0.18em; }
 .lang-select select:hover { border-color: var(--color-border-strong); background: var(--color-surface-2); }
 .lang-select option { background: var(--color-surface); color: var(--color-text); }
 
-/* Intro */
+/* Intro, with soft colour glows behind it */
+.intro { position: relative; isolation: isolate; }
+.intro::before {
+  content: ""; position: absolute; z-index: -1; inset: 0 -30vw; pointer-events: none;
+  background:
+    radial-gradient(32rem 18rem at 18% 30%, var(--glow-1), transparent 70%),
+    radial-gradient(28rem 16rem at 80% 20%, var(--glow-2), transparent 70%),
+    radial-gradient(26rem 14rem at 60% 100%, var(--glow-3), transparent 70%);
+}
 .intro {
   display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between;
   gap: var(--space-5); padding-block: var(--space-7) var(--space-6);
@@ -110,20 +118,22 @@ a { color: var(--color-link); text-underline-offset: 0.18em; }
 .intro-main { display: flex; gap: var(--space-5); align-items: flex-start; flex: 1 1 32rem; }
 .avatar {
   width: var(--avatar-size); height: var(--avatar-size); border-radius: 50%; flex: none;
-  object-fit: cover; border: var(--avatar-ring) solid var(--avatar-ring-color);
+  object-fit: cover; border: 2px solid var(--avatar-ring-color); box-shadow: var(--avatar-glow);
 }
 .intro-text { display: grid; gap: var(--space-3); }
 .eyebrow {
   display: inline-flex; align-items: center; gap: var(--space-2); justify-self: start; margin: 0;
   padding: var(--space-1) var(--space-3); border-radius: var(--radius-pill);
-  border: var(--border-width) solid var(--color-border); background: var(--color-surface);
-  color: var(--color-muted); font-size: var(--font-size-xs);
+  border: var(--border-width) solid transparent; background: var(--color-eyebrow-bg);
+  color: var(--color-eyebrow-text); font-size: var(--font-size-xs); font-weight: var(--font-weight-strong);
 }
-.eyebrow .icon { color: var(--color-subtle); width: 0.9rem; height: 0.9rem; }
+.eyebrow .icon { color: var(--color-eyebrow-text); width: 0.9rem; height: 0.9rem; }
 .intro h1 {
   font-size: var(--font-size-hero); font-weight: var(--font-weight-hero);
   letter-spacing: var(--letter-spacing-hero); line-height: var(--line-height-tight);
-  color: var(--color-heading); margin: 0; max-width: 22em; text-wrap: balance;
+  color: var(--title-start); margin: 0; max-width: 22em; text-wrap: balance;
+  background: linear-gradient(90deg, var(--title-start), var(--title-end));
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
 }
 .lead { margin: 0; color: var(--color-muted); max-width: 42rem; }
 
@@ -143,11 +153,11 @@ html[data-view="home"] .intro { border-bottom: 0; padding-block: var(--space-8);
   min-height: var(--touch); padding: var(--space-2) var(--space-4);
   border-radius: var(--radius); text-decoration: none;
   font-size: var(--font-size-small); font-weight: var(--font-weight-strong);
-  background: var(--color-accent); color: var(--color-on-accent);
+  background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end)); color: var(--color-on-accent);
   border: var(--border-width) solid transparent;
-  transition: background var(--motion), border-color var(--motion);
+  transition: background var(--motion), border-color var(--motion), box-shadow var(--motion);
 }
-.btn:hover { background: var(--color-accent-hover); }
+.btn:hover { background: linear-gradient(135deg, var(--gradient-start-hover), var(--gradient-end-hover)); }
 .btn-outline, .btn-plain {
   background: var(--color-surface); color: var(--color-subtle); border-color: var(--color-border);
 }
@@ -169,7 +179,7 @@ html[data-view="home"] .intro { border-bottom: 0; padding-block: var(--space-8);
 }
 .group-head h3 {
   margin: 0; font-size: var(--font-size-xs); font-weight: var(--font-weight-strong);
-  text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-muted);
+  text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-group);
 }
 .group-head p { margin: 0; font-size: var(--font-size-xs); color: var(--color-muted); }
 .grid {
@@ -183,16 +193,16 @@ html[data-view="home"] .intro { border-bottom: 0; padding-block: var(--space-8);
   flex: 1; display: flex; flex-direction: column; gap: var(--space-4);
   background: var(--color-surface); border: var(--border-width) solid var(--color-border);
   border-radius: var(--radius-large); padding: var(--space-5);
-  transition: background var(--motion), border-color var(--motion);
+  box-shadow: var(--shadow-card);
+  transition: background var(--motion), border-color var(--motion), box-shadow var(--motion);
 }
-.card:hover, .card:focus-within { background: var(--color-surface-2); border-color: var(--color-border-strong); }
+.card:hover, .card:focus-within { border-color: var(--hue-fg, var(--color-border-strong)); box-shadow: var(--shadow-hover); }
 .card-head { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-3); align-items: flex-start; justify-content: space-between; }
 .card-title { display: flex; gap: var(--space-3); align-items: center; min-width: 0; }
 .icon-box {
   display: inline-flex; align-items: center; justify-content: center; flex: none;
   width: var(--icon-app); height: var(--icon-app); border-radius: var(--radius);
-  border: var(--border-width) solid var(--color-border); background: var(--color-icon-box);
-  color: var(--color-subtle);
+  background: var(--hue-bg, var(--color-icon-box)); color: var(--hue-fg, var(--color-subtle));
 }
 .icon-box .icon { width: 1.25rem; height: 1.25rem; stroke-width: 1.75; }
 .name-row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-1) var(--space-2); }
@@ -262,3 +272,11 @@ html[data-view="home"] .intro { border-bottom: 0; padding-block: var(--space-8);
   html { scroll-behavior: auto; }
   *, *::before, *::after { transition: none !important; animation: none !important; }
 }
+
+/* Per-app colours (app.js gives each card hue-0 … hue-5, in apps.json order) */
+.hue-0 { --hue-fg: var(--hue-0-fg); --hue-bg: var(--hue-0-bg); }
+.hue-1 { --hue-fg: var(--hue-1-fg); --hue-bg: var(--hue-1-bg); }
+.hue-2 { --hue-fg: var(--hue-2-fg); --hue-bg: var(--hue-2-bg); }
+.hue-3 { --hue-fg: var(--hue-3-fg); --hue-bg: var(--hue-3-bg); }
+.hue-4 { --hue-fg: var(--hue-4-fg); --hue-bg: var(--hue-4-bg); }
+.hue-5 { --hue-fg: var(--hue-5-fg); --hue-bg: var(--hue-5-bg); }
