@@ -90,6 +90,7 @@ Each app repository contains:
 ├── .claude/                        ← graphify setup (ks-tv-launcher: scripts/kb.py instead)
 ├── CLAUDE.md                       ← stack, platform constraints, build commands
 ├── ks-utility/                     ← git submodule: shared generic utilities (Kotlin apps)
+├── shared/                         ← code used by two or more platforms (multi-platform apps only)
 ├── tv/google-tv/                   ← platform folders, the same in every app repo
 ├── desktop/mac/  desktop/windows/
 ├── mobile/android/  mobile/ios/

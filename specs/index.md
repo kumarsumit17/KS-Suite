@@ -7,7 +7,7 @@ okf_version: "0.2"
 * [Shared conventions](conventions.md) - The conventions every KS-Suite repository follows, and where shared code is allowed.
 * [Versioning and signing](versioning-signing.md) - Tag-driven SemVer, the version fields derived from the tag, CI signing from repository secrets, and the release pipeline stages.
 * [Dependencies](dependencies.md) - Third-party dependencies are kept to the minimum; the order of preference and what must be reported for each new one.
-* [Platform folders](platform-folders.md) - The platform folders every KS-Suite app repository has, which platforms each app targets, and where shared code goes.
+* [Platform folders](platform-folders.md) - The platform folders every KS-Suite app repository has, which platforms each app targets, and the shared/ folder for code several platforms use.
 
 # Reference
 
