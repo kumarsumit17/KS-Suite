@@ -1,5 +1,6 @@
 # 2026-11-22
 
+* **Update**: [Landing page](landing-page.md): released as `v1.0.0` (GitHub release "Landing page v1.0.0" on `504ab8f`); the repository's Website field now points to the page.
 * **Update**: [Landing page](landing-page.md): "Show apps" is a pill-shaped on/off switch with a round knob instead of a Show/Hide button.
 * **Update**: [Landing page](landing-page.md): bright palette instead of zinc: violet-to-pink gradient buttons and title, a colour per app for the icon box, coloured group headings and badges, soft glows behind the intro, deep-indigo dark mode. All text pairs pass WCAG AA.
 * **Added**: [Release cycle](release-cycle.md): one cycle for every app (dev with CI and a rehearsal green, fast-forward main, push the tag, the workflow publishes a full release marked latest; hand checks after the release go into the next version).
