@@ -41,26 +41,12 @@
       "group": "media",
       "repo": "kumarsumit17/ks-tv-launcher",
       "icon": "ks-tv-launcher.svg",
-      "accent": "#2563c9",
-      "featured": true,
       "status": "released",
       "platforms": ["google-tv"],
       "stack": "Kotlin · Compose for TV",
       "tagline": {
         "en": "Ad-free TV launcher with a glass look, live weather, and a tracker for your streaming subscriptions with renewal reminders.",
         "hi": "बिना विज्ञापन वाला TV लॉन्चर: ग्लास जैसा लुक, लाइव मौसम और रिन्यूअल रिमाइंडर के साथ स्ट्रीमिंग सब्सक्रिप्शन ट्रैकर।"
-      },
-      "highlights": {
-        "en": [
-          "Glass look built for the TV remote",
-          "Live weather widget",
-          "Reminders before subscriptions renew"
-        ],
-        "hi": [
-          "TV रिमोट के लिए बना ग्लास लुक",
-          "लाइव मौसम विजेट",
-          "सब्सक्रिप्शन रिन्यू होने से पहले रिमाइंडर"
-        ]
       }
     },
     {
@@ -69,7 +55,6 @@
       "group": "desktop",
       "repo": "kumarsumit17/ks-download-manager",
       "icon": "ks-download-manager.svg",
-      "accent": "#0f8a5f",
       "status": "coming-soon",
       "platforms": ["windows", "macos"],
       "stack": "Rust · Tauri",
@@ -84,7 +69,6 @@
       "group": "media",
       "repo": "kumarsumit17/ks-jaiplayer",
       "icon": "ks-jaiplayer.svg",
-      "accent": "#d9480f",
       "status": "coming-soon",
       "platforms": ["android", "google-tv", "windows", "macos"],
       "stack": "Kotlin Multiplatform",
@@ -99,7 +83,6 @@
       "group": "media",
       "repo": "kumarsumit17/ks-streamflix",
       "icon": "ks-streamflix.svg",
-      "accent": "#8b5cf6",
       "status": "coming-soon",
       "platforms": ["google-tv"],
       "stack": "Kotlin · Compose for TV",
@@ -114,7 +97,6 @@
       "group": "personal",
       "repo": "kumarsumit17/ks-vault",
       "icon": "ks-vault.svg",
-      "accent": "#3b82f6",
       "status": "coming-soon",
       "platforms": ["android"],
       "stack": "Kotlin · Compose",
@@ -129,7 +111,6 @@
       "group": "personal",
       "repo": "kumarsumit17/ks-expense-manager",
       "icon": "ks-expense-manager.svg",
-      "accent": "#0e9f6e",
       "status": "coming-soon",
       "platforms": ["android"],
       "stack": "Kotlin · Compose",

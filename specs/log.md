@@ -1,5 +1,6 @@
 # 2026-11-22
 
+* **Update**: [Landing page](landing-page.md): back to the plain zinc cards (owner's choice); the `accent`, `featured` and `highlights` fields are removed. Groups and the `#apps` view stay.
 * **Update**: [Landing page](landing-page.md): CSS and JavaScript links carry `?v=__VERSION__`, stamped with the commit id by the Pages workflow, after a cached old `app.js` left the apps empty for a visitor.
 * **Update**: [Landing page](landing-page.md): the Pages workflow is split into `build` and `deploy` jobs, after single-job deploys failed to find the just-uploaded artifact.
 * **Update**: [Landing page](landing-page.md): apps grouped into sections (`groups` in `apps.json`); cards take an optional `accent` colour, `featured` flag and `highlights`; the apps and install notes show only at `#apps`, opened by a new "See the apps" button.

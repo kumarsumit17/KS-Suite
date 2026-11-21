@@ -23,7 +23,6 @@
     smartphone: '<rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><path d="M12 18h.01"/>',
     plug: '<path d="M12 22v-5"/><path d="M9 8V2"/><path d="M15 8V2"/><path d="M18 8v5a4 4 0 0 1-4 4h-4a4 4 0 0 1-4-4V8Z"/>',
     layers: '<path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z"/><path d="M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12"/><path d="M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17"/>',
-    check: '<path d="M20 6 9 17l-5-5"/>',
     grid: '<rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/>',
     folderGit: '<path d="M9 20H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h3.9a2 2 0 0 1 1.69.9l.81 1.2a2 2 0 0 0 1.67.9H20a2 2 0 0 1 2 2v5"/><circle cx="13" cy="12" r="2"/><path d="M18 19c-2.8 0-5-2.2-5-5v8"/><circle cx="20" cy="19" r="2"/>',
     sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/>',
@@ -154,9 +153,6 @@
     if (!Array.isArray(a.platforms) || !a.platforms.length || !a.platforms.every((p) => p in PLATFORMS)) problems.push("platforms");
     if (a.stack != null && typeof a.stack !== "string") problems.push("stack");
     if (!state.groups.some((g) => g.id === a.group)) problems.push("group");
-    if (a.accent != null && !/^#[0-9a-fA-F]{6}$/.test(a.accent)) problems.push("accent");
-    if (a.featured != null && typeof a.featured !== "boolean") problems.push("featured");
-    if (a.highlights != null && !LANGUAGES.every((l) => Array.isArray(a.highlights[l]) && a.highlights[l].every((h) => typeof h === "string"))) problems.push("highlights");
     if (!a.tagline || !LANGUAGES.every((l) => typeof a.tagline[l] === "string" && a.tagline[l])) problems.push("tagline");
     return problems;
   }
@@ -280,7 +276,7 @@
     const titleId = `app-${app.id}`;
     const head = el("div", { class: "card-head" },
       el("div", { class: "card-title" },
-        el("span", { class: "app-icon" }, el("img", { src: `icons/${app.icon}`, alt: "", width: "44", height: "44" })),
+        el("img", { src: `icons/${app.icon}`, alt: "", width: "40", height: "40" }),
         el("div", null, el("h4", { id: titleId }, app.name), el("p", { class: "repo-id" }, app.id))),
       badges);
 
@@ -296,15 +292,9 @@
     links.append(el("a", { href: `https://github.com/${app.repo}` }, icon("code"), t("link.source")));
     const foot = el("div", { class: "card-foot" }, meta.childNodes.length ? meta : null, downloadsBlock(app), links);
 
-    const highlights = app.highlights?.[state.language]?.length
-      ? el("ul", { class: "highlights" }, ...app.highlights[state.language].map((h) => el("li", null, icon("check"), el("span", null, h))))
-      : null;
-
-    const article = el("article", { class: "card", "aria-labelledby": titleId },
-      head, el("p", { class: "tagline", lang: state.language }, app.tagline[state.language]), highlights, chips, foot);
-    // The app's accent colour (apps.json "accent"): set through the CSSOM, which the page's CSP allows.
-    if (app.accent) article.style.setProperty("--app-accent", app.accent);
-    return el("li", { "data-app": app.id, class: app.featured ? "featured" : null }, article);
+    return el("li", { "data-app": app.id },
+      el("article", { class: "card", "aria-labelledby": titleId },
+        head, el("p", { lang: state.language }, app.tagline[state.language]), chips, foot));
   }
 
   function drawStatic() {

@@ -181,47 +181,17 @@ html[data-view="home"] .intro { border-bottom: 0; padding-block: var(--space-8);
 .grid > li { display: flex; }
 
 .card {
-  --app-accent: var(--color-border-strong);
-  position: relative; overflow: hidden;
   flex: 1; display: flex; flex-direction: column; gap: var(--space-3);
   background: var(--color-surface); border: var(--border-width) solid var(--color-border);
   border-radius: var(--radius-large); padding: var(--space-5);
-  transition: background var(--motion), border-color var(--motion), transform var(--motion);
+  transition: background var(--motion), border-color var(--motion);
 }
-/* Accent strip along the top edge, in the app's colour */
-.card::before {
-  content: ""; position: absolute; inset: 0 0 auto; height: var(--card-strip);
-  background: linear-gradient(90deg, var(--app-accent), color-mix(in srgb, var(--app-accent) 25%, transparent));
-}
-.card:hover, .card:focus-within {
-  background: var(--color-surface-2);
-  border-color: color-mix(in srgb, var(--app-accent) 55%, var(--color-border));
-  transform: translateY(var(--card-lift));
-}
+.card:hover, .card:focus-within { background: var(--color-surface-2); border-color: var(--color-border-strong); }
 .card-head { display: flex; gap: var(--space-3); align-items: flex-start; justify-content: space-between; }
 .card-title { display: flex; gap: var(--space-3); align-items: center; min-width: 0; }
-.app-icon {
-  display: inline-flex; flex: none; padding: var(--space-1); border-radius: calc(var(--radius) + var(--space-1));
-  background: color-mix(in srgb, var(--app-accent) var(--icon-tint), transparent);
-}
-.app-icon img { width: var(--icon-app); height: var(--icon-app); border-radius: var(--radius); display: block; }
-.tagline { font-size: var(--font-size-small); }
-
-.highlights { list-style: none; padding: 0; margin: 0; display: grid; gap: var(--space-1); }
-.highlights li { display: flex; gap: var(--space-2); align-items: baseline; font-size: var(--font-size-small); color: var(--color-subtle); }
-.highlights .icon { color: var(--app-accent); width: 0.95rem; height: 0.95rem; align-self: center; }
-
-/* A featured app (apps.json "featured": true) spans the full row, with a soft tint */
-.grid > li.featured { grid-column: 1 / -1; }
-.featured .card {
-  background: linear-gradient(135deg, color-mix(in srgb, var(--app-accent) var(--featured-tint), var(--color-surface)), var(--color-surface) 60%);
-}
-.featured .card:hover, .featured .card:focus-within {
-  background: linear-gradient(135deg, color-mix(in srgb, var(--app-accent) var(--featured-tint), var(--color-surface-2)), var(--color-surface-2) 60%);
-}
-@media (min-width: 48rem) {
-  .featured .highlights { grid-template-columns: repeat(3, auto); justify-content: start; gap: var(--space-1) var(--space-5); }
-  .featured .downloads { grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr)); }
+.card-title img {
+  width: var(--icon-app); height: var(--icon-app); border-radius: var(--radius); flex: none;
+  border: var(--border-width) solid var(--color-border);
 }
 .card h4 { margin: 0; font-size: var(--font-size-body); font-weight: var(--font-weight-strong); color: var(--color-heading); line-height: var(--line-height-tight); }
 .repo-id { margin: 0; font-family: var(--font-mono); font-size: var(--font-size-xs); color: var(--color-muted); }
@@ -289,5 +259,4 @@ html[data-view="home"] .intro { border-bottom: 0; padding-block: var(--space-8);
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { transition: none !important; animation: none !important; }
-  .card:hover, .card:focus-within { transform: none; }
 }
