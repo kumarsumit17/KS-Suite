@@ -64,6 +64,7 @@ The app folders are git-ignored here, so this repository never tracks their cont
 KS-Suite/
 ├── README.md               ← you are here
 ├── CLAUDE.md               ← suite-wide rules for AI-assisted work
+├── specs/                  ← suite-wide specs (OKF bundle)
 ├── LICENSE
 ├── .gitignore              ← ignores the app folders (each is its own repo)
 ├── ks-tv-launcher/         ← git repo
@@ -83,6 +84,7 @@ Each app repository contains:
 ├── CLAUDE.md                       ← stack, platform constraints, build commands
 ├── app/ (or shared/ + platform apps)
 ├── docs/
+├── specs/                          ← specs (OKF bundle)
 ├── LICENSE
 └── README.md
 ```
@@ -91,123 +93,15 @@ Each app repository contains:
 
 ## 🕸 Cross-Repository Relationships
 
-The apps share **no code and no runtime services**. Each one builds, ships, and works alone.
-Every link between them is an explicit Android intent that the user starts. Each link is listed below so that a change to one side can be checked against the other.
+The apps share **no code and no runtime services**. Each one builds, ships, and works alone; every link between them is an explicit Android intent that the user starts. The diagram and the contract on each edge are in [specs/cross-repo.md](specs/cross-repo.md), and the conventions the repos share in [specs/conventions.md](specs/conventions.md).
 
-```mermaid
-graph LR
-    subgraph TV["📺 Android TV / Google TV"]
-        L[ks-tv-launcher]
-        S[ks-streamflix]
-    end
-    subgraph MP["🖥 Multi-platform"]
-        J[ks-jaiplayer]
-    end
-    subgraph PH["📱 Android (offline)"]
-        E[ks-expense-manager]
-        V[ks-vault]
-    end
-
-    L -- "launches (package intent)" --> S
-    L -- "launches (package intent)" --> J
-    S -- "ACTION_VIEW video/* (optional handoff)" --> J
-    L -. "subscriptions export (share intent, user-started)" .-> E
-    V:::isolated
-
-    classDef isolated stroke-dasharray: 4 4
-```
-
-### Edge contracts
-
-| From → To | Mechanism | Contract | Fallback if target missing |
-|---|---|---|---|
-| `ks-tv-launcher` → `ks-streamflix`, `ks-jaiplayer` | `PackageManager.getLeanbackLaunchIntentForPackage` | Target package IDs `com.ks.streamflix`, `com.ks.jaiplayer` | Tile hidden |
-| `ks-streamflix` → `ks-jaiplayer` | `ACTION_VIEW`, MIME `video/*`, explicit package | JaiPlayer must keep its `ACTION_VIEW` intent filter | Built-in ExoPlayer |
-| `ks-tv-launcher` ⇢ `ks-expense-manager` | `ACTION_SEND`, `text/csv` | Columns `name,amount_minor,currency,cycle,next_due` | Standard share sheet |
-| `ks-vault` | none | **Isolated by design**: no outbound links and no network | — |
-| `ks-download-manager` | none | Standalone: no links to other apps | — |
-
-### Shared conventions (not shared code)
-
-| Concern | Convention | Defined in |
-|---|---|---|
-| Language / build | Kotlin, Gradle KTS, version catalog, JDK 17. Exception: `ks-download-manager` (desktop only) uses Rust, Tauri and TypeScript | root `CLAUDE.md` |
-| Package root | `com.ks.<app>` | root `CLAUDE.md` |
-| TV UX | D-pad first, 48dp/27dp overscan margins | `ks-tv-launcher`, `ks-streamflix`, `ks-jaiplayer` `CLAUDE.md` |
-| Privacy | No analytics/ads SDKs; vault and expense apps have no `INTERNET` permission | each `CLAUDE.md` |
-| Release | Tag-driven SemVer and CI signing | below |
-
-> When an edge contract changes, update this table and the `CLAUDE.md` files on **both** sides in the same release cycle.
+> When an edge contract changes, update [specs/cross-repo.md](specs/cross-repo.md) and the `CLAUDE.md` files on **both** sides in the same release cycle.
 
 ---
 
 ## 🚀 CI/CD: Semantic Versioning & Automated Signing
 
-Every repository ships the same GitHub Actions pipeline in `.github/workflows/release.yml`.
-
-### 1. Versioning (SemVer 2.0)
-
-- Versions follow `MAJOR.MINOR.PATCH`:
-  - **MAJOR** for breaking changes or data migrations that can't be reversed
-  - **MINOR** for backward-compatible features
-  - **PATCH** for bug fixes
-- Commit messages follow [Conventional Commits](https://www.conventionalcommits.org/) (`feat:`, `fix:`, `feat!:`, `chore:`…), so the next version and the release notes can be derived from history.
-- A release is triggered by pushing an annotated tag:
-
-  ```bash
-  git tag -a v1.4.2 -m "v1.4.2"
-  git push origin v1.4.2
-  ```
-
-- The workflow derives both Android version fields from the tag:
-
-  | Field | Formula | `v1.4.2` → |
-  |---|---|---|
-  | `versionName` | tag without the `v` | `1.4.2` |
-  | `versionCode` | `MAJOR × 10000 + MINOR × 100 + PATCH` | `10402` |
-
-  They are passed to Gradle as `-PversionName` / `-PversionCode`. MINOR and PATCH must stay below 100.
-
-### 2. Automated Signing
-
-Keystores **never** enter source control. `*.jks`, `*.keystore`, and `keystore.properties` are git-ignored in every repo.
-
-Configure these **repository secrets** (Settings → Secrets and variables → Actions):
-
-| Secret | Contents |
-|---|---|
-| `KEYSTORE_BASE64` | `base64 -i release.jks` output |
-| `KEYSTORE_PASSWORD` | Keystore password |
-| `KEY_ALIAS` | Signing key alias |
-| `KEY_PASSWORD` | Signing key password |
-
-At build time the workflow decodes the keystore into `$RUNNER_TEMP` and exposes it through `SIGNING_*` environment variables. It deletes the keystore when the job finishes, even if the job fails. Gradle reads the variables like this:
-
-```kotlin
-signingConfigs {
-    create("release") {
-        storeFile = System.getenv("SIGNING_STORE_FILE")?.let(::file)
-        storePassword = System.getenv("SIGNING_STORE_PASSWORD")
-        keyAlias = System.getenv("SIGNING_KEY_ALIAS")
-        keyPassword = System.getenv("SIGNING_KEY_PASSWORD")
-    }
-}
-```
-
-For local release builds, keep the same four values in an untracked `keystore.properties`.
-
-### 3. Pipeline Stages
-
-```
-tag push v*.*.*
-   │
-   ├─▶ checkout → JDK 17 → Gradle cache
-   ├─▶ derive versionName / versionCode from tag
-   ├─▶ decode keystore from secrets
-   ├─▶ build signed APK + AAB          (jaiplayer also builds Windows .msi/.exe and macOS .dmg)
-   ├─▶ publish GitHub Release with auto-generated notes and artifacts
-   └─▶ wipe keystore
-```
+Every repository ships the same GitHub Actions pipeline in `.github/workflows/release.yml`. Releases are triggered by an annotated `vMAJOR.MINOR.PATCH` tag, `versionName` and `versionCode` are derived from it, and signing keys come only from repository secrets. Details: [specs/versioning-signing.md](specs/versioning-signing.md).
 
 ---
 
