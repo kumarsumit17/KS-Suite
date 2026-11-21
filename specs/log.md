@@ -1,5 +1,7 @@
 # 2026-11-22
 
+* **Added**: [Release cycle](release-cycle.md): one cycle for every app (dev with CI and a rehearsal green, fast-forward main, push the tag, the workflow publishes a full release marked latest; hand checks after the release go into the next version).
+* **Update**: [Versioning and signing](versioning-signing.md): links to the release cycle; ks-download-manager's release workflow exists.
 * **Update**: [Landing page](landing-page.md): the apps button is a Show apps / Hide apps toggle.
 * **Update**: [Landing page](landing-page.md): `app.js` requests its data files with the deploy's version too, so a page cached from an earlier deploy never reads newer data.
 * **Update**: [Landing page](landing-page.md): closer to the owner's shadcn-style design: "KS-Suite" title with a release-hub label, "Applications" heading, monochrome Lucide icons in bordered boxes (`icon` is now a Lucide name; the app SVGs are removed), one platform pill per card, and a footer row with the tech line and release on the left and download / "Latest release" (`/releases/latest`) buttons on the right. New optional `restricted` field.

@@ -1,0 +1,42 @@
+---
+type: Policy
+title: Release cycle
+description: The one release cycle every KS-Suite app follows: test on dev, merge to main, push the tag, and the release workflow publishes the release.
+tags: [release, ci, versioning, policy]
+---
+
+# Release cycle
+
+Every KS-Suite app releases the same way. Version numbers and signing are in [Versioning and signing](versioning-signing.md); this page is the cycle around them.
+
+## The cycle
+
+1. **Test on `dev`.** Work reaches `dev` (fast-forward merges). CI is green on `dev`, and a **rehearsal** of the release (below) is green on `dev`. The version's changelog section is dated, if the app keeps a `CHANGELOG.md`.
+2. **Merge to `main`.** Fast-forward `main` to `dev` and push it. CI is green on `main`.
+3. **Push the tag.** An annotated tag `vMAJOR.MINOR.PATCH` on `main`, pushed on its own.
+4. **The workflow publishes.** The tag's run builds every file, checks them, and publishes the GitHub release as a **full release, marked latest**, once every build and check has passed. There is no draft step and no one publishes by hand.
+5. **Hand checks after the release.** The checks that need a person (installing on real devices, store or OS prompts) are done on the published files. Anything they find goes into the **next version**; the published release is not changed.
+
+```
+dev (CI green, rehearsal green) ──ff──▶ main (CI green) ──tag vX.Y.Z──▶ release workflow ──▶ published, latest
+```
+
+## The release workflow
+
+`.github/workflows/release.yml` in each app repository, with this shape:
+
+- **Two ways in.** A tag push makes a release. A manual run (`workflow_dispatch`) is the rehearsal: it builds and checks everything exactly as a tag would and **never publishes**. A rehearsal takes the version to build as an input.
+- **Build and verify jobs are read-only** (`contents: read`). They build every release file, check it (signatures, contents, versions, licence files), and pass the files on as workflow artifacts.
+- **One publish job** is the only job with write access. It runs only for a tag push, only if every job before it succeeded, checks it received exactly the expected files, and publishes them.
+- **Checks before anything is built:** the tag is exactly `vMAJOR.MINOR.PATCH` (no suffix), the tagged commit is on `main`, and the version's changelog section is dated (apps with a `CHANGELOG.md`).
+- **Exactly the release files** are attached, chosen by name; nothing else from the run is ever attached.
+- **Build provenance:** each release file gets a GitHub build-provenance attestation on a tag run (`gh attestation verify <file> -R <owner>/<repo>`). A rehearsal makes none: an attestation is a permanent public record, and rehearsal files are never released.
+- **Pinned and named:** runner images are named versions (`ubuntu-24.04`, `macos-15`, `windows-2025`), never `-latest`; every action is pinned to a full commit SHA with its version in a comment. GitHub's own actions only, and the preinstalled `gh` CLI for publishing; a third-party action needs the owner's exception (see [Dependencies](dependencies.md)).
+- **A failure publishes nothing.** A failed upload leaves no public release (publish through a hidden draft that becomes public only when every file is up, as `gh release create` with files does).
+
+## Rules
+
+- Never force-push. Never move or delete a pushed tag. Never change the files of a published release.
+- Never tag while anything is red (CI on `dev` or `main`, or the rehearsal).
+- A tag whose run fails stays as it is; the fix goes to `dev` and the release gets the **next PATCH** version. The changelog says which tags were never released.
+- Each app records its own decisions and its exact file list in its repository (for example ks-download-manager's [release steps](https://github.com/kumarsumit17/ks-download-manager/blob/main/docs/release.md)).

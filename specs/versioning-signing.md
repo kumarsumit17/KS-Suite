@@ -7,7 +7,9 @@ tags: [versioning, signing, release, ci]
 
 # CI/CD: semantic versioning and automated signing
 
-Every Kotlin app repository ships the same GitHub Actions pipeline in `.github/workflows/release.yml`. `ks-download-manager` has no release workflow yet; it is added in Stage 9 of its [build stages](https://github.com/kumarsumit17/ks-download-manager/blob/dev/specs/stages.md).
+Every Kotlin app repository ships the same GitHub Actions pipeline in `.github/workflows/release.yml`. `ks-download-manager` (Rust/Tauri) has its own release workflow with the same cycle ([release steps](https://github.com/kumarsumit17/ks-download-manager/blob/main/docs/release.md)).
+
+The cycle around a release (test on `dev`, merge to `main`, push the tag, the workflow publishes) is in [Release cycle](release-cycle.md).
 
 ## 1. Versioning (SemVer 2.0)
 
@@ -69,6 +71,6 @@ tag push v*.*.*
    ├─▶ derive versionName / versionCode from tag
    ├─▶ decode keystore from secrets
    ├─▶ build signed APK + AAB          (jaiplayer also builds Windows .msi/.exe and macOS .dmg)
-   ├─▶ publish GitHub Release with auto-generated notes and artifacts
+   ├─▶ publish the GitHub Release (full release, latest) once every build and check passed
    └─▶ wipe keystore
 ```
