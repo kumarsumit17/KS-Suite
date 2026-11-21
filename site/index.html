@@ -49,21 +49,24 @@
           <p class="lead" data-t="hero.lead"></p>
         </div>
       </div>
-      <a class="btn btn-outline" href="https://github.com/kumarsumit17/KS-Suite"><span data-icon="folderGit"></span><span data-t="hero.repo">KS-Suite repository</span></a>
+      <div class="intro-actions">
+        <a class="btn" href="#apps" id="see-apps"><span data-icon="grid"></span><span data-t="hero.cta">See the apps</span></a>
+        <a class="btn btn-outline" href="https://github.com/kumarsumit17/KS-Suite"><span data-icon="folderGit"></span><span data-t="hero.repo">KS-Suite repository</span></a>
+      </div>
     </section>
 
-    <section class="apps wrap" id="apps" tabindex="-1" aria-labelledby="apps-heading">
+    <section class="apps wrap" id="apps" data-part="apps" tabindex="-1" aria-labelledby="apps-heading">
       <div class="section-head">
         <h2 id="apps-heading" data-t="apps.heading">Apps</h2>
         <p class="muted" data-t="apps.intro">Each card shows the newest release. Downloads come straight from GitHub.</p>
       </div>
-      <ul class="grid" id="grid"></ul>
+      <div class="groups" id="groups"></div>
       <noscript>
         <p>This page needs JavaScript to list the apps. The same list, with links to each app's releases, is in the <a href="https://github.com/kumarsumit17/KS-Suite#readme">README</a>.</p>
       </noscript>
     </section>
 
-    <section class="notes wrap" aria-labelledby="notes-heading">
+    <section class="notes wrap" data-part="apps" aria-labelledby="notes-heading">
       <div class="panel">
         <h2 id="notes-heading"><span data-icon="download"></span><span data-t="install.heading">Quick install notes</span></h2>
         <div class="notes-grid">

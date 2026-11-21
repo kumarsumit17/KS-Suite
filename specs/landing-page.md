@@ -64,6 +64,16 @@ No framework, build step or package install. Everything is served from the Pages
 ## apps.json
 Order in the file is the order on the page. `icon` is a file in `site/icons/`. `platforms` uses fixed ids, whose labels are in the language files. `tagline` has one text per language. `status` is `released`, `beta` or `coming-soon`. `stack` (optional) is a short tech line shown at the foot of the card, not translated.
 
+Customizing a card in `apps.json`:
+- `group` (required): the id of an entry in the top-level `groups` list. Each group has an `id`, a `title` and an optional `note`, both in English and Hindi. The page shows one section per group, in the order of `groups`; an empty group is skipped.
+- `accent` (optional, `#rrggbb`): the app's colour, used for the strip along the card's top edge, the icon backdrop, the highlight ticks and the hover border. Decoration only; text never sits on it.
+- `featured` (optional, `true`): the card spans the full row with a soft tint of its accent.
+- `highlights` (optional): a short list per language, shown as ticked points.
+- How strong the tints are, the strip height and the hover lift are in `theme.css` (`--icon-tint`, `--featured-tint`, `--card-strip`, `--card-lift`).
+
+## Views
+The page opens on the intro only. The apps and the install notes show when the address ends in `#apps`: the "See the apps" button, the skip link, or a shared link. `theme-init.js` sets `data-view` on `<html>` before first paint, so there is no flash; `app.js` follows `hashchange`, moves focus to the apps and scrolls to them, and the browser's Back button returns to the intro. Without JavaScript everything is visible.
+
 ```json
 {
   "owner": "kumarsumit17",
@@ -71,8 +81,10 @@ Order in the file is the order on the page. `icon` is a file in `site/icons/`. `
     {
       "id": "ks-download-manager",
       "name": "KS Download Manager",
+      "group": "desktop",
       "repo": "kumarsumit17/ks-download-manager",
       "icon": "ks-download-manager.svg",
+      "accent": "#0f8a5f",
       "status": "coming-soon",
       "platforms": ["windows", "macos"],
       "stack": "Rust · Tauri",

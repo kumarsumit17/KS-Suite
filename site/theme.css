@@ -43,12 +43,16 @@
   --radius-pill: 999px;
   --border-width: 1px;
   --focus-width: 3px;
-  --icon-app: 2.5rem;
+  --icon-app: 2.75rem;
+  --card-strip: 3px;
+  --icon-tint: 18%;      /* how strongly the app colour tints the icon backdrop */
+  --featured-tint: 9%;   /* how strongly it tints a featured card */
   --avatar-size: 4.5rem;
   --avatar-ring: 1px;
 
   /* Motion (turned off under prefers-reduced-motion in style.css) */
   --motion: 180ms ease-out;
+  --card-lift: -2px;
 
   /* Colours: light-dark(light, dark). A monochrome zinc palette. */
   --color-bg: light-dark(#fafafa, #09090b);
