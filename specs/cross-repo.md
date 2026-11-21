@@ -7,7 +7,7 @@ tags: [cross-repo, intents, contracts]
 
 # Cross-repository relationships
 
-The apps share **no code and no runtime services**. Each one builds, ships, and works alone.
+The apps share **no runtime services** and no build-time dependency on each other. Each one builds, ships, and works alone. Generic utility code is shared by copy only: an app copies a file in from [`ks-utility`](https://github.com/kumarsumit17/ks-utility).
 Every link between them is an explicit Android intent that the user starts. Each link is listed below so that a change to one side can be checked against the other.
 
 ```mermaid
@@ -42,5 +42,6 @@ graph LR
 | `ks-tv-launcher` ⇢ `ks-expense-manager` | `ACTION_SEND`, `text/csv` | Columns `name,amount_minor,currency,cycle,next_due` | Standard share sheet |
 | `ks-vault` | none | **Isolated by design**: no outbound links and no network | — |
 | `ks-download-manager` | none | Standalone: no links to other apps | — |
+| `ks-utility` → any app | Source copied into the app | Generic utilities only, standard library only; no build-time or run-time link | — |
 
 > When an edge contract changes, update this table and the `CLAUDE.md` files on **both** sides in the same release cycle.

@@ -1,11 +1,11 @@
 ---
 type: Policy
 title: Shared conventions
-description: The conventions every KS-Suite repository follows, without sharing code.
+description: The conventions every KS-Suite repository follows, and where shared code is allowed.
 tags: [conventions, policy]
 ---
 
-# Shared conventions (not shared code)
+# Shared conventions
 
 
 | Concern | Convention | Defined in |
@@ -14,6 +14,7 @@ tags: [conventions, policy]
 | Package root | `com.ks.<app>` | root `CLAUDE.md` |
 | TV UX | D-pad first, 48dp/27dp overscan margins | `ks-tv-launcher`, `ks-streamflix`, `ks-jaiplayer` `CLAUDE.md` |
 | Privacy | No analytics/ads SDKs; vault and expense apps have no `INTERNET` permission | each `CLAUDE.md` |
+| Shared code | Only generic utilities, kept in `ks-utility` and copied into an app; application-specific logic stays in the app | `ks-utility` `CLAUDE.md` |
 | Release | Tag-driven SemVer and CI signing | [Versioning and signing](versioning-signing.md) |
 
 The rules themselves are listed in the root `CLAUDE.md`.
