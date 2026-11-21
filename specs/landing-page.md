@@ -132,7 +132,7 @@ The page checks each entry on load. An entry with a missing field or an unknown 
 - Without JavaScript, a `<noscript>` block lists every app with a link to its Releases page.
 
 ## Deploy
-`.github/workflows/pages.yml`, on `push` to `main` with `paths: [site/**, .github/workflows/pages.yml]`, plus `workflow_dispatch`. Runner `ubuntu-24.04`. Permissions `contents: read`, `pages: write`, `id-token: write`; concurrency group `pages`. Steps, each pinned to a full commit SHA with the version in a comment: `actions/checkout`, `actions/configure-pages`, `actions/upload-pages-artifact` (path `site`), `actions/deploy-pages`. The SHAs are looked up from each action's release tag when building.
+`.github/workflows/pages.yml`, on `push` to `main` with `paths: [site/**, .github/workflows/pages.yml]`, plus `workflow_dispatch`. Runner `ubuntu-24.04`. Permissions `contents: read`, `pages: write`, `id-token: write`; concurrency group `pages`. Two jobs, as in GitHub's Pages starter workflow: `build` runs `actions/checkout`, `actions/configure-pages` and `actions/upload-pages-artifact` (path `site`); `deploy` (`needs: build`) runs `actions/deploy-pages`. Each action is pinned to a full commit SHA with the version in a comment. (A single job failed when the deploy step looked for the artifact a fraction of a second after the upload, before GitHub listed it.) The SHAs are looked up from each action's release tag when building.
 
 ## README
 A short section at the top: what KS-Suite is, a link to the page (`https://kumarsumit17.github.io/KS-Suite/`) to download the apps, then the existing developer material below. 
