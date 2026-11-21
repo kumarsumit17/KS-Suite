@@ -345,6 +345,12 @@
     const showApps = location.hash === "#apps";
     document.documentElement.dataset.view = showApps ? "apps" : "home";
     document.getElementById("see-apps")?.setAttribute("aria-expanded", String(showApps));
+    // The button is a toggle: its label says what the next click does.
+    const label = document.getElementById("see-apps-label");
+    if (label) {
+      label.dataset.t = showApps ? "hero.ctaHide" : "hero.cta";
+      if (state.text.en) label.textContent = t(label.dataset.t);
+    }
     if (showApps && moveFocus) {
       const section = document.getElementById("apps");
       section?.focus({ preventScroll: true });
@@ -367,6 +373,13 @@
   async function start() {
     applyView(false);
     window.addEventListener("hashchange", () => applyView(true));
+    // A second click on "Hide apps" closes them: drop #apps from the address (Back reopens them).
+    document.getElementById("see-apps")?.addEventListener("click", (e) => {
+      if (location.hash !== "#apps") return; // the link itself opens the apps
+      e.preventDefault();
+      history.pushState(null, "", location.pathname + location.search);
+      applyView(false);
+    });
     state.language = resolveLanguage(savedChoice(), navigator.languages);
 
     document.getElementById("lang-select")?.addEventListener("change", (e) => {
