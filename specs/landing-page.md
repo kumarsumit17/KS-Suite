@@ -62,7 +62,7 @@ No framework, build step or package install. Everything is served from the Pages
 ```
 
 ## apps.json
-Order in the file is the order on the page. `icon` is a file in `site/icons/`. `platforms` uses fixed ids, whose labels are in the language files. `tagline` has one text per language. `status` is `released`, `beta` or `coming-soon`.
+Order in the file is the order on the page. `icon` is a file in `site/icons/`. `platforms` uses fixed ids, whose labels are in the language files. `tagline` has one text per language. `status` is `released`, `beta` or `coming-soon`. `stack` (optional) is a short tech line shown at the foot of the card, not translated.
 
 ```json
 {
@@ -75,6 +75,7 @@ Order in the file is the order on the page. `icon` is a file in `site/icons/`. `
       "icon": "ks-download-manager.svg",
       "status": "coming-soon",
       "platforms": ["windows", "macos"],
+      "stack": "Rust · Tauri",
       "tagline": {
         "en": "Free download manager for images, audio and video, with up to 20× faster downloads.",
         "hi": "इमेज, ऑडियो और वीडियो के लिए मुफ़्त डाउनलोड मैनेजर, 20 गुना तक तेज़ डाउनलोड के साथ।"

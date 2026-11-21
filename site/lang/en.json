@@ -13,10 +13,8 @@
   "hero.avatar": "The developer of KS-Suite",
   "hero.eyebrow": "Free and open source",
   "hero.title": "Free, private apps for the TV, the desktop and the phone.",
-  "hero.private": "Private by default: your data stays on your device.",
-  "hero.lean": "Lean and fast, with no ads and no tracking.",
-  "hero.open": "Open source, built to one shared standard.",
-  "hero.cta": "See the apps",
+  "hero.lead": "Apps for Android TV, phones and the desktop, private by default, with no ads and no tracking. Every download comes straight from the app's newest GitHub release.",
+  "hero.repo": "KS-Suite repository",
   "apps.heading": "Apps",
   "apps.intro": "Each card shows the newest release. Downloads come straight from GitHub.",
   "status.released": "Released",
@@ -43,6 +41,13 @@
   "release.all": "All releases",
   "soon.note": "No download yet. Follow the progress on GitHub.",
   "link.source": "Source on GitHub",
+  "install.heading": "Quick install notes",
+  "install.androidTitle": "Google TV and Android",
+  "install.androidText": "Download the APK, allow installing from unknown sources if asked, then open the file to install. On a TV, the Downloader app or ADB also works.",
+  "install.desktopTitle": "Windows and macOS",
+  "install.desktopText": "Each button gives the right file for that system. On a Mac, choose Apple silicon for M-series chips and Intel for older Macs.",
   "footer.licence": "MIT licence",
-  "footer.privacy": "This page has no analytics and sets no cookies."
+  "footer.privacy": "This page has no analytics and sets no cookies.",
+  "footer.built": "Built and released with GitHub Actions",
+  "footer.icons": "Icons by Lucide"
 }

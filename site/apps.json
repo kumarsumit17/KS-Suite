@@ -7,6 +7,7 @@
       "icon": "ks-tv-launcher.svg",
       "status": "released",
       "platforms": ["google-tv"],
+      "stack": "Kotlin · Compose for TV",
       "tagline": {
         "en": "Ad-free TV launcher with a glass look, live weather, and a tracker for your streaming subscriptions with renewal reminders.",
         "hi": "बिना विज्ञापन वाला TV लॉन्चर: ग्लास जैसा लुक, लाइव मौसम और रिन्यूअल रिमाइंडर के साथ स्ट्रीमिंग सब्सक्रिप्शन ट्रैकर।"
@@ -19,6 +20,7 @@
       "icon": "ks-download-manager.svg",
       "status": "coming-soon",
       "platforms": ["windows", "macos"],
+      "stack": "Rust · Tauri",
       "tagline": {
         "en": "Free download manager for images, audio and video, with up to 20× faster downloads.",
         "hi": "इमेज, ऑडियो और वीडियो के लिए मुफ़्त डाउनलोड मैनेजर, 20 गुना तक तेज़ डाउनलोड के साथ।"
@@ -31,6 +33,7 @@
       "icon": "ks-jaiplayer.svg",
       "status": "coming-soon",
       "platforms": ["android", "google-tv", "windows", "macos"],
+      "stack": "Kotlin Multiplatform",
       "tagline": {
         "en": "Media player for phone, TV and desktop, with a native playback engine on each.",
         "hi": "फ़ोन, TV और डेस्कटॉप के लिए मीडिया प्लेयर, हर प्लेटफ़ॉर्म पर नेटिव प्लेबैक इंजन के साथ।"
@@ -43,6 +46,7 @@
       "icon": "ks-streamflix.svg",
       "status": "coming-soon",
       "platforms": ["google-tv"],
+      "stack": "Kotlin · Compose for TV",
       "tagline": {
         "en": "Lean streaming media manager built for the TV remote, with fast focus navigation.",
         "hi": "TV रिमोट के लिए बना हल्का स्ट्रीमिंग मीडिया मैनेजर, तेज़ नेविगेशन के साथ।"
@@ -55,6 +59,7 @@
       "icon": "ks-vault.svg",
       "status": "coming-soon",
       "platforms": ["android"],
+      "stack": "Kotlin · Compose",
       "tagline": {
         "en": "Fully offline vault for notes, IDs and tickets, behind a pattern or password.",
         "hi": "नोट्स, ID और टिकट के लिए पूरी तरह ऑफ़लाइन वॉल्ट, पैटर्न या पासवर्ड से सुरक्षित।"
@@ -67,6 +72,7 @@
       "icon": "ks-expense-manager.svg",
       "status": "coming-soon",
       "platforms": ["android"],
+      "stack": "Kotlin · Compose",
       "tagline": {
         "en": "Minimal, private tracker for your personal expenses.",
         "hi": "निजी खर्चों का आसान और प्राइवेट ट्रैकर।"

@@ -3,7 +3,7 @@
 
    Colours are written once as light-dark(LIGHT, DARK). The page follows the system
    (color-scheme: light dark); the theme switch sets data-theme="light" or "dark" on
-   <html>, which forces one side. Colour pairs are checked for WCAG AA
+   <html>, which forces one side. The look is flat (no shadows). Colour pairs are checked for WCAG AA
    (4.5:1 text, 3:1 large text and focus ring). */
 
 :root {
@@ -14,9 +14,11 @@
   --font-size-small: 0.875rem;
   --font-size-body: 1rem;
   --font-size-large: 1.25rem;
-  --font-size-hero: clamp(2.1rem, 5vw + 1rem, 3.75rem);
+  --font-size-hero: clamp(1.75rem, 2.5vw + 1rem, 2.4rem);
+  --font-size-xs: 0.75rem;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   --font-weight-strong: 650;
-  --font-weight-hero: 800;
+  --font-weight-hero: 600;
   --letter-spacing-hero: -0.025em;
   --line-height: 1.55;
   --line-height-tight: 1.15;
@@ -30,62 +32,54 @@
   --space-6: 2rem;
   --space-7: 3rem;
   --space-8: 5rem;
-  --page-width: 72rem;
-  --card-min: 19rem;
+  --page-width: 64rem;
+  --card-min: 22rem;
   --touch: 2.75rem; /* 44 px minimum tap target */
 
   /* Shape */
-  --radius-small: 0.6rem;
-  --radius: 1.1rem;
-  --radius-large: 1.5rem;
+  --radius-small: 0.375rem;
+  --radius: 0.5rem;
+  --radius-large: 0.75rem;
   --radius-pill: 999px;
   --border-width: 1px;
   --focus-width: 3px;
-  --icon-app: 3.5rem;
-  --avatar-size: clamp(7.5rem, 18vw, 10rem);
-  --avatar-ring: 4px;
+  --icon-app: 2.5rem;
+  --avatar-size: 4.5rem;
+  --avatar-ring: 1px;
 
   /* Motion (turned off under prefers-reduced-motion in style.css) */
   --motion: 180ms ease-out;
-  --lift: -3px;
 
-  /* Colours: light-dark(light, dark) */
-  --color-bg: light-dark(#f5f6fa, #0b0e14);
-  --color-surface: light-dark(#ffffff, #151a23);
-  --color-surface-2: light-dark(#eef1f7, #1c2230);
-  --color-header: light-dark(rgb(245 246 250 / 0.82), rgb(11 14 20 / 0.78));
-  --color-border: light-dark(#d9dee8, #2a3242);
-  --color-border-strong: light-dark(#b9c2d3, #3d4760);
-  --color-text: light-dark(#121620, #e9ecf3);
-  --color-muted: light-dark(#4a5263, #a9b1c2);
-  --color-accent: light-dark(#1d5bc9, #86aeff);
-  --color-accent-hover: light-dark(#164aa6, #a9c5ff);
-  --color-on-accent: light-dark(#ffffff, #0b0e14);
-  --color-link: light-dark(#1d5bc9, #8fb4ff);
-  --color-focus: light-dark(#1d5bc9, #8fb4ff);
-  --color-eyebrow-bg: light-dark(#e3ebfb, #1b2640);
-  --color-eyebrow-text: light-dark(#1a4fae, #a9c5ff);
+  /* Colours: light-dark(light, dark). A monochrome zinc palette. */
+  --color-bg: light-dark(#fafafa, #09090b);
+  --color-surface: light-dark(#ffffff, #111114);
+  --color-surface-2: light-dark(#f4f4f5, #18181c);
+  --color-header: light-dark(rgb(250 250 250 / 0.85), rgb(9 9 11 / 0.8));
+  --color-border: light-dark(#e4e4e7, #27272a);
+  --color-border-strong: light-dark(#a1a1aa, #3f3f46);
+  --color-text: light-dark(#09090b, #fafafa);
+  --color-heading: light-dark(#09090b, #ffffff);
+  --color-muted: light-dark(#52525b, #a1a1aa);
+  --color-subtle: light-dark(#3f3f46, #d4d4d8);
+  --color-accent: light-dark(#18181b, #fafafa);
+  --color-accent-hover: light-dark(#3f3f46, #e4e4e7);
+  --color-on-accent: light-dark(#fafafa, #09090b);
+  --color-link: light-dark(#18181b, #e4e4e7);
+  --color-focus: light-dark(#2563eb, #93c5fd);
+  --color-icon-box: light-dark(#f4f4f5, #18181b);
 
-  /* Hero background glows (decoration only, no text sits on the strongest part) */
-  --glow-1: light-dark(rgb(29 91 201 / 0.18), rgb(70 120 255 / 0.22));
-  --glow-2: light-dark(rgb(124 58 237 / 0.14), rgb(160 90 255 / 0.18));
-  --glow-3: light-dark(rgb(15 138 95 / 0.10), rgb(30 180 130 / 0.12));
+  --shadow-card: none;
+  --shadow-hover: none;
+  --shadow-icon: none;
+  --avatar-ring-color: light-dark(#e4e4e7, #27272a);
 
-  --shadow-card: 0 1px 2px light-dark(rgb(18 22 32 / 0.06), rgb(0 0 0 / 0.4)),
-                 0 4px 16px light-dark(rgb(18 22 32 / 0.05), rgb(0 0 0 / 0.25));
-  --shadow-hover: 0 2px 4px light-dark(rgb(18 22 32 / 0.06), rgb(0 0 0 / 0.45)),
-                  0 14px 34px light-dark(rgb(29 91 201 / 0.14), rgb(0 0 0 / 0.5));
-  --avatar-ring-color: light-dark(#ffffff, #151a23);
-  --avatar-glow: 0 0 0 calc(var(--avatar-ring) + 3px) light-dark(rgb(29 91 201 / 0.25), rgb(134 174 255 / 0.35)),
-                 0 18px 40px light-dark(rgb(18 22 32 / 0.18), rgb(0 0 0 / 0.55));
-  --shadow-icon: 0 6px 16px light-dark(rgb(18 22 32 / 0.18), rgb(0 0 0 / 0.5));
-
-  --badge-released-bg: light-dark(#dcf3e4, #123321);
-  --badge-released-text: light-dark(#135229, #92e2b0);
-  --badge-beta-bg: light-dark(#fdefd2, #3b2c0c);
-  --badge-beta-text: light-dark(#6e4300, #ffd68c);
-  --badge-soon-bg: light-dark(#e9ecf1, #262c39);
-  --badge-soon-text: light-dark(#3d4452, #c9ceda);
+  --badge-released-bg: light-dark(#dcfce7, rgb(34 197 94 / 0.12));
+  --badge-released-text: light-dark(#166534, #86efac);
+  --badge-beta-bg: light-dark(#fef3c7, rgb(245 158 11 / 0.12));
+  --badge-beta-text: light-dark(#92400e, #fcd34d);
+  --badge-soon-bg: light-dark(#f4f4f5, #18181b);
+  --badge-soon-text: light-dark(#3f3f46, #d4d4d8);
+  --badge-border: light-dark(#e4e4e7, #27272a);
 }
 
 :root[data-theme="light"] { color-scheme: light; }

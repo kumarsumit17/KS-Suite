@@ -40,16 +40,16 @@
   </header>
 
   <main>
-    <section class="hero">
-      <div class="wrap hero-inner">
-        <img class="avatar" src="icons/avatar.jpg" width="160" height="160" alt="The developer of KS-Suite" data-t-alt="hero.avatar">
-        <p class="eyebrow" data-t="hero.eyebrow">Free and open source</p>
-        <h1 data-t="hero.title">Free, private apps for the TV, the desktop and the phone.</h1>
-        <p class="hero-actions">
-          <a class="btn btn-large" href="#apps" data-t="hero.cta">See the apps</a>
-        </p>
-        <ul class="points" id="points"></ul>
+    <section class="intro wrap">
+      <div class="intro-main">
+        <img class="avatar" src="icons/avatar.jpg" width="96" height="96" alt="The developer of KS-Suite" data-t-alt="hero.avatar">
+        <div class="intro-text">
+          <p class="eyebrow"><span data-icon="layers"></span><span data-t="hero.eyebrow">Free and open source</span></p>
+          <h1 data-t="hero.title">Free, private apps for the TV, the desktop and the phone.</h1>
+          <p class="lead" data-t="hero.lead"></p>
+        </div>
       </div>
+      <a class="btn btn-outline" href="https://github.com/kumarsumit17/KS-Suite"><span data-icon="folderGit"></span><span data-t="hero.repo">KS-Suite repository</span></a>
     </section>
 
     <section class="apps wrap" id="apps" tabindex="-1" aria-labelledby="apps-heading">
@@ -62,14 +62,31 @@
         <p>This page needs JavaScript to list the apps. The same list, with links to each app's releases, is in the <a href="https://github.com/kumarsumit17/KS-Suite#readme">README</a>.</p>
       </noscript>
     </section>
+
+    <section class="notes wrap" aria-labelledby="notes-heading">
+      <div class="panel">
+        <h2 id="notes-heading"><span data-icon="download"></span><span data-t="install.heading">Quick install notes</span></h2>
+        <div class="notes-grid">
+          <div>
+            <h3 data-t="install.androidTitle">Google TV and Android</h3>
+            <p data-t="install.androidText"></p>
+          </div>
+          <div>
+            <h3 data-t="install.desktopTitle">Windows and macOS</h3>
+            <p data-t="install.desktopText"></p>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
 
   <footer class="site-footer">
     <div class="wrap">
       <p>
+        <span data-t="footer.built">Built and released with GitHub Actions</span>
         <a href="https://github.com/kumarsumit17/KS-Suite/blob/main/LICENSE" data-t="footer.licence">MIT licence</a>
-        <a href="https://github.com/kumarsumit17/KS-Suite" data-t="link.source">Source on GitHub</a>
-        <span class="muted" data-t="footer.privacy">This page has no analytics and sets no cookies.</span>
+        <span data-t="footer.privacy">This page has no analytics and sets no cookies.</span>
+        <span data-t="footer.icons">Icons by Lucide</span>
       </p>
     </div>
   </footer>

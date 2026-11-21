@@ -1,5 +1,6 @@
 # 2026-11-22
 
+* **Update**: [Landing page](landing-page.md): flat monochrome zinc look; intro with a small circular profile picture beside the title, a lead line and a repository button; cards show the repository id and an optional `stack` line from `apps.json`; new Quick install notes section; footer credits GitHub Actions and Lucide.
 * **Update**: [Landing page](landing-page.md): the hero is centred, with the owner's GitHub profile picture as a circular image above the title (served from `site/icons/avatar.jpg`, not from GitHub).
 * **Update**: [Landing page](landing-page.md): the language choice is a dropdown (Same as system, English, हिंदी) instead of a button group.
 * **Update**: [Landing page](landing-page.md): new look (hero with glows, feature tiles, lifting cards, sticky header) and a System/Light/Dark theme switch that is remembered; colours now use `light-dark()`.

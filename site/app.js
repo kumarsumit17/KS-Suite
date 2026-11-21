@@ -22,10 +22,10 @@
     laptop: '<path d="M20 16V7a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v9m16 0H4m16 0 1.28 2.55a1 1 0 0 1-.9 1.45H3.62a1 1 0 0 1-.9-1.45L4 16"/>',
     smartphone: '<rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><path d="M12 18h.01"/>',
     plug: '<path d="M12 22v-5"/><path d="M9 8V2"/><path d="M15 8V2"/><path d="M18 8v5a4 4 0 0 1-4 4h-4a4 4 0 0 1-4-4V8Z"/>',
-    shield: '<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/>',
+    layers: '<path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z"/><path d="M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12"/><path d="M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17"/>',
+    folderGit: '<path d="M9 20H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h3.9a2 2 0 0 1 1.69.9l.81 1.2a2 2 0 0 0 1.67.9H20a2 2 0 0 1 2 2v5"/><circle cx="13" cy="12" r="2"/><path d="M18 19c-2.8 0-5-2.2-5-5v8"/><circle cx="20" cy="19" r="2"/>',
     sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/>',
     moon: '<path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>',
-    zap: '<path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/>',
   };
 
   // Platform ids allowed in apps.json: their language key and icon.
@@ -145,6 +145,7 @@
     if (typeof a.icon !== "string" || !/^[\w.-]+\.svg$/.test(a.icon)) problems.push("icon");
     if (!STATUSES.includes(a.status)) problems.push("status");
     if (!Array.isArray(a.platforms) || !a.platforms.length || !a.platforms.every((p) => p in PLATFORMS)) problems.push("platforms");
+    if (a.stack != null && typeof a.stack !== "string") problems.push("stack");
     if (!a.tagline || !LANGUAGES.every((l) => typeof a.tagline[l] === "string" && a.tagline[l])) problems.push("tagline");
     return problems;
   }
@@ -266,25 +267,27 @@
       ...app.platforms.map((p) => el("li", null, icon(PLATFORMS[p].icon), t(PLATFORMS[p].key))));
 
     const titleId = `app-${app.id}`;
-    const parts = [
-      el("div", { class: "card-head" },
-        el("img", { src: `icons/${app.icon}`, alt: "", width: "48", height: "48" }),
-        el("div", null, el("h3", { id: titleId }, app.name), badges)),
-      el("p", { lang: state.language }, app.tagline[state.language]),
-      chips,
-    ];
+    const head = el("div", { class: "card-head" },
+      el("div", { class: "card-title" },
+        el("img", { src: `icons/${app.icon}`, alt: "", width: "40", height: "40" }),
+        el("div", null, el("h3", { id: titleId }, app.name), el("p", { class: "repo-id" }, app.id))),
+      badges);
+
+    // Footer of the card: tech stack and release, then the downloads, then links.
+    const meta = el("p", { class: "card-meta" });
+    if (app.stack) meta.append(el("span", null, app.stack));
     if (release) {
       const date = formatDate(release.date);
-      parts.push(el("p", { class: "muted" }, date ? t("release.info", { version: release.version, date }) : release.version));
+      meta.append(el("span", null, date ? t("release.info", { version: release.version, date }) : release.version));
     }
-    parts.push(downloadsBlock(app));
-
     const links = el("p", { class: "links" });
     if (release) links.append(el("a", { href: releasesUrl(app) }, icon("external"), t("release.all")));
     links.append(el("a", { href: `https://github.com/${app.repo}` }, icon("code"), t("link.source")));
-    parts.push(links);
+    const foot = el("div", { class: "card-foot" }, meta.childNodes.length ? meta : null, downloadsBlock(app), links);
 
-    return el("li", { "data-app": app.id }, el("article", { class: "card", "aria-labelledby": titleId }, ...parts));
+    return el("li", { "data-app": app.id },
+      el("article", { class: "card", "aria-labelledby": titleId },
+        head, el("p", { lang: state.language }, app.tagline[state.language]), chips, foot));
   }
 
   function drawStatic() {
@@ -300,11 +303,6 @@
     if (langSelect) langSelect.value = choice;
     const theme = savedTheme();
     for (const b of document.querySelectorAll("[data-theme-choice]")) b.setAttribute("aria-pressed", String(b.dataset.themeChoice === theme));
-
-    const points = document.getElementById("points");
-    points.replaceChildren(
-      ...[["shield", "hero.private"], ["zap", "hero.lean"], ["code", "hero.open"]].map(([i, k]) => el("li", null, icon(i), el("span", null, t(k))))
-    );
   }
 
   function drawApps() {
@@ -334,8 +332,12 @@
       draw();
     });
 
+    // Static icons in the HTML: <span data-icon="name"> gets the Lucide icon of that name.
+    for (const node of document.querySelectorAll("[data-icon]")) {
+      if (LUCIDE[node.dataset.icon]) node.replaceChildren(icon(node.dataset.icon));
+    }
+
     for (const b of document.querySelectorAll("[data-theme-choice]")) {
-      if (LUCIDE[b.dataset.icon]) b.replaceChildren(icon(b.dataset.icon));
       b.addEventListener("click", () => {
         applyTheme(THEMES.includes(b.dataset.themeChoice) ? b.dataset.themeChoice : "system");
         drawStatic();
