@@ -24,7 +24,7 @@ This repository is the suite's front door: it links to every app, and holds the 
 | 🎬 [**ks-streamflix**](https://github.com/kumarsumit17/ks-streamflix) | Lean, D-pad optimized streaming media manager with fast focus navigation. | Android TV | 🛠 Planned |
 | 🔐 [**ks-vault**](https://github.com/kumarsumit17/ks-vault) | Fully offline secure vault and notekeeper behind pattern/password authentication, for notes, government IDs, and tickets. | Android | 🛠 Planned |
 | 💰 [**ks-expense-manager**](https://github.com/kumarsumit17/ks-expense-manager) | Minimalist, privacy-first personal finance and expense tracker. | Android | 🛠 Planned |
-| ⬇️ [**ks-download-manager**](https://github.com/kumarsumit17/ks-download-manager) | Free download manager for images, audio and video, with up to 20× faster downloads. | To be decided | 🛠 Planned |
+| ⬇️ [**ks-download-manager**](https://github.com/kumarsumit17/ks-download-manager) | Free download manager for images, audio and video, with up to 20× faster downloads. | Windows · macOS (Chrome extension under consideration) | 🛠 Planned |
 
 "Planned" means the repository holds the project structure and its rules, with app code still to come.
 
@@ -37,7 +37,7 @@ This repository is the suite's front door: it links to every app, and holds the 
 | `ks-streamflix` | Kotlin · Jetpack Compose for TV · Media3/ExoPlayer · Room · Hilt |
 | `ks-vault` | Kotlin · Jetpack Compose · Room + SQLCipher · Android Keystore · BiometricPrompt |
 | `ks-expense-manager` | Kotlin · Jetpack Compose · Room · Vico · DataStore |
-| `ks-download-manager` | Kotlin · rest to be decided |
+| `ks-download-manager` | Kotlin · desktop UI and download engine to be decided |
 
 ---
 
