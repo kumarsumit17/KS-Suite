@@ -25,7 +25,7 @@ This repository is the suite's front door: it links to every app, and holds the 
 | 🎬 [**ks-streamflix**](https://github.com/kumarsumit17/ks-streamflix) | Lean, D-pad optimized streaming media manager with fast focus navigation. | Android TV | 🛠 Planned |
 | 🔐 [**ks-vault**](https://github.com/kumarsumit17/ks-vault) | Fully offline secure vault and notekeeper behind pattern/password authentication, for notes, government IDs, and tickets. | Android | 🛠 Planned |
 | 💰 [**ks-expense-manager**](https://github.com/kumarsumit17/ks-expense-manager) | Minimalist, privacy-first personal finance and expense tracker. | Android | 🛠 Planned |
-| ⬇️ [**ks-download-manager**](https://github.com/kumarsumit17/ks-download-manager) | Free download manager for images, audio and video, with up to 20× faster downloads. | Windows · macOS (Chrome extension under consideration) | 🚧 In development · [stage 2 of 9](https://github.com/kumarsumit17/ks-download-manager/blob/dev/specs/stages.md) |
+| ⬇️ [**ks-download-manager**](https://github.com/kumarsumit17/ks-download-manager) | Free download manager for images, audio and video, with up to 20× faster downloads. | Windows · macOS (Chrome extension under consideration) | 🚧 In development · [stages 1–4 of 9 done](https://github.com/kumarsumit17/ks-download-manager/blob/dev/specs/stages.md) |
 
 "Planned" means the repository holds the project structure and its rules, with app code still to come. "In development" means app code is being built in stages, with no release yet.
 
@@ -42,7 +42,7 @@ This repository is the suite's front door: it links to every app, and holds the 
 
 ### Shared utilities
 
-[**ks-utility**](https://github.com/kumarsumit17/ks-utility) holds common, generic utility functions for the suite. Every app takes it as a dependency pinned to a commit: the Kotlin apps as a git submodule built by Gradle, `ks-download-manager` through `package.json` and `Cargo.toml`. Application-specific logic stays in the app. Status: 🛠 Planned.
+[**ks-utility**](https://github.com/kumarsumit17/ks-utility) holds common, generic utility functions for the suite. Every app takes it as a dependency pinned to a commit: the Kotlin apps as a git submodule built by Gradle, `ks-download-manager` through `package.json` and `Cargo.toml`. Application-specific logic stays in the app. `ks-tv-launcher` is still being moved onto it: its submodule and Gradle wiring are not committed yet. Status: 🛠 Planned.
 
 ---
 
@@ -87,7 +87,7 @@ Each app repository contains:
 <app>/
 ├── .github/workflows/release.yml   ← standardized release pipeline (Kotlin apps)
 ├── .gitignore                      ← build output, .gradle/, keystores
-├── .claude/                        ← graphify setup
+├── .claude/                        ← graphify setup (ks-tv-launcher: scripts/kb.py instead)
 ├── CLAUDE.md                       ← stack, platform constraints, build commands
 ├── ks-utility/                     ← git submodule: shared generic utilities (Kotlin apps)
 ├── app/ (or shared/ + platform apps)

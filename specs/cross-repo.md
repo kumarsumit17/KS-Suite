@@ -42,7 +42,7 @@ graph LR
 | `ks-tv-launcher` ⇢ `ks-expense-manager` | `ACTION_SEND`, `text/csv` | Columns `name,amount_minor,currency,cycle,next_due` | Standard share sheet |
 | `ks-vault` | none | **Isolated by design**: no outbound links and no network | — |
 | `ks-download-manager` | none | Standalone: no links to other apps | — |
-| `ks-utility` → Kotlin apps | Git submodule at `ks-utility/`, `includeBuild("ks-utility/kotlin")`, dependency `com.ks:utility` | Generic utilities only, standard library only, plain Kotlin/JVM; the app pins a commit | — |
+| `ks-utility` → Kotlin apps | Git submodule at `ks-utility/`, `includeBuild("ks-utility/kotlin")`, dependency `com.ks:utility` | Generic utilities only, standard library only, plain Kotlin/JVM; the app pins a commit. The Gradle wiring is added when an app's Gradle build is created; `ks-tv-launcher` has not committed the submodule yet | — |
 | `ks-utility` → `ks-download-manager` | Git dependencies in `package.json` and `src-tauri/Cargo.toml` | Root `package.json` exports `typescript/src/index.ts`; crate `ks-utility` in `rust/`; the app pins a commit | — |
 
 > When an edge contract changes, update this table and the `CLAUDE.md` files on **both** sides in the same release cycle.
