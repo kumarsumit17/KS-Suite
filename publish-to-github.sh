@@ -6,7 +6,7 @@ set -euo pipefail
 
 OWNER="kumarsumit17"
 VISIBILITY="--public"
-APPS=(ks-tv-launcher ks-jaiplayer ks-streamflix ks-vault ks-expense-manager)
+APPS=(ks-tv-launcher ks-jaiplayer ks-streamflix ks-vault ks-expense-manager ks-download-manager)
 
 cd "$(dirname "$0")"
 ROOT="$PWD"
@@ -46,6 +46,7 @@ publish ks-jaiplayer       ks-jaiplayer       "KS-Suite: multi-platform media pl
 publish ks-streamflix      ks-streamflix      "KS-Suite: D-pad optimized streaming media manager for Android TV"
 publish ks-vault           ks-vault           "KS-Suite: fully offline secure vault and notekeeper for Android"
 publish ks-expense-manager ks-expense-manager "KS-Suite: privacy-first personal expense tracker for Android"
+publish ks-download-manager ks-download-manager "KS-Suite: free download manager for images, audio and video"
 publish .                  KS-Suite           "KS-Suite: a family of privacy-focused apps, with links to every app repo"
 
 echo; echo "Done: https://github.com/$OWNER/KS-Suite"

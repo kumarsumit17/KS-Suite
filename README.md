@@ -1,23 +1,59 @@
 # KS-Suite
 
-Welcome to **KS-Suite**, a family of privacy-focused apps for the living room, the desktop, and your pocket.
-Every app in the suite follows the same principles:
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+![Kotlin](https://img.shields.io/badge/Kotlin-only-7F52FF?logo=kotlin&logoColor=white)
+![No tracking](https://img.shields.io/badge/Analytics%20%26%20ads-none-success)
+
+**KS-Suite** is a family of free, privacy-focused apps for the living room, the desktop, and your pocket.
+This repository is the suite's front door: it links to every app, and holds the conventions they all share. Each app lives in its own repository.
 
 - **Private by default.** Your data stays on your device unless you choose otherwise.
-- **Lean and fast.** No bloat and no tracking SDKs, with UIs tuned for the device in your hand or the remote on your couch.
+- **Lean and fast.** No bloat, no ads and no tracking SDKs, with UIs tuned for the device in your hand or the remote on your couch.
 - **One standard.** Shared conventions for code style, versioning, signing, and releases across every repository.
+
+**Contents:** [Apps](#-apps) · [Getting the code](#-getting-the-code) · [Workspace layout](#-workspace-layout) · [How the apps relate](#-cross-repository-relationships) · [CI/CD](#-cicd-semantic-versioning--automated-signing) · [License](#-license)
 
 ---
 
-## 📂 Application Directory
+## 📂 Apps
 
-| App | Target Platform | Tech Stack | Description |
+| App | What it does | Platform | Status |
 |---|---|---|---|
-| [`ks-tv-launcher`](https://github.com/kumarsumit17/ks-tv-launcher) | Android TV / Google TV | Kotlin · Jetpack Compose for TV (tv-material3) · Hilt · DataStore · Retrofit | Custom TV home launcher with Apple TV-style glassmorphism, a live weather widget, and a streaming subscription tracker. |
-| [`ks-jaiplayer`](https://github.com/kumarsumit17/ks-jaiplayer) | Android · Google TV · Windows · macOS | Kotlin Multiplatform · Compose Multiplatform · Media3/ExoPlayer · VLCJ | Multi-platform media player with a shared Kotlin core and a native playback engine on each target. |
-| [`ks-streamflix`](https://github.com/kumarsumit17/ks-streamflix) | Android TV | Kotlin · Jetpack Compose for TV · Media3/ExoPlayer · Room · Hilt | Lean, D-pad optimized streaming media manager with fast focus navigation. |
-| [`ks-vault`](https://github.com/kumarsumit17/ks-vault) | Android | Kotlin · Jetpack Compose · Room + SQLCipher · Android Keystore · BiometricPrompt | Fully offline secure vault and notekeeper behind pattern/password authentication, for notes, government IDs, and tickets. |
-| [`ks-expense-manager`](https://github.com/kumarsumit17/ks-expense-manager) | Android | Kotlin · Jetpack Compose · Room · Vico · DataStore | Minimalist, privacy-first personal finance and expense tracker. |
+| 📺 [**ks-tv-launcher**](https://github.com/kumarsumit17/ks-tv-launcher) | Ad-free, Apple TV-style launcher with a glass UI, a live weather widget, and a streaming-subscription tracker with renewal reminders. | Android TV / Google TV | ✅ Released · [v0.7.3](https://github.com/kumarsumit17/ks-tv-launcher/releases) |
+| ▶️ [**ks-jaiplayer**](https://github.com/kumarsumit17/ks-jaiplayer) | Multi-platform media player with a shared Kotlin core and a native playback engine on each target. | Android · Google TV · Windows · macOS | 🛠 Planned |
+| 🎬 [**ks-streamflix**](https://github.com/kumarsumit17/ks-streamflix) | Lean, D-pad optimized streaming media manager with fast focus navigation. | Android TV | 🛠 Planned |
+| 🔐 [**ks-vault**](https://github.com/kumarsumit17/ks-vault) | Fully offline secure vault and notekeeper behind pattern/password authentication, for notes, government IDs, and tickets. | Android | 🛠 Planned |
+| 💰 [**ks-expense-manager**](https://github.com/kumarsumit17/ks-expense-manager) | Minimalist, privacy-first personal finance and expense tracker. | Android | 🛠 Planned |
+| ⬇️ [**ks-download-manager**](https://github.com/kumarsumit17/ks-download-manager) | Free download manager for images, audio and video, with up to 20× faster downloads. | To be decided | 🛠 Planned |
+
+"Planned" means the repository holds the project structure and its rules, with app code still to come.
+
+### Tech stacks
+
+| App | Stack |
+|---|---|
+| `ks-tv-launcher` | Kotlin · Jetpack Compose for TV (tv-material) · DataStore · Coil · WorkManager |
+| `ks-jaiplayer` | Kotlin Multiplatform · Compose Multiplatform · Media3/ExoPlayer · VLCJ |
+| `ks-streamflix` | Kotlin · Jetpack Compose for TV · Media3/ExoPlayer · Room · Hilt |
+| `ks-vault` | Kotlin · Jetpack Compose · Room + SQLCipher · Android Keystore · BiometricPrompt |
+| `ks-expense-manager` | Kotlin · Jetpack Compose · Room · Vico · DataStore |
+| `ks-download-manager` | Kotlin · rest to be decided |
+
+---
+
+## 🚀 Getting the code
+
+Each app is a separate repository, so clone only what you need. To recreate the whole workspace:
+
+```bash
+git clone https://github.com/kumarsumit17/KS-Suite.git
+cd KS-Suite
+for app in ks-tv-launcher ks-jaiplayer ks-streamflix ks-vault ks-expense-manager ks-download-manager; do
+  git clone "https://github.com/kumarsumit17/$app.git"
+done
+```
+
+The app folders are git-ignored here, so this repository never tracks their contents. Builds need **JDK 17**; each app's own `README.md` has its build and install steps.
 
 ---
 
@@ -33,7 +69,8 @@ KS-Suite/
 ├── ks-jaiplayer/           ← git repo (KMP: shared/, androidApp/, desktopApp/)
 ├── ks-streamflix/          ← git repo
 ├── ks-vault/               ← git repo
-└── ks-expense-manager/     ← git repo
+├── ks-expense-manager/     ← git repo
+└── ks-download-manager/    ← git repo
 ```
 
 Each app repository contains:
@@ -87,6 +124,7 @@ graph LR
 | `ks-streamflix` → `ks-jaiplayer` | `ACTION_VIEW`, MIME `video/*`, explicit package | JaiPlayer must keep its `ACTION_VIEW` intent filter | Built-in ExoPlayer |
 | `ks-tv-launcher` ⇢ `ks-expense-manager` | `ACTION_SEND`, `text/csv` | Columns `name,amount_minor,currency,cycle,next_due` | Standard share sheet |
 | `ks-vault` | none | **Isolated by design**: no outbound links and no network | — |
+| `ks-download-manager` | none | Standalone: no links to other apps | — |
 
 ### Shared conventions (not shared code)
 

@@ -1,6 +1,6 @@
 # KS-Suite workspace
 
-Five independent apps, each its own git repo. This file holds suite-wide rules; each repo's own `CLAUDE.md` holds its stack, constraints, and commands. Read that one before working in a repo.
+Six independent apps, each its own git repo. This file holds suite-wide rules; each repo's own `CLAUDE.md` holds its stack, constraints, and commands. Read that one before working in a repo.
 
 ## Rules that apply to every repo
 - Kotlin only. Gradle Kotlin DSL (`*.gradle.kts`) with a version catalog at `gradle/libs.versions.toml`. JDK 17.
