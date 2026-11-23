@@ -49,6 +49,33 @@ scripts/emulators.sh stop tv
 - The AVDs are API 36. An app spec that names another API level (for example API 34 for TV) can add an AVD from `system-images;android-34;android-tv;arm64-v8a`.
 - An emulator does not replace the hand check on a real TV or phone after a release ([Release cycle](release-cycle.md), step 5): remote, HDMI, performance and real-account behaviour differ.
 
+### TV screen sizes
+
+Every Google TV app change (`ks-tv-launcher`, `ks-streamflix`, `ks-jaiplayer` on TV) is tested on one emulator per common TV size, not only on `ks-tv-36`. The owner's TV is 55 inch.
+
+| Size | AVD | Resolution | Density | adb serial |
+|---|---|---|---|---|
+| 32 inch | `ks-tv-32in` | 1280 x 720 | 213 (tvdpi) | `emulator-5560` |
+| 43 inch | `ks-tv-43in` | 1920 x 1080 | 320 (xhdpi) | `emulator-5562` |
+| 50 inch | `ks-tv-50in` | 3840 x 2160 | 640 (xxxhdpi) | `emulator-5564` |
+| 55 inch | `ks-tv-55in` | 3840 x 2160 | 640 | `emulator-5566` |
+| 65 inch | `ks-tv-65in` | 3840 x 2160 | 640 | `emulator-5568` |
+| 75 inch | `ks-tv-75in` | 3840 x 2160 | 640 | `emulator-5570` |
+| 85 inch | `ks-tv-85in` | 3840 x 2160 | 640 | `emulator-5572` |
+| 100 inch | `ks-tv-100in` | 3840 x 2160 | 640 | `emulator-5574` |
+
+```bash
+scripts/emulators.sh create-sizes        # once: device definitions ks_tv_<inch> in ~/.android/devices.xml, and the AVDs
+scripts/emulators.sh sizes               # tv-32 tv-43 ... tv-100
+scripts/emulators.sh start tv-55 --headless
+export ANDROID_SERIAL=$(scripts/emulators.sh serial tv-55)
+```
+
+- Each size is its own device definition with its true diagonal, and the resolution TVs of that size usually have. The density is the one Android TV uses for the resolution (720p 213, 1080p 320, 4K 640), never one computed from the inches, as on a real TV. So every size lays out the same 960 x 540 dp, and what differs between them is resolution and density (text and image sharpness, bitmap sizes, 4K memory use), not the layout.
+- The emulator reports `xdpi`/`ydpi` equal to the density, not the panel's physical pixels per inch, so code that reads physical size gets the same values on every size. Physical size (how big text looks from the sofa) is checked by hand on a real TV.
+- Run the sizes one at a time (each 4K TV emulator uses about 2 GB of memory). `connectedDebugAndroidTest` uninstalls the app when it finishes: install it again before checking screens by hand.
+- More sizes are added to `TV_SIZES` in `scripts/emulators.sh` and to this table, then `create-sizes` again (existing AVDs are kept).
+
 ## Windows
 
 An Apple-silicon Mac cannot build Windows installers (Compose's `jpackage` and Tauri's NSIS build each build only on their own OS) or run them. So:
