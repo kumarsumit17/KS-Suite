@@ -62,6 +62,22 @@ signingConfigs {
 
 For local release builds, keep the same four values in an untracked `keystore.properties`.
 
+### A new repository: signing first
+
+Every app is signed with the one suite key (alias `ks-release`, certificate SHA-256 starting `2A:A2:5F:08`), so updates install over each other's releases and the apps can trust one another. A GitHub personal account has no shared Actions secrets, so **each repository needs its own copy of the four secrets**.
+
+When a new app repository is created, its signing secrets are set and checked **first**, before any code, CI or release work, so the first tag cannot fail on signing (ks-beam's `v1.0.0` was never released because they were missing):
+
+1. Create the repository on GitHub.
+2. The owner sets the four secrets from the suite keystore. Claude never types or handles the passwords. The alias goes in without a prompt, and the password line saves the password only after `keytool` has opened the keystore with it, so a mistyped one is never stored (run it in a terminal where you can type, not in a non-interactive box):
+   ```bash
+   base64 -i ~/keys/ks-release.jks | gh secret set KEYSTORE_BASE64 -R kumarsumit17/<repo>
+   gh secret set KEY_ALIAS -R kumarsumit17/<repo> --body ks-release
+   read -s "P?Keystore password: "; echo; export P; if keytool -list -keystore ~/keys/ks-release.jks -storepass:env P -alias ks-release > /dev/null 2>&1; then printf '%s' "$P" | gh secret set KEYSTORE_PASSWORD -R kumarsumit17/<repo> && printf '%s' "$P" | gh secret set KEY_PASSWORD -R kumarsumit17/<repo>; else echo "Wrong password: nothing saved"; fi; unset P
+   ```
+3. Check: `gh secret list -R kumarsumit17/<repo>` lists all four. Once the repository has its release workflow, a rehearsal (manual run) must pass the **Decode and check keystore** step and verify the APK's signing certificate before the first tag.
+4. Never change a secret while a release or rehearsal run is in progress: each job reads the secrets when it starts.
+
 ## 3. Pipeline Stages
 
 ```

@@ -1,5 +1,6 @@
 # 2026-11-23
 
+* **Update**: [Versioning and signing](versioning-signing.md): new section "A new repository: signing first": every new app repository gets its four signing secrets from the suite keystore (alias `ks-release`) set and checked before any code, CI or release work, with a password line that saves only what `keytool` accepts; never change secrets during a run.
 * **Update**: [Platform folders](platform-folders.md) and [Testing on every platform](testing.md): `ks-beam` targets Google TV too (its one APK is a receiver on TVs), tested by casting from the Mac to the TV emulator; its Windows build is tested on CI.
 * **Update**: new app `ks-beam` (casting to TVs and projectors over DLNA from Android, Windows and macOS; Google TV receiver planned): [Platform folders](platform-folders.md) targets, [Testing on every platform](testing.md) matrix, the Apps list in the index, `.gitignore` and `CLAUDE.md`.
 * **Update**: [Testing on every platform](testing.md): TV screen sizes: one Google TV emulator per size (32, 43, 50, 55, 65, 75, 85 and 100 inch) from `scripts/emulators.sh create-sizes`; every Google TV app change is tested on all of them.

@@ -14,6 +14,7 @@ Seven independent apps, each its own git repo, plus `ks-utility`, a repo of gene
 - Kotlin only. Gradle Kotlin DSL (`*.gradle.kts`) with a version catalog at `gradle/libs.versions.toml`. JDK 17.
 - Package root is `com.ks.<app>`.
 - Never commit or print signing material: `keystore.properties`, `*.jks`, `*.keystore`, or the `SIGNING_*` env vars.
+- A new app repository gets its signing secrets first: before any code, CI or release work, the owner sets the four secrets from the suite keystore (alias `ks-release`) and they are checked. See `specs/versioning-signing.md`, "A new repository: signing first".
 - Version numbers come from git tags (`vMAJOR.MINOR.PATCH`) via `-PversionName` and `-PversionCode`. Never hardcode them in `build.gradle.kts`. See `specs/versioning-signing.md`.
 - Commits follow Conventional Commits (`feat:`, `fix:`, `feat!:`, `chore:`).
 - No analytics, crash-reporting, or ad SDKs in any app.
