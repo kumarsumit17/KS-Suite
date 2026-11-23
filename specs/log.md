@@ -1,5 +1,6 @@
 # 2026-11-23
 
+* **Update**: [Release cycle](release-cycle.md): new Branches section: every repository has only `dev` and `main`; all work is committed on `dev`, `main` only fast-forwards to `dev`, new work starts from `dev` brought up to date with `main`, and any other branch is deleted once its work is on `dev`.
 * **Creation**: [Testing on every platform](testing.md) added: app × platform matrix; shared phone and Android TV emulators (`ks-phone-36`, `ks-tv-36`, API 36) through `scripts/emulators.sh`; Windows tested on CI (`windows-2025`) with the unsigned installer kept as an artifact, plus an optional Windows 11 ARM VM; the Chrome extension loaded unpacked by hand.
 * **Update**: [Landing page](landing-page.md): ks-download-manager marked released (v0.1.2), with macOS and the Chrome extension released and Windows in beta; new optional `platformStatus` field in `apps.json`.
 
