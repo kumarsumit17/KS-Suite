@@ -1,5 +1,6 @@
 # 2026-11-23
 
+* **Creation**: [Testing on every platform](testing.md) added: app × platform matrix; shared phone and Android TV emulators (`ks-phone-36`, `ks-tv-36`, API 36) through `scripts/emulators.sh`; Windows tested on CI (`windows-2025`) with the unsigned installer kept as an artifact, plus an optional Windows 11 ARM VM; the Chrome extension loaded unpacked by hand.
 * **Update**: [Landing page](landing-page.md): ks-download-manager marked released (v0.1.2), with macOS and the Chrome extension released and Windows in beta; new optional `platformStatus` field in `apps.json`.
 
 # 2026-11-22
