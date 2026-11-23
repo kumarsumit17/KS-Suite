@@ -47,13 +47,16 @@
 
   // Download kinds found in release file names, in button order.
   const KINDS = [
-    { id: "macArm", key: "download.macArm" },
-    { id: "macIntel", key: "download.macIntel" },
-    { id: "mac", key: "download.mac" },
-    { id: "windows", key: "download.windows" },
-    { id: "chrome", key: "download.chrome" },
-    { id: "android", key: "download.android" },
+    { id: "macArm", key: "download.macArm", platform: "macos" },
+    { id: "macIntel", key: "download.macIntel", platform: "macos" },
+    { id: "mac", key: "download.mac", platform: "macos" },
+    { id: "windows", key: "download.windows", platform: "windows" },
+    { id: "chrome", key: "download.chrome", platform: "chrome" },
+    { id: "android", key: "download.android", platform: "android" },
   ];
+
+  // Statuses one platform of a released or beta app can have (apps.json "platformStatus").
+  const PLATFORM_STATUSES = ["released", "beta"];
 
   const state = { groups: [], apps: [], text: {}, language: "en", releases: new Map() };
 
@@ -158,6 +161,8 @@
     if (a.restricted != null && typeof a.restricted !== "boolean") problems.push("restricted");
     if (!STATUSES.includes(a.status)) problems.push("status");
     if (!Array.isArray(a.platforms) || !a.platforms.length || !a.platforms.every((p) => p in PLATFORMS)) problems.push("platforms");
+    if (a.platformStatus != null && (typeof a.platformStatus !== "object" || a.status === "coming-soon" ||
+      !Object.entries(a.platformStatus).every(([p, s]) => a.platforms?.includes(p) && PLATFORM_STATUSES.includes(s)))) problems.push("platformStatus");
     if (a.stack != null && typeof a.stack !== "string") problems.push("stack");
     if (!state.groups.some((g) => g.id === a.group)) problems.push("group");
     if (!a.tagline || !LANGUAGES.every((l) => typeof a.tagline[l] === "string" && a.tagline[l])) problems.push("tagline");
@@ -241,6 +246,12 @@
     return { released: "status.released", beta: "status.beta", "coming-soon": "status.comingSoon" }[status];
   }
 
+  // A platform's label, with "(Beta)" when that platform is in beta but the app is not.
+  function withPlatformStatus(app, platform, label) {
+    const status = app.platformStatus?.[platform];
+    return status === "beta" && app.status !== "beta" ? t("platform.withStatus", { platform: label, status: t("status.beta") }) : label;
+  }
+
   function releasesUrl(app) {
     return `https://github.com/${app.repo}/releases`;
   }
@@ -261,7 +272,8 @@
       return box;
     }
     for (const d of release.downloads) {
-      const platform = t(KINDS.find((k) => k.id === d.kind).key);
+      const kind = KINDS.find((k) => k.id === d.kind);
+      const platform = withPlatformStatus(app, kind.platform, t(kind.key));
       const size = formatSize(d.size);
       box.append(el("a", { class: "btn btn-small", href: d.url, "aria-label": t("download.button", { platform, size }) },
         icon("download"), el("span", null, platform), el("span", { class: "size" }, size)));
@@ -278,7 +290,7 @@
 
     const platforms = el("span", { class: "platform-pill" },
       el("span", { class: "visually-hidden" }, `${t("platforms.label")}: `),
-      app.platforms.map((p) => t(PLATFORMS[p].key)).join(" · "));
+      app.platforms.map((p) => withPlatformStatus(app, p, t(PLATFORMS[p].key))).join(" · "));
 
     const titleId = `app-${app.id}`;
     const head = el("div", { class: "card-head" },

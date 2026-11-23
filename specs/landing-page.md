@@ -62,7 +62,7 @@ No framework, build step or package install. Everything is served from the Pages
 ```
 
 ## apps.json
-Order in the file is the order on the page. `icon` is the name of a Lucide icon inlined in `app.js` (`tv`, `playCircle`, `clapperboard`, `wallet`, `shieldCheck`, `hardDriveDownload`, …); add the icon's paths there to use a new one. `platforms` uses fixed ids, whose labels are in the language files. `tagline` has one text per language. `status` is `released`, `beta` or `coming-soon`. `stack` (optional) is a short tech line shown at the foot of the card, not translated.
+Order in the file is the order on the page. `icon` is the name of a Lucide icon inlined in `app.js` (`tv`, `playCircle`, `clapperboard`, `wallet`, `shieldCheck`, `hardDriveDownload`, …); add the icon's paths there to use a new one. `platforms` uses fixed ids, whose labels are in the language files. `tagline` has one text per language. `status` is `released`, `beta` or `coming-soon`. `platformStatus` (optional, not for `coming-soon`) gives one platform its own status, `released` or `beta`, for example `{ "windows": "beta" }` on a released app; each key must be in `platforms`. A beta platform of an app that is not itself beta shows as "Windows (Beta)" in the platform list and on its download buttons (key `platform.withStatus` in the language files). `stack` (optional) is a short tech line shown at the foot of the card, not translated.
 
 Grouping and access in `apps.json`:
 - `restricted` (optional, `true`): for an app whose repository is private. The card shows a "Private" badge and a lock note, and no download or release links, so visitors never meet a 404. No app sets it today: every repository is public.
@@ -81,8 +81,9 @@ The page opens on the intro only. The apps and the install notes show when the a
       "group": "desktop",
       "repo": "kumarsumit17/ks-download-manager",
       "icon": "hardDriveDownload",
-      "status": "coming-soon",
-      "platforms": ["windows", "macos"],
+      "status": "released",
+      "platforms": ["macos", "windows", "chrome"],
+      "platformStatus": { "macos": "released", "windows": "beta", "chrome": "released" },
       "stack": "Rust · Tauri",
       "tagline": {
         "en": "Free download manager for images, audio and video, with up to 20× faster downloads.",

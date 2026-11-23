@@ -21,6 +21,7 @@
   "status.beta": "बीटा",
   "status.comingSoon": "जल्द आ रहा है",
   "status.prerelease": "प्री-रिलीज़",
+  "platform.withStatus": "{platform} ({status})",
   "platforms.label": "प्लेटफ़ॉर्म",
   "platform.googleTv": "Google TV",
   "platform.android": "Android",

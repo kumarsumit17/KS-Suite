@@ -1,3 +1,7 @@
+# 2026-11-23
+
+* **Update**: [Landing page](landing-page.md): ks-download-manager marked released (v0.1.2), with macOS and the Chrome extension released and Windows in beta; new optional `platformStatus` field in `apps.json`.
+
 # 2026-11-22
 
 * **Update**: [Landing page](landing-page.md): released as `v1.0.0` (GitHub release "Landing page v1.0.0" on `504ab8f`); the repository's Website field now points to the page.

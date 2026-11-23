@@ -21,6 +21,7 @@
   "status.beta": "Beta",
   "status.comingSoon": "Coming soon",
   "status.prerelease": "Pre-release",
+  "platform.withStatus": "{platform} ({status})",
   "platforms.label": "Platforms",
   "platform.googleTv": "Google TV",
   "platform.android": "Android",

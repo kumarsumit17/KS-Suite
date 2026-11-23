@@ -55,8 +55,9 @@
       "group": "desktop",
       "repo": "kumarsumit17/ks-download-manager",
       "icon": "hardDriveDownload",
-      "status": "coming-soon",
-      "platforms": ["windows", "macos"],
+      "status": "released",
+      "platforms": ["macos", "windows", "chrome"],
+      "platformStatus": { "macos": "released", "windows": "beta", "chrome": "released" },
       "stack": "Rust · Tauri",
       "tagline": {
         "en": "Free download manager for images, audio and video, with up to 20× faster downloads.",
