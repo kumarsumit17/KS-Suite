@@ -24,8 +24,9 @@ The owner's machine is an Apple-silicon Mac. Android phones and Google TV are te
 | `ks-download-manager` | Windows | the same checks on Windows; the NSIS installer is built, installed silently, checked and uninstalled | the CI run's `windows-installer-unsigned` artifact | **CI only** (`windows-2025`) |
 | `ks-download-manager` | Chrome extension | `npm run test:extension`, `build:extension`, `test:lang`; `scripts/extension-id.mjs` checks the fixed ID | load `extension/dist` unpacked (below) | Mac (Chrome); also built on CI |
 | `ks-beam` | Android phone | `./gradlew :shared:desktopTest check`, `:mobile:android:assembleDebug` | `installDebug` on the phone emulator, `adb shell monkey -p com.ks.beam 1`; the emulator's private network never sees TVs, so casting is tested on a real phone | Mac (phone emulator) and a real phone |
+| `ks-beam` | Google TV (receiver) | `./gradlew check`, `:mobile:android:assembleDebug` | `installDebug` on the TV emulator, then cast from the Mac: `adb forward tcp:49152 tcp:<port from logcat>` and `EmulatorCastTest` with `KS_BEAM_RENDERER=http://127.0.0.1:49152/desc.xml` (ks-beam `CLAUDE.md`) | Mac (TV emulator) |
 | `ks-beam` | macOS | `./gradlew check`; `:desktop:mac:packageReleaseDmg` needs a non-Homebrew JDK | `./gradlew :desktop:mac:run`; casting needs a DLNA TV or projector on the same network | Mac |
-| `ks-beam` | Windows | `:desktop:windows:packageReleaseMsi` | the CI run's .msi | **CI only** (once its CI exists) |
+| `ks-beam` | Windows | `:shared:desktopTest`, `:desktop:windows:packageReleaseMsi`, silent install and uninstall | the CI run's `windows-msi-unsigned` artifact | **CI only** (`windows-2025`) |
 
 An app with "no Gradle build yet" has its commands in its `CLAUDE.md`; they apply once its build exists.
 
