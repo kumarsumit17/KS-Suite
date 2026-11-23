@@ -1,3 +1,7 @@
+# 2026-11-24
+
+* **Update**: [Cross-repository relationships](cross-repo.md): `ks-streamflix` → `ks-jaiplayer`: JaiPlayer's `ACTION_VIEW` accepts `http`/`https` stream links (signed, no header, plain http allowed) from v1.0.4, with `EXTRA_TITLE` as the name.
+
 # 2026-11-23
 
 * **Update**: [Versioning and signing](versioning-signing.md): new section "A new repository: signing first": every new app repository gets its four signing secrets from the suite keystore (alias `ks-release`) set and checked before any code, CI or release work, with a password line that saves only what `keytool` accepts; never change secrets during a run.

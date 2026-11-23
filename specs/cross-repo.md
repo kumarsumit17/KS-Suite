@@ -38,7 +38,7 @@ graph LR
 | From → To | Mechanism | Contract | Fallback if target missing |
 |---|---|---|---|
 | `ks-tv-launcher` → `ks-streamflix`, `ks-jaiplayer` | `PackageManager.getLeanbackLaunchIntentForPackage` | Target package IDs `com.ks.streamflix`, `com.ks.jaiplayer` | Tile hidden |
-| `ks-streamflix` → `ks-jaiplayer` | `ACTION_VIEW`, MIME `video/*`, explicit package | JaiPlayer must keep its `ACTION_VIEW` intent filter | Built-in ExoPlayer |
+| `ks-streamflix` → `ks-jaiplayer` | `ACTION_VIEW`, MIME `video/*`, explicit package, `EXTRA_TITLE` | JaiPlayer must keep its `ACTION_VIEW` intent filter, which accepts `http`/`https` stream links (JaiPlayer v1.0.4+): StreamFlix sends signed links that need no header, and plain http is allowed for the home server. StreamFlix shows the button only when the intent resolves | Built-in ExoPlayer |
 | `ks-tv-launcher` ⇢ `ks-expense-manager` | `ACTION_SEND`, `text/csv` | Columns `name,amount_minor,currency,cycle,next_due` | Standard share sheet |
 | `ks-vault` | none | **Isolated by design**: no outbound links and no network | — |
 | `ks-download-manager` | none | Standalone: no links to other apps | — |
