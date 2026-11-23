@@ -1,5 +1,6 @@
 # 2026-11-23
 
+* **Update**: new app `ks-beam` (casting to TVs and projectors over DLNA from Android, Windows and macOS; Google TV receiver planned): [Platform folders](platform-folders.md) targets, [Testing on every platform](testing.md) matrix, the Apps list in the index, `.gitignore` and `CLAUDE.md`.
 * **Update**: [Testing on every platform](testing.md): TV screen sizes: one Google TV emulator per size (32, 43, 50, 55, 65, 75, 85 and 100 inch) from `scripts/emulators.sh create-sizes`; every Google TV app change is tested on all of them.
 * **Update**: [Release cycle](release-cycle.md): new Branches section: every repository has only `dev` and `main`; all work is committed on `dev`, `main` only fast-forwards to `dev`, new work starts from `dev` brought up to date with `main`, and any other branch is deleted once its work is on `dev`.
 * **Creation**: [Testing on every platform](testing.md) added: app × platform matrix; shared phone and Android TV emulators (`ks-phone-36`, `ks-tv-36`, API 36) through `scripts/emulators.sh`; Windows tested on CI (`windows-2025`) with the unsigned installer kept as an artifact, plus an optional Windows 11 ARM VM; the Chrome extension loaded unpacked by hand.

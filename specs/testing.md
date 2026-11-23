@@ -23,6 +23,9 @@ The owner's machine is an Apple-silicon Mac. Android phones and Google TV are te
 | `ks-download-manager` | macOS | `npm run build`, `test:lang`, `test:ui`, `cargo test`, `cargo clippy` | `npm run tauri dev`; `npm run tauri build` for the .dmg | Mac |
 | `ks-download-manager` | Windows | the same checks on Windows; the NSIS installer is built, installed silently, checked and uninstalled | the CI run's `windows-installer-unsigned` artifact | **CI only** (`windows-2025`) |
 | `ks-download-manager` | Chrome extension | `npm run test:extension`, `build:extension`, `test:lang`; `scripts/extension-id.mjs` checks the fixed ID | load `extension/dist` unpacked (below) | Mac (Chrome); also built on CI |
+| `ks-beam` | Android phone | `./gradlew :shared:desktopTest check`, `:mobile:android:assembleDebug` | `installDebug` on the phone emulator, `adb shell monkey -p com.ks.beam 1`; the emulator's private network never sees TVs, so casting is tested on a real phone | Mac (phone emulator) and a real phone |
+| `ks-beam` | macOS | `./gradlew check`; `:desktop:mac:packageReleaseDmg` needs a non-Homebrew JDK | `./gradlew :desktop:mac:run`; casting needs a DLNA TV or projector on the same network | Mac |
+| `ks-beam` | Windows | `:desktop:windows:packageReleaseMsi` | the CI run's .msi | **CI only** (once its CI exists) |
 
 An app with "no Gradle build yet" has its commands in its `CLAUDE.md`; they apply once its build exists.
 

@@ -1,6 +1,6 @@
 # KS-Suite workspace
 
-Six independent apps, each its own git repo, plus `ks-utility`, a repo of generic utility code. Five apps are Kotlin apps; `ks-download-manager` is a desktop-only Rust/Tauri app. This file holds suite-wide rules; each repo's own `CLAUDE.md` holds its stack, constraints, and commands. Read that one before working in a repo.
+Seven independent apps, each its own git repo, plus `ks-utility`, a repo of generic utility code. Six apps are Kotlin apps; `ks-download-manager` is a desktop-only Rust/Tauri app. This file holds suite-wide rules; each repo's own `CLAUDE.md` holds its stack, constraints, and commands. Read that one before working in a repo.
 
 ## Specs
 - All suite-wide specs live in `specs/` in the repository root, as an Open Knowledge Format (OKF) v0.2 bundle. Each app keeps its own specs in its repo's `specs/`. Start at `specs/index.md`.

@@ -32,6 +32,7 @@ Each app is its own git repository with its own bundle; these links point to eac
 * [ks-vault](https://github.com/kumarsumit17/ks-vault/blob/main/specs/index.md) - The specs of `ks-vault`.
 * [ks-expense-manager](https://github.com/kumarsumit17/ks-expense-manager/blob/main/specs/index.md) - The specs of `ks-expense-manager`.
 * [ks-download-manager](https://github.com/kumarsumit17/ks-download-manager/blob/dev/specs/index.md) - The specs of `ks-download-manager`.
+* [ks-beam](https://github.com/kumarsumit17/ks-beam/blob/dev/specs/index.md) - The specs of `ks-beam`, which casts from Android, Windows and macOS to TVs and projectors.
 
 # Shared code
 

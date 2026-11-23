@@ -53,6 +53,7 @@ Code moves outward only when it is needed there: from a platform folder to `shar
 | `ks-vault` | `mobile/android` | `tv/*`, `desktop/*`, `mobile/ios` | no |
 | `ks-expense-manager` | `mobile/android` | `tv/*`, `desktop/*`, `mobile/ios` | no |
 | `ks-download-manager` | `desktop/mac`, `desktop/windows` | `tv/*`, `mobile/*` | yes: `src/`, `src-tauri/` and `extension/`, once moved |
+| `ks-beam` | `mobile/android`, `desktop/windows`, `desktop/mac`; `tv/google-tv` planned (receiver) | `mobile/ios` | yes: the Kotlin Multiplatform module (casting core and interface) |
 
 ## Existing code
 
