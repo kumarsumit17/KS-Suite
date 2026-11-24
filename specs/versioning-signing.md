@@ -33,6 +33,7 @@ The cycle around a release (test on `dev`, merge to `main`, push the tag, the wo
   | `versionCode` | `MAJOR × 10000 + MINOR × 100 + PATCH` | `10402` |
 
   They are passed to Gradle as `-PversionName` / `-PversionCode`. MINOR and PATCH must stay below 100.
+- An app with a separate Google TV app ([Platform folders](platform-folders.md#phone-and-google-tv-builds)) gives the TV build `versionCode + 1,000,000,000` (`v1.4.2` → `1000010402`), set in its Gradle build. Google Play needs a different `versionCode` for every bundle of one package, and the lower phone code also keeps the phone build from being installed over the TV build.
 
 ## 2. Automated Signing
 
