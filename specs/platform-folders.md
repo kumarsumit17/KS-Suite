@@ -49,7 +49,7 @@ Code moves outward only when it is needed there: from a platform folder to `shar
 |---|---|---|---|
 | `ks-tv-launcher` | `tv/google-tv` | `desktop/*`, `mobile/*` | no |
 | `ks-jaiplayer` | `mobile/android`, `tv/google-tv`, `desktop/windows`, `desktop/mac` | `mobile/ios` | yes: the Kotlin Multiplatform module |
-| `ks-streamflix` | `tv/google-tv` | `desktop/*`, `mobile/*` | no |
+| `ks-streamflix` | `desktop/mac`, `desktop/windows` (the server with its window), `mobile/android`, `tv/google-tv` (one APK) | `mobile/ios` | yes: the API models, the server core and its plugins, the apps' Kotlin Multiplatform module and the desktop app |
 | `ks-vault` | `mobile/android` | `tv/*`, `desktop/*`, `mobile/ios` | no |
 | `ks-expense-manager` | `mobile/android` | `tv/*`, `desktop/*`, `mobile/ios` | no |
 | `ks-download-manager` | `desktop/mac`, `desktop/windows` | `tv/*`, `mobile/*` | yes: `src/`, `src-tauri/` and `extension/`, once moved |
