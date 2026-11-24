@@ -264,16 +264,25 @@
     return `https://github.com/${app.repo}/releases`;
   }
 
-  // Android and Google TV get a button each, labelled for the app's own platforms. When one
-  // APK serves both (no separate TV file in the release), both buttons fetch that APK; a
-  // TV-only app shows only "Google TV".
+  // A button only for an APK the release really has. A TV build names itself
+  // (…-google-tv.apk) and gets "Google TV"; any other APK is the phone build and gets
+  // "Android", except in a TV-only app (no "android" platform), where it is the TV build.
+  // A phone APK never doubles as a Google TV button: a phone interface is unusable with a remote.
   function downloadsFor(app, release) {
-    const has = (p) => app.platforms.includes(p);
-    const list = release.downloads.filter((d) => d.kind !== "android" || has("android"));
-    const apk = release.downloads.find((d) => d.kind === "android");
-    if (has("google-tv") && apk && !list.some((d) => d.kind === "googleTv")) list.push({ ...apk, kind: "googleTv" });
+    const tvOnly = app.platforms.includes("google-tv") && !app.platforms.includes("android");
+    const list = release.downloads.map((d) =>
+      d.kind === "android" && tvOnly && !release.downloads.some((x) => x.kind === "googleTv") ? { ...d, kind: "googleTv" } : d);
     const order = (d) => KINDS.findIndex((k) => k.id === d.kind);
-    return list.sort((a, b) => order(a) - order(b));
+    return list.filter((d) => d.kind !== "android" || !tvOnly).sort((a, b) => order(a) - order(b));
+  }
+
+  // The card lists its platforms; once its release is known, Android and Google TV are
+  // listed only when the release has their APK, so the card never promises a missing build.
+  function shownPlatforms(app) {
+    const release = state.releases.get(app.id);
+    if (!release) return app.platforms;
+    const kinds = new Set(downloadsFor(app, release).map((d) => d.kind));
+    return app.platforms.filter((p) => (p !== "android" || kinds.has("android")) && (p !== "google-tv" || kinds.has("googleTv")));
   }
 
   // The right side of the card's footer: download buttons, or a link when there are none.
@@ -317,7 +326,7 @@
 
     const platforms = el("span", { class: "platform-pill" },
       el("span", { class: "visually-hidden" }, `${t("platforms.label")}: `),
-      app.platforms.map((p) => withPlatformStatus(app, p, t(PLATFORMS[p].key))).join(" · "));
+      shownPlatforms(app).map((p) => withPlatformStatus(app, p, t(PLATFORMS[p].key))).join(" · "));
 
     const titleId = `app-${app.id}`;
     const head = el("div", { class: "card-head" },

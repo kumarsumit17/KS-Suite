@@ -1,5 +1,6 @@
 # 2026-11-24
 
+* **Update**: [Landing page](landing-page.md): a download button appears only for an APK the release has: `…-google-tv.apk` is the Google TV build, any other APK the phone build (the TV build in a TV-only app); a phone APK no longer doubles as a Google TV button, and the platform list hides Android or Google TV when its APK is missing.
 * **Update**: [Platform folders](platform-folders.md): `ks-streamflix` targets `desktop/mac` and `desktop/windows` (the media server with its window), `mobile/android` and `tv/google-tv` (one APK), with a `shared/` folder; only `mobile/ios` stays empty (released as v1.0.0).
 * **Update**: [Landing page](landing-page.md) and [Cross-repository relationships](cross-repo.md): the page updates itself. Each app repository keeps its card in `ks-suite.json`; an hourly Pages run (`.github/scripts/collect-apps.mjs`) finds new apps and sets each status from its releases, and the page shows a first release straight away. Android and Google TV get separate download buttons on every card.
 * **Update**: [Cross-repository relationships](cross-repo.md): `ks-streamflix` → `ks-jaiplayer`: JaiPlayer's `ACTION_VIEW` accepts `http`/`https` stream links (signed, no header, plain http allowed) from v1.0.4, with `EXTRA_TITLE` as the name.
