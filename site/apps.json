@@ -70,8 +70,9 @@
       "group": "media",
       "repo": "kumarsumit17/ks-jaiplayer",
       "icon": "playCircle",
-      "status": "coming-soon",
+      "status": "released",
       "platforms": ["android", "google-tv", "windows", "macos"],
+      "platformStatus": { "android": "released", "google-tv": "released", "windows": "beta", "macos": "released" },
       "stack": "Kotlin Multiplatform",
       "tagline": {
         "en": "Media player for phone, TV and desktop, with a native playback engine on each.",
@@ -84,12 +85,28 @@
       "group": "media",
       "repo": "kumarsumit17/ks-streamflix",
       "icon": "clapperboard",
-      "status": "coming-soon",
-      "platforms": ["google-tv"],
-      "stack": "Kotlin · Compose for TV",
+      "status": "released",
+      "platforms": ["macos", "windows", "android", "google-tv"],
+      "platformStatus": { "macos": "released", "windows": "beta", "android": "released", "google-tv": "released" },
+      "stack": "Kotlin Multiplatform",
       "tagline": {
-        "en": "Lean streaming media manager built for the TV remote, with fast focus navigation.",
-        "hi": "TV रिमोट के लिए बना हल्का स्ट्रीमिंग मीडिया मैनेजर, तेज़ नेविगेशन के साथ।"
+        "en": "Free, open-source home media server: run it on your Mac or Windows PC, then browse and stream your library on phone and TV.",
+        "hi": "मुफ़्त, ओपन-सोर्स होम मीडिया सर्वर: इसे अपने Mac या Windows PC पर चलाएं, फिर फ़ोन और TV पर अपनी लाइब्रेरी देखें और स्ट्रीम करें।"
+      }
+    },
+    {
+      "id": "ks-beam",
+      "name": "KS Beam",
+      "group": "media",
+      "repo": "kumarsumit17/ks-beam",
+      "icon": "cast",
+      "status": "released",
+      "platforms": ["android", "windows", "macos", "google-tv"],
+      "platformStatus": { "android": "released", "windows": "beta", "macos": "released", "google-tv": "released" },
+      "stack": "Kotlin Multiplatform",
+      "tagline": {
+        "en": "Cast videos, music and photos from your phone or computer to a TV or projector.",
+        "hi": "फ़ोन या कंप्यूटर से वीडियो, संगीत और फ़ोटो TV या प्रोजेक्टर पर कास्ट करें।"
       }
     },
     {
