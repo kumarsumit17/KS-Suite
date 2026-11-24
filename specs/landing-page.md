@@ -10,7 +10,8 @@ tags: [site, github-pages, landing-page, plan]
 Status: **built** (2026-11-22), following the recommended choice for each decision below. Pages is turned on by the owner in the repository settings (Source: GitHub Actions).
 
 ## Adding an app or restyling
-- **Add an app:** add an entry to `site/apps.json` and its icon to `site/icons/`. Nothing else changes. Use `"status": "coming-soon"` until it has a public release.
+- **Add an app:** put a `ks-suite.json` card in the root of the app's repository, on its default branch (see [The app card](#the-app-card-ks-suitejson)). Within the hour the Pages workflow finds it and the app appears; nothing changes in this repository. Use a new `group` or a new icon only after adding it here.
+- **New versions and first releases** need nothing: the page reads every app's newest release from GitHub when it opens, and an app with a published release shows as released.
 - **Restyle:** edit `site/theme.css` only. The palette is violet and pink with a gradient on primary buttons and the title, and six app colours (`--hue-0` … `--hue-5`), given to cards in `apps.json` order for the icon and its backdrop. Re-check contrast for any colour pair you change.
 - **Change interface text:** edit `site/lang/en.json` and `site/lang/hi.json`, then run `node ks-utility/typescript/tools/lang.mjs check site/lang` from the workspace (Node 23.6+, nothing installed).
 
@@ -62,7 +63,7 @@ No framework, build step or package install. Everything is served from the Pages
 ```
 
 ## apps.json
-Order in the file is the order on the page. `icon` is the name of a Lucide icon inlined in `app.js` (`tv`, `playCircle`, `clapperboard`, `wallet`, `shieldCheck`, `hardDriveDownload`, …); add the icon's paths there to use a new one. `platforms` uses fixed ids, whose labels are in the language files. `tagline` has one text per language. `status` is `released`, `beta` or `coming-soon`. `platformStatus` (optional, not for `coming-soon`) gives one platform its own status, `released` or `beta`, for example `{ "windows": "beta" }` on a released app; each key must be in `platforms`. A beta platform of an app that is not itself beta shows as "Windows (Beta)" in the platform list and on its download buttons (key `platform.withStatus` in the language files). `stack` (optional) is a short tech line shown at the foot of the card, not translated.
+Order in the file is the order on the page. `icon` is the name of a Lucide icon inlined in `app.js` (`tv`, `playCircle`, `clapperboard`, `wallet`, `shieldCheck`, `hardDriveDownload`, …); add the icon's paths there to use a new one. `platforms` uses fixed ids, whose labels are in the language files. `tagline` has one text per language. `status` is `released`, `beta` or `coming-soon`; the Pages workflow sets it from the app's releases (see [Collecting the apps](#collecting-the-apps)), so it is only written by hand to keep an app at `beta`. `platformStatus` (optional) gives one platform its own status, `released` or `beta`, for example `{ "windows": "beta" }` on a released app; each key must be in `platforms`. A beta platform of an app that is not itself beta shows as "Windows (Beta)" in the platform list and on its download buttons (key `platform.withStatus` in the language files). `stack` (optional) is a short tech line shown at the foot of the card, not translated.
 
 Grouping and access in `apps.json`:
 - `restricted` (optional, `true`): for an app whose repository is private. The card shows a "Private" badge and a lock note, and no download or release links, so visitors never meet a 404. No app sets it today: every repository is public.
@@ -93,11 +94,32 @@ The page opens on the intro only. The apps and the install notes show when the a
   ]
 }
 ```
-The page checks each entry on load. An entry with a missing field or an unknown status or platform is left out and reported in the console, so one bad entry never breaks the page.
+The page checks each entry on load. An entry with a missing field or an unknown status or platform is left out and reported in the console, so one bad entry never breaks the page. An unknown icon is drawn as `layers` instead, so a new app's card still shows.
+
+## The app card (`ks-suite.json`)
+Each app repository describes its own card in `ks-suite.json` at the repository root, on its default branch (`main`, so it describes the released app). It is an `apps.json` entry without `repo` (taken from the repository) and usually without `status`; `id` defaults to the repository name:
+```json
+{
+  "name": "KS Beam",
+  "group": "media",
+  "icon": "cast",
+  "platforms": ["android", "google-tv", "windows", "macos"],
+  "platformStatus": { "windows": "beta" },
+  "stack": "Kotlin Multiplatform",
+  "tagline": { "en": "…", "hi": "…" }
+}
+```
+The `site/apps.json` entries stay as the fallback: a card replaces the fields it gives, and an app without a card keeps its entry.
+
+## Collecting the apps
+`.github/scripts/collect-apps.mjs` (Node, no packages) rebuilds `site/apps.json` inside the Pages run, never committed:
+1. Lists the public repositories of `kumarsumit17` (no forks, nothing archived) and reads each one's `ks-suite.json` from its default branch. A repository without the file is not an app.
+2. Keeps the entries already in `site/apps.json` in their order and merges each card into its entry (matched by `id` or `repo`); apps found only through a card come after them.
+3. Sets each app's `status` from its releases: a published release gives `released`, only pre-releases give `beta`, none gives `coming-soon`. An entry or card that says `beta` stays `beta`.
+A GitHub call that fails leaves that part as it was (a warning in the run), so the page never loses its apps. The run uses the workflow's `GITHUB_TOKEN`, so the API rate limit is not a concern.
 
 ## Downloads
-- `status: coming-soon`: no API call, no download buttons. The card shows "Coming soon" and a link to the repository.
-- Otherwise: one request per app, `GET https://api.github.com/repos/{repo}/releases?per_page=5`, unauthenticated. The newest entry that is not a draft wins, pre-releases included.
+- One request per app (every status), `GET https://api.github.com/repos/{repo}/releases?per_page=5`, unauthenticated. The newest entry that is not a draft wins, pre-releases included.
 - Platform from the asset file name, first rule that matches, case-insensitive:
 
 | Button | File name |
@@ -107,9 +129,12 @@ The page checks each entry on load. An entry with a missing field or an unknown 
 | macOS (universal) | any other `.dmg` |
 | Windows | any `.msi`; an `.exe` only if its name has `setup` or `install` or starts with the repository name (so a bundled `ffmpeg.exe` is skipped) |
 | Chrome extension | `.zip` or `.crx` containing `chrome` or `extension` |
-| Android | `.apk` (`.aab` ignored) |
+| Google TV | `.apk` whose name contains `google-tv`, `googletv`, `android-tv` or `-tv.` / `-tv-` (a separate TV build) |
+| Android | any other `.apk` (`.aab` ignored) |
 
+- A `coming-soon` app whose request finds a release shows as released with its downloads straight away, without waiting for the hourly run. With no release it shows "Coming soon" and a link to the repository.
   Signature, checksum and update files (`.sig`, `.sha256`, `latest.json`, `.blockmap`) are skipped. One button per platform; if two assets match one platform, the larger one wins (the installer rather than an update patch).
+- Android and Google TV always get separate buttons, labelled by the app's `platforms`: a TV-only app shows only "Google TV"; an app on both shows "Android" and "Google TV". When the release has one APK for both, the two buttons download that same file.
 - Each button shows the platform, and the card shows the version tag and the release date (formatted for the language with `Intl`, Latin digits). Size is formatted with `KB` / `MB` symbols.
 - A pre-release, or an app with `status: beta`, gets a visible "Beta" or "Pre-release" badge in text, not colour alone.
 - Fallback: on any network error, non-200 response (including 403/429 rate limit), a release with no matching assets, or no releases at all, the card shows a single "Download from GitHub Releases" link to `https://github.com/{repo}/releases`. A button is only drawn once its URL and size are known, so a broken or empty button never appears.
@@ -129,7 +154,7 @@ The page checks each entry on load. An entry with a missing field or an unknown 
 - Without JavaScript, a `<noscript>` block lists every app with a link to its Releases page.
 
 ## Deploy
-`.github/workflows/pages.yml`, on `push` to `main` with `paths: [site/**, .github/workflows/pages.yml]`, plus `workflow_dispatch`. Runner `ubuntu-24.04`. Permissions `contents: read`, `pages: write`, `id-token: write`; concurrency group `pages`. Two jobs, as in GitHub's Pages starter workflow: `build` runs `actions/checkout`, `actions/configure-pages` and `actions/upload-pages-artifact` (path `site`); `deploy` (`needs: build`) runs `actions/deploy-pages`. Before the upload, `build` replaces `__VERSION__` in `site/index.html` and `site/app.js` with the short commit id; `app.js` also requests `apps.json` and the language files with it,, so the CSS and JavaScript links (`style.css?v=__VERSION__`) change with every deploy and browsers never mix a new page with cached old files (GitHub Pages lets browsers keep files for 10 minutes). Locally the placeholder is harmless. Each action is pinned to a full commit SHA with the version in a comment. (A single job failed when the deploy step looked for the artifact a fraction of a second after the upload, before GitHub listed it.) The SHAs are looked up from each action's release tag when building.
+`.github/workflows/pages.yml`, on `push` to `main` with `paths: [site/**, .github/workflows/pages.yml, .github/scripts/collect-apps.mjs]`, hourly (`17 * * * *`), plus `workflow_dispatch`. Before the upload, `build` runs the collector; an hourly run compares the result with the live `apps.json` and skips the upload and deploy when nothing changed. GitHub turns hourly runs off after 60 days without activity in the repository; turn them on again in the Actions tab, or run the workflow by hand. Runner `ubuntu-24.04`. Permissions `contents: read`, `pages: write`, `id-token: write`; concurrency group `pages`. Two jobs, as in GitHub's Pages starter workflow: `build` runs `actions/checkout`, `actions/configure-pages` and `actions/upload-pages-artifact` (path `site`); `deploy` (`needs: build`) runs `actions/deploy-pages`. Before the upload, `build` replaces `__VERSION__` in `site/index.html` and `site/app.js` with the short commit id and the run number (an hourly run can redeploy the same commit with a new app list); `app.js` also requests `apps.json` and the language files with it,, so the CSS and JavaScript links (`style.css?v=__VERSION__`) change with every deploy and browsers never mix a new page with cached old files (GitHub Pages lets browsers keep files for 10 minutes). Locally the placeholder is harmless. Each action is pinned to a full commit SHA with the version in a comment. (A single job failed when the deploy step looked for the artifact a fraction of a second after the upload, before GitHub listed it.) The SHAs are looked up from each action's release tag when building.
 
 ## Repository page
 The repository's Website field (the About box) points to `https://kumarsumit17.github.io/KS-Suite/`, GitHub lists the `github-pages` deployment, and site releases are tagged `vMAJOR.MINOR.PATCH` with a GitHub release (`v1.0.0` is the first).

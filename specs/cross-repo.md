@@ -47,6 +47,9 @@ graph LR
 
 > When an edge contract changes, update this table and the `CLAUDE.md` files on **both** sides in the same release cycle.
 
+## The landing-page card
+Every app repository keeps a `ks-suite.json` at its root: its card on the KS-Suite landing page (name, group, icon, platforms, stack, English and Hindi tagline). The Pages workflow here reads it from the default branch every hour; adding the file to a new repository is all it takes to list the app. Format and rules: [Landing page](landing-page.md#the-app-card-ks-suitejson). When an app changes its platforms or description, it updates its own card.
+
 ## Shared code
 
 `ks-utility` is a build-time dependency only: it adds no runtime link between apps. An app gets a change to it only when the app moves its pinned version tag (a pushed tag never moves), so `ks-utility` never changes the meaning or signature of a function that is in use. The mechanism is described in [ks-utility's usage spec](https://github.com/kumarsumit17/ks-utility/blob/main/specs/usage.md).

@@ -35,6 +35,7 @@
   "download.windows": "Windows",
   "download.chrome": "Chrome एक्सटेंशन",
   "download.android": "Android",
+  "download.googleTv": "Google TV",
   "download.button": "{platform} के लिए डाउनलोड करें, {size}",
   "release.info": "वर्शन {version} · {date}",
   "release.checking": "नया रिलीज़ देखा जा रहा है...",

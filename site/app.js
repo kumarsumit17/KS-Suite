@@ -54,6 +54,7 @@
     { id: "windows", key: "download.windows", platform: "windows" },
     { id: "chrome", key: "download.chrome", platform: "chrome" },
     { id: "android", key: "download.android", platform: "android" },
+    { id: "googleTv", key: "download.googleTv", platform: "google-tv" },
   ];
 
   // Statuses one platform of a released or beta app can have (apps.json "platformStatus").
@@ -158,11 +159,16 @@
     if (typeof a.id !== "string" || !/^[a-z0-9-]+$/.test(a.id)) problems.push("id");
     if (typeof a.name !== "string" || !a.name) problems.push("name");
     if (typeof a.repo !== "string" || !/^[\w.-]+\/[\w.-]+$/.test(a.repo)) problems.push("repo");
-    if (typeof a.icon !== "string" || !(a.icon in LUCIDE)) problems.push("icon");
+    if (typeof a.icon !== "string") problems.push("icon");
+    else if (!(a.icon in LUCIDE)) {
+      // A new app's card may name an icon this page does not have yet: draw a generic one.
+      console.warn(`apps.json entry ${a.id}: unknown icon "${a.icon}", using "layers".`);
+      a.icon = "layers";
+    }
     if (a.restricted != null && typeof a.restricted !== "boolean") problems.push("restricted");
     if (!STATUSES.includes(a.status)) problems.push("status");
     if (!Array.isArray(a.platforms) || !a.platforms.length || !a.platforms.every((p) => p in PLATFORMS)) problems.push("platforms");
-    if (a.platformStatus != null && (typeof a.platformStatus !== "object" || a.status === "coming-soon" ||
+    if (a.platformStatus != null && (typeof a.platformStatus !== "object" ||
       !Object.entries(a.platformStatus).every(([p, s]) => a.platforms?.includes(p) && PLATFORM_STATUSES.includes(s)))) problems.push("platformStatus");
     if (a.stack != null && typeof a.stack !== "string") problems.push("stack");
     if (!state.groups.some((g) => g.id === a.group)) problems.push("group");
@@ -184,7 +190,8 @@
     // An .exe counts only as an installer or the app itself, not a bundled tool (ffmpeg.exe).
     if (/\.exe$/.test(n)) return /setup|install/.test(n) || n.startsWith(repoName) ? "windows" : null;
     if (/\.(zip|crx)$/.test(n) && /chrome|extension/.test(n)) return "chrome";
-    if (/\.apk$/.test(n)) return "android";
+    // A TV-only build names itself (app-google-tv.apk, app-tv.apk); any other APK is the phone one.
+    if (/\.apk$/.test(n)) return /google-?tv|android-?tv|[-_.]tv[-_.]/.test(n) ? "googleTv" : "android";
     return null;
   }
 
@@ -257,6 +264,18 @@
     return `https://github.com/${app.repo}/releases`;
   }
 
+  // Android and Google TV get a button each, labelled for the app's own platforms. When one
+  // APK serves both (no separate TV file in the release), both buttons fetch that APK; a
+  // TV-only app shows only "Google TV".
+  function downloadsFor(app, release) {
+    const has = (p) => app.platforms.includes(p);
+    const list = release.downloads.filter((d) => d.kind !== "android" || has("android"));
+    const apk = release.downloads.find((d) => d.kind === "android");
+    if (has("google-tv") && apk && !list.some((d) => d.kind === "googleTv")) list.push({ ...apk, kind: "googleTv" });
+    const order = (d) => KINDS.findIndex((k) => k.id === d.kind);
+    return list.sort((a, b) => order(a) - order(b));
+  }
+
   // The right side of the card's footer: download buttons, or a link when there are none.
   function actions(app) {
     const box = el("div", { class: "actions", "aria-live": "polite" });
@@ -265,14 +284,14 @@
       box.append(el("span", { class: "lock-note" }, icon("lock"), el("span", null, t("access.private"))));
       return box;
     }
-    if (app.status === "coming-soon") { box.append(source()); return box; }
+    if (statusOf(app) === "coming-soon") { box.append(source()); return box; }
     if (!state.releases.has(app.id)) { box.append(el("span", { class: "muted" }, t("release.checking"))); return box; }
     const release = state.releases.get(app.id);
     if (!release) {
       box.append(el("a", { class: "btn btn-outline btn-small", href: releasesUrl(app) }, el("span", null, t("release.fallback")), icon("arrowUpRight")));
       return box;
     }
-    for (const d of release.downloads) {
+    for (const d of downloadsFor(app, release)) {
       const kind = KINDS.find((k) => k.id === d.kind);
       const platform = withPlatformStatus(app, kind.platform, t(kind.key));
       const size = formatSize(d.size);
@@ -283,11 +302,18 @@
     return box;
   }
 
+  // apps.json says "coming-soon" until the hourly collector sees a release; a release
+  // found here in the meantime shows the app as released straight away.
+  function statusOf(app) {
+    return app.status === "coming-soon" && state.releases.get(app.id) ? "released" : app.status;
+  }
+
   function card(app) {
     const release = state.releases.get(app.id);
+    const status = statusOf(app);
     const badges = el("span", { class: "badges" },
-      app.restricted ? badge("beta", "access.privateBadge") : badge(app.status, statusKey(app.status)));
-    if (!app.restricted && release && release.prerelease && app.status !== "beta") badges.append(badge("prerelease", "status.prerelease"));
+      app.restricted ? badge("beta", "access.privateBadge") : badge(status, statusKey(status)));
+    if (!app.restricted && release && release.prerelease && status !== "beta") badges.append(badge("prerelease", "status.prerelease"));
 
     const platforms = el("span", { class: "platform-pill" },
       el("span", { class: "visually-hidden" }, `${t("platforms.label")}: `),
@@ -436,7 +462,7 @@
     draw();
     applyView(true); // a shared link ending in #apps opens straight on the apps, once they are drawn
 
-    await Promise.all(state.apps.filter((a) => a.status !== "coming-soon" && !a.restricted).map(async (app) => {
+    await Promise.all(state.apps.filter((a) => !a.restricted).map(async (app) => {
       state.releases.set(app.id, await fetchRelease(app.repo));
       // Replace only this card, so focus elsewhere on the page is kept.
       document.querySelector(`[data-app="${app.id}"]`)?.replaceWith(card(app));

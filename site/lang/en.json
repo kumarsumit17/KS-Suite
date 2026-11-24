@@ -35,6 +35,7 @@
   "download.windows": "Windows",
   "download.chrome": "Chrome extension",
   "download.android": "Android",
+  "download.googleTv": "Google TV",
   "download.button": "Download for {platform}, {size}",
   "release.info": "Version {version} · {date}",
   "release.checking": "Checking for the newest release...",

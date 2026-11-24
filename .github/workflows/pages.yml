@@ -6,6 +6,11 @@ on:
     paths:
       - "site/**"
       - ".github/workflows/pages.yml"
+      - ".github/scripts/collect-apps.mjs"
+  # Hourly: picks up a new app (a repository with a ks-suite.json card) or an app's first
+  # release. Versions and downloads need no run; the page reads them live from GitHub.
+  schedule:
+    - cron: "17 * * * *"
   workflow_dispatch:
 
 permissions:
@@ -22,23 +27,48 @@ jobs:
     runs-on: ubuntu-24.04
     permissions:
       contents: read
+    outputs:
+      changed: ${{ steps.compare.outputs.changed }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-      - uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
+      - id: pages
+        uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
+      # site/apps.json is the fallback list; this rebuilds it from every repository's
+      # ks-suite.json card and its releases (.github/scripts/collect-apps.mjs).
+      - name: Collect apps from GitHub
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: node .github/scripts/collect-apps.mjs site/apps.json
+      # An hourly run deploys only when the app list differs from the live one.
+      - name: Compare with the live app list
+        id: compare
+        shell: bash
+        env:
+          EVENT: ${{ github.event_name }}
+          LIVE: ${{ steps.pages.outputs.base_url }}/apps.json
+        run: |
+          if [ "$EVENT" = schedule ] && curl -fsS "$LIVE" -o /tmp/live.json && cmp -s /tmp/live.json site/apps.json; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"; echo "No change in the app list."
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
       # index.html links its CSS and JavaScript as file?v=__VERSION__, and app.js asks
       # for its data files the same way. Each deploy puts the commit id there, so
-      # browsers never mix files from different deploys.
+      # browsers never mix files from different deploys (the run number: an hourly run can
+      # redeploy the same commit with a new app list).
       - name: Stamp asset versions
         shell: bash
-        run: sed -i "s/__VERSION__/${GITHUB_SHA::7}/g" site/index.html site/app.js
-      - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        run: sed -i "s/__VERSION__/${GITHUB_SHA::7}-${GITHUB_RUN_NUMBER}/g" site/index.html site/app.js
+      - if: steps.compare.outputs.changed == 'true'
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
         with:
           path: site
 
   deploy:
     needs: build
+    if: needs.build.outputs.changed == 'true'
     runs-on: ubuntu-24.04
     permissions:
       pages: write
