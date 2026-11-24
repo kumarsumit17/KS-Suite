@@ -61,7 +61,7 @@ Each app's folders decide which Android builds it ships; there is no "build both
 - **Phone only** (`ks-vault`, `ks-expense-manager`): no TV build. A phone interface on a TV is unusable with a remote.
 - **TV only** (`ks-tv-launcher`): only the TV APK, with no Android build.
 - **No Android** (`ks-download-manager`): neither.
-- One universal APK for phone and TV only when an app's TV and phone screens are nearly the same, which is rare. Before an app first ships two APKs, it releases its new update checker in a one-APK release, so copies already installed pick the right file afterwards.
+- One universal APK for phone and TV only when an app's TV and phone screens are nearly the same, which is rare. Before an app that updates itself first ships two APKs, it releases its new update checker in a one-APK release, so copies already installed pick the right file afterwards. An app with no in-app updater (`ks-beam`) skips this step.
 
 ## Existing code
 
