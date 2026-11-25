@@ -10,6 +10,10 @@ okf_version: "0.2"
 * [Dependencies](dependencies.md) - Third-party dependencies are kept to the minimum; the order of preference and what must be reported for each new one.
 * [Platform folders](platform-folders.md) - The platform folders every KS-Suite app repository has, which platforms each app targets, and the shared/ folder for code several platforms use.
 
+# Plans
+
+* [Per-platform optimization rollout](plan-per-platform.md) - The order in which every KS-Suite app audits, plans and tunes each platform build for its own OS, the gaps to check in each, and where each app stands.
+
 # Playbooks
 
 * [Testing on every platform](testing.md) - How each KS-Suite app is built, run and tested on each platform it targets from the owner's Apple-silicon Mac, with emulators for Android and Google TV, CI for Windows, and Chrome for the extension.

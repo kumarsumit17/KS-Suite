@@ -1,5 +1,6 @@
 # 2026-11-25
 
+* **New**: [Per-platform optimization rollout](plan-per-platform.md): the order the apps follow, how each audits and plans, the gaps to check, and each app's status (handed over from the per-platform session).
 * **Update**: [Versioning and signing](versioning-signing.md): before its first platform tag, an app that updates itself ships one plain bridge release that reads the release list.
 * **Update**: [Testing](testing.md): the `ks-vault` row has its Gradle build (`:mobile:android`), the no-network check and `FLAG_SECURE` screen reading; always set `ANDROID_SERIAL`; `ks-forge` rows for macOS and Windows (CI).
 * **Update**: [Platform folders](platform-folders.md), [index](index.md): `ks-forge` (desktop terminal, macOS and Windows) added; the landing page lists KS Forge.
