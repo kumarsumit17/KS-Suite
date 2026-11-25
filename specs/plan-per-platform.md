@@ -21,12 +21,12 @@ The rule is in [Platform folders](platform-folders.md#each-platform-build-is-opt
 | # | App | Platforms | Status (2026-11-25) |
 |---|---|---|---|
 | 0 | `ks-jaiplayer` | Android, Google TV, macOS, Windows | Plan approved; building. First app with platform tags (ks-utility `v0.10.0`). |
-| 1 | `ks-streamflix` | Android, Google TV, macOS and Windows server | Brief sent; audit and plan to come |
+| 1 | `ks-streamflix` | Android, Google TV, macOS and Windows server | Plan drafted on `dev` (daaa83e), waiting for the owner's approval. v1.1.0 (the phone/TV split) is to be the bridge release for platform tags. Its own gaps: closing the desktop window stops the server; the computer may sleep mid-stream; FFmpeg is a separate install; the TV has no passthrough, HDR or frame-rate matching |
 | 2 | `ks-beam` | Android, Google TV, macOS, Windows | Brief sent; reuses ks-jaiplayer's Android work |
 | 3 | `ks-tv-launcher` | Google TV | Brief sent; every TV size, 43 to 100 inch |
 | 4 | `ks-download-manager` | macOS, Windows, Chrome extension | Brief sent; Rust platform-tag helpers ready in ks-utility |
-| 5 | `ks-vault` | Android | Brief sent |
-| 6 | `ks-expense-manager` | Android | Brief sent |
+| 5 | `ks-vault` | Android | Plan approved 2026-11-25. Step 1 is on `dev` (199495e): the APK went from 9.6 to 7.3 MB. Next: cold start and unlock time on a real phone, TalkBack and font scale, then stage 2. Plain tags, no bridge release (no update checker) |
+| 6 | `ks-expense-manager` | Android | **Done**: plan approved 2026-11-25, released as v0.1.0 (47ffdef). Plain tags, no bridge release (no update checker). Hand checks left (they don't block a release): cold start on a real phone, a TalkBack session by ear |
 | 7 | `ks-forge` | macOS, Windows | Brief sent |
 
 The order is a preference, not a gate. Each app moves at its own pace, and this table is updated when an app's plan is approved or released.
