@@ -65,6 +65,20 @@
       }
     },
     {
+      "id": "ks-forge",
+      "name": "KS Forge",
+      "group": "desktop",
+      "repo": "kumarsumit17/ks-forge",
+      "icon": "terminal",
+      "status": "released",
+      "platforms": ["macos", "windows"],
+      "stack": "Rust · Tauri · TypeScript",
+      "tagline": {
+        "en": "Fast, private terminal for macOS and Windows.",
+        "hi": "macOS और Windows के लिए तेज़ और प्राइवेट टर्मिनल।"
+      }
+    },
+    {
       "id": "ks-jaiplayer",
       "name": "KS JaiPlayer",
       "group": "media",

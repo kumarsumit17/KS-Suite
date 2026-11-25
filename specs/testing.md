@@ -15,7 +15,7 @@ The owner's machine is an Apple-silicon Mac. Android phones and Google TV are te
 |---|---|---|---|---|
 | `ks-tv-launcher` | Google TV | `./gradlew assembleDebug testDebugUnitTest lintDebug`, `connectedDebugAndroidTest` on the TV emulator | `installDebug`, then `adb shell am start -n com.ks.tvlauncher.dev/com.ks.tvlauncher.MainActivity` (KS TV Dev only) | Mac (TV emulator) |
 | `ks-streamflix` | Android phone and Google TV (one APK until its TV split), the server on macOS and Windows | `./gradlew check` (every test with FFmpeg when installed, lint, language files, size budgets) | `:mobile:android:installDebug` on the phone and TV emulators (an emulator reaches the Mac's server at `10.0.2.2:8742`); `:desktop:mac:run` for the server and its window | Mac (both emulators, macOS); Windows on CI (the `.msi` installed, started and uninstalled) |
-| `ks-vault` | Android phone | `./gradlew assembleDebug testDebugUnitTest lintDebug`, `connectedDebugAndroidTest` (Keystore needs a device) | `installDebug`, then `adb shell monkey -p com.ks.vault 1` | Mac (phone emulator); no Gradle build yet |
+| `ks-vault` | Android phone | `./gradlew :mobile:android:assembleDebug :mobile:android:testDebugUnitTest :mobile:android:lintDebug`, `:mobile:android:connectedDebugAndroidTest` (Keystore needs a device), `:mobile:android:check` (adds the language files and a no-network manifest check) | `:mobile:android:installDebug`, then `adb shell monkey -p com.ks.vault -c android.intent.category.LAUNCHER 1` (the debug build has the same package); `FLAG_SECURE` makes screenshots black, so read the screen with `adb shell uiautomator dump` | Mac (phone emulator) |
 | `ks-expense-manager` | Android phone | `./gradlew assembleDebug testDebugUnitTest lintDebug`, `connectedDebugAndroidTest` (Room migrations) | `installDebug`, then `adb shell monkey -p com.ks.expense 1` | Mac (phone emulator); no Gradle build yet |
 | `ks-jaiplayer` | Android phone and Google TV (separate apps from v1.2.0) | `./gradlew :shared:allTests`, the Android module's unit tests and lint | `:mobile:android:installDebug` on the phone emulator and `:tv:google-tv:installDebug` on the TV emulator; `ACTION_VIEW` hand-off with `adb shell am start -a android.intent.action.VIEW -d <file or URL> -t video/*` | Mac (both emulators) |
 | `ks-jaiplayer` | macOS | `./gradlew :shared:allTests`, `:desktop:mac:run`, `:desktop:mac:packageReleaseDistributionForCurrentOS` (.dmg) | needs VLC 3.x installed | Mac |
@@ -27,6 +27,8 @@ The owner's machine is an Apple-silicon Mac. Android phones and Google TV are te
 | `ks-beam` | Google TV (receiver) | `./gradlew check`, `:mobile:android:assembleDebug` | `installDebug` on the TV emulator, then cast from the Mac: `adb forward tcp:49152 tcp:<port from logcat>` and `EmulatorCastTest` with `KS_BEAM_RENDERER=http://127.0.0.1:49152/desc.xml` (ks-beam `CLAUDE.md`) | Mac (TV emulator) |
 | `ks-beam` | macOS | `./gradlew check`; `:desktop:mac:packageReleaseDmg` needs a non-Homebrew JDK | `./gradlew :desktop:mac:run`; casting needs a DLNA TV or projector on the same network | Mac |
 | `ks-beam` | Windows | `:shared:desktopTest`, `:desktop:windows:packageReleaseMsi`, silent install and uninstall | the CI run's `windows-msi-unsigned` artifact | **CI only** (`windows-2025`) |
+| `ks-forge` | macOS | `cd shared && npm run build && npm test && npm run test:lang`, `cargo test`, `cargo clippy`, `npm run tauri build -- --bundles app` | `node scripts/selftest.mjs "<app>/Contents/MacOS/ks-forge"` (the self-test drives the real window) | Mac |
+| `ks-forge` | Windows | the NSIS installer is built, installed silently, self-tested as installed and uninstalled | the CI run's `windows-installer-unsigned` artifact | **CI only** (`windows-2025`) |
 
 An app with "no Gradle build yet" has its commands in its `CLAUDE.md`; they apply once its build exists.
 
@@ -50,6 +52,7 @@ scripts/emulators.sh stop tv
 - SDK: `/opt/homebrew/share/android-commandlinetools` (Homebrew `android-commandlinetools`), with `emulator`, `platform-tools` and the two system images. The script uses `ANDROID_HOME` if set.
 - Both AVDs have a hardware keyboard: the Mac's arrow keys, Enter and Esc are the D-pad, OK and Back, so TV screens can be checked for D-pad navigation by hand. `adb shell input keyevent DPAD_DOWN` (or `DPAD_CENTER`, `BACK`) does the same from a script.
 - Both can run at once; their fixed ports keep the serials stable.
+- Always set `ANDROID_SERIAL` before an `adb` or Gradle device task: without it, `installDebug` installs on every running emulator, including one another session is using.
 - The AVDs are API 36. An app spec that names another API level (for example API 34 for TV) can add an AVD from `system-images;android-34;android-tv;arm64-v8a`.
 - An emulator does not replace the hand check on a real TV or phone after a release ([Release cycle](release-cycle.md), step 5): remote, HDMI, performance and real-account behaviour differ.
 

@@ -54,6 +54,7 @@ Code moves outward only when it is needed there: from a platform folder to `shar
 | `ks-expense-manager` | `mobile/android` | `tv/*`, `desktop/*`, `mobile/ios` | no |
 | `ks-download-manager` | `desktop/mac`, `desktop/windows` | `tv/*`, `mobile/*` | yes: `src/`, `src-tauri/` and `extension/`, once moved |
 | `ks-beam` | `mobile/android`, `tv/google-tv` (separate TV app from v1.1.0: the phone app sends, the TV app receives), `desktop/windows`, `desktop/mac` | `mobile/ios` | yes: the Kotlin Multiplatform module (casting core, receiver protocol and interface) |
+| `ks-forge` | `desktop/mac`, `desktop/windows` | `tv/*`, `mobile/*` | yes: the Tauri codebase (`shared/src`, `shared/src-tauri`) |
 
 ## Phone and Google TV builds
 Each app's folders decide which Android builds it ships; there is no "build both" rule:
