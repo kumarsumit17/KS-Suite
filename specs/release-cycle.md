@@ -13,7 +13,7 @@ Every KS-Suite app releases the same way. Version numbers and signing are in [Ve
 
 1. **Test on `dev`.** All work is committed on `dev` ([Branches](#branches)). CI is green on `dev`, and a **rehearsal** of the release (below) is green on `dev`. The release build is installed and tried on the emulators before every release: the phone emulator, the Google TV emulators for a TV app ([Testing on every platform](testing.md)), the Mac for macOS, and Windows through CI. The version's changelog section is dated, if the app keeps a `CHANGELOG.md`.
 2. **Merge to `main`.** Fast-forward `main` to `dev` and push it. CI is green on `main`.
-3. **Push the tag.** An annotated tag `vMAJOR.MINOR.PATCH` (or a [platform tag](versioning-signing.md) `<platform>-vMAJOR.MINOR.PATCH`) on `main`, pushed on its own.
+3. **Push the tag.** An annotated tag `vMAJOR.MINOR.PATCH`; it releases every platform build ([one version for every platform](versioning-signing.md#one-version-for-every-platform)) on `main`, pushed on its own.
 4. **The workflow publishes.** The tag's run builds every file, checks them, and publishes the GitHub release as a **full release, marked latest**, once every build and check has passed. There is no draft step and no one publishes by hand.
 5. **Hand checks after the release.** The checks that need a person (installing on real devices, store or OS prompts) are done on the published files. Anything they find goes into the **next version**; the published release is not changed.
 

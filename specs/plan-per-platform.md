@@ -7,27 +7,27 @@ tags: [plan, platforms, optimization, android, google-tv, macos, windows]
 
 # Per-platform optimization rollout
 
-The rule is in [Platform folders](platform-folders.md#each-platform-build-is-optimized-for-its-os): each platform build of every app is its own app, tuned to its OS (look and input, startup, hardware decoding and native media stack, packaging and size, OS integrations, accessibility), with as few dependencies as possible. It can have its own version through platform tags ([Versioning and signing](versioning-signing.md)). This plan covers how the suite gets there. Each app's own work lives in its repository.
+The rule is in [Platform folders](platform-folders.md#each-platform-build-is-optimized-for-its-os): each platform build of every app is its own app, tuned to its OS (look and input, startup, hardware decoding and native media stack, packaging and size, OS integrations, accessibility), with as few dependencies as possible. All of an app's builds share one version from one plain tag ([Versioning and signing](versioning-signing.md#one-version-for-every-platform)): the plans cover only the optimizations. This plan covers how the suite gets there. Each app's own work lives in its repository.
 
 ## How each app does it
 
 1. The app's own session writes an audit and a plan in the app's `specs/`, modelled on ks-jaiplayer's [`specs/plan-per-platform.md`](https://github.com/kumarsumit17/ks-jaiplayer/blob/dev/specs/plan-per-platform.md): an audit table, one section per platform, the decisions it needs from the owner, and a build order with tests.
 2. The owner approves the plan before any building starts.
 3. The app builds it on `dev` and releases it by the [Release cycle](release-cycle.md). It tests every platform by [Testing on every platform](testing.md). Hand checks and paid signing never block a release.
-4. An app that moves to platform tags first ships one plain bridge release ([Versioning and signing](versioning-signing.md)).
+4. Platform tags and bridge releases are out of scope for now: an app's plan keeps one `vX.Y.Z` for all its builds.
 
 ## Order and status
 
 | # | App | Platforms | Status (2026-11-25) |
 |---|---|---|---|
-| 0 | `ks-jaiplayer` | Android, Google TV, macOS, Windows | Plan approved; building. First app with platform tags (ks-utility `v0.10.0`). |
-| 1 | `ks-streamflix` | Android, Google TV, macOS and Windows server | Plan drafted on `dev` (daaa83e), waiting for the owner's approval. v1.1.0 (the phone/TV split) is to be the bridge release for platform tags. Its own gaps: closing the desktop window stops the server; the computer may sleep mid-stream; FFmpeg is a separate install; the TV has no passthrough, HDR or frame-rate matching |
+| 0 | `ks-jaiplayer` | Android, Google TV, macOS, Windows | Plan approved; building the optimizations, with one `vX.Y.Z` for all four builds |
+| 1 | `ks-streamflix` | Android, Google TV, macOS and Windows server | Plan drafted on `dev` (daaa83e), waiting for the owner's approval. v1.1.0 (the phone/TV split) is a normal release; no platform tags. Its own gaps: closing the desktop window stops the server; the computer may sleep mid-stream; FFmpeg is a separate install; the TV has no passthrough, HDR or frame-rate matching |
 | 2 | `ks-beam` | Android, Google TV, macOS, Windows | Brief sent; reuses ks-jaiplayer's Android work |
 | 3 | `ks-tv-launcher` | Google TV | Brief sent; every TV size, 43 to 100 inch |
-| 4 | `ks-download-manager` | macOS, Windows, Chrome extension | Brief sent; Rust platform-tag helpers ready in ks-utility |
-| 5 | `ks-vault` | Android | Plan approved 2026-11-25. Step 1 is on `dev` (199495e): the APK went from 9.6 to 7.3 MB. Next: cold start and unlock time on a real phone, TalkBack and font scale, then stage 2. Plain tags, no bridge release (no update checker) |
-| 6 | `ks-expense-manager` | Android | **Done**: plan approved 2026-11-25, released as v0.1.0 (47ffdef). Plain tags, no bridge release (no update checker). Hand checks left (they don't block a release): cold start on a real phone, a TalkBack session by ear |
-| 7 | `ks-forge` | macOS, Windows | Plan drafted on `dev` (6dfc444) with 7 owner decisions, waiting for approval. `mac-v`/`windows-v` tags after a plain bridge release v0.1.1. Decisions include the Windows title bar (tabs with Mica, or native), optional dependencies and macOS blur |
+| 4 | `ks-download-manager` | macOS, Windows, Chrome extension | Brief sent |
+| 5 | `ks-vault` | Android | Plan approved 2026-11-25. Step 1 is on `dev` (199495e): the APK went from 9.6 to 7.3 MB. Next: cold start and unlock time on a real phone, TalkBack and font scale, then stage 2 |
+| 6 | `ks-expense-manager` | Android | **Done**: plan approved 2026-11-25, released as v0.1.0 (47ffdef). Hand checks left (they don't block a release): cold start on a real phone, a TalkBack session by ear |
+| 7 | `ks-forge` | macOS, Windows | Plan drafted on `dev` (6dfc444) with 7 owner decisions, waiting for approval. Its platform-tag and bridge-release decisions are dropped (one `vX.Y.Z`); the others include the Windows title bar (tabs with Mica, or native), optional dependencies and macOS blur |
 
 The order is a preference, not a gate. Each app moves at its own pace, and this table is updated when an app's plan is approved or released.
 

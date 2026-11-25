@@ -1,5 +1,6 @@
 # 2026-11-25
 
+* **Update**: [Versioning and signing](versioning-signing.md), [Release cycle](release-cycle.md), [Per-platform optimization rollout](plan-per-platform.md) and `CLAUDE.md`: owner's rule for every app: one `vX.Y.Z` tag releases all platform builds with one version; platform tags and bridge releases are not used for now; the per-platform plans cover only the optimizations.
 * **Update**: [Per-platform optimization rollout](plan-per-platform.md): `ks-forge` plan drafted, waiting for approval.
 * **Update**: [Per-platform optimization rollout](plan-per-platform.md): `ks-expense-manager` done (v0.1.0); `ks-vault` step 1 on dev; `ks-streamflix` plan waiting for approval.
 * **New**: [Per-platform optimization rollout](plan-per-platform.md): the order the apps follow, how each audits and plans, the gaps to check, and each app's status (handed over from the per-platform session).
