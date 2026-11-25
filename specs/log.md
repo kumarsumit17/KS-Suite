@@ -1,5 +1,6 @@
 # 2026-11-25
 
+* **Update**: [Per-platform optimization rollout](plan-per-platform.md): `ks-beam` releases with platform tags.
 * **Update**: [Per-platform optimization rollout](plan-per-platform.md): `ks-vault` tags `android-vX.Y.Z`.
 * **Update**: [Per-platform optimization rollout](plan-per-platform.md): `ks-streamflix` bridge release is v1.2.0, after the plain v1.1.0.
 * **Update**: [Landing page](landing-page.md): each platform's download comes from the newest release that has its file (platform tags), and the card links to all releases.
