@@ -116,6 +116,20 @@ EOT
 
 has_avd() { "$EMULATOR" -list-avds 2>/dev/null | grep -qx "$1"; }
 
+# The AVD running on an adb serial, or nothing when no emulator is there. Another app's
+# own AVD can hold one of our fixed ports, so every command checks the name before it
+# uses a serial: it never reports or stops an emulator that is not the one asked for.
+avd_on() { # serial
+  "$ADB" devices | grep -q "^$1[[:space:]]" || return 0
+  "$ADB" -s "$1" emu avd name 2>/dev/null | head -n 1 | tr -d '\r'
+}
+check_port() { # serial avd; fails when another AVD holds the port
+  on=$(avd_on "$1")
+  [ -z "$on" ] || [ "$on" = "$2" ] && return 0
+  echo "$1 is AVD '$on', not $2: another emulator holds port ${1#emulator-}. Stop that one first (adb -s $1 emu kill, if it is yours) or use another size." >&2
+  return 1
+}
+
 create_one() { # name image device
   if has_avd "$1"; then echo "$1: exists"; return; fi
   [ -f "$SDK/$(echo "$2" | tr ";" "/")/package.xml" ] || { echo "missing SDK package: $2 (sdkmanager \"$2\")" >&2; return 1; }
@@ -152,11 +166,13 @@ case "${1:-}" in
   start)
     which="${2:?phone, tv or tv-<inches>}"; avd=$(avd_of "$which"); port=$(port_of "$which"); serial="emulator-$port"
     extra=""; [ "${3:-}" = "--headless" ] && extra="-no-window -no-audio"
-    if ! "$ADB" devices | grep -q "^$serial"; then
+    check_port "$serial" "$avd" || exit 1
+    if [ -z "$(avd_on "$serial")" ]; then
       # shellcheck disable=SC2086
       nohup "$EMULATOR" -avd "$avd" -port "$port" -no-snapshot-save -no-boot-anim $extra >"${TMPDIR:-/tmp}/$avd.log" 2>&1 &
     fi
     "$ADB" -s "$serial" wait-for-device
+    check_port "$serial" "$avd" || exit 1
     i=0
     until [ "$("$ADB" -s "$serial" shell getprop sys.boot_completed 2>/dev/null | tr -d '\r')" = 1 ]; do
       i=$((i + 1)); [ "$i" -gt 180 ] && { echo "$avd did not boot in 6 minutes (log: ${TMPDIR:-/tmp}/$avd.log)" >&2; exit 1; }
@@ -166,10 +182,15 @@ case "${1:-}" in
     echo "$avd booted as $serial"
     ;;
   stop)
-    port=$(port_of "${2:?phone, tv or tv-<inches>}"); serial="emulator-$port"; "$ADB" -s "$serial" emu kill >/dev/null 2>&1 || true; echo "stopped $serial"
+    which="${2:?phone, tv or tv-<inches>}"; avd=$(avd_of "$which"); serial="emulator-$(port_of "$which")"
+    check_port "$serial" "$avd" || exit 1
+    if [ -z "$(avd_on "$serial")" ]; then echo "$avd is not running"; exit 0; fi
+    "$ADB" -s "$serial" emu kill >/dev/null 2>&1 || true; echo "stopped $avd ($serial)"
     ;;
   serial)
-    port=$(port_of "${2:?phone, tv or tv-<inches>}"); echo "emulator-$port"
+    which="${2:?phone, tv or tv-<inches>}"; avd=$(avd_of "$which"); serial="emulator-$(port_of "$which")"
+    check_port "$serial" "$avd" || exit 1
+    echo "$serial"
     ;;
   list)
     "$EMULATOR" -list-avds; "$ADB" devices

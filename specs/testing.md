@@ -52,6 +52,7 @@ scripts/emulators.sh stop tv
 - SDK: `/opt/homebrew/share/android-commandlinetools` (Homebrew `android-commandlinetools`), with `emulator`, `platform-tools` and the two system images. The script uses `ANDROID_HOME` if set.
 - Both AVDs have a hardware keyboard: the Mac's arrow keys, Enter and Esc are the D-pad, OK and Back, so TV screens can be checked for D-pad navigation by hand. `adb shell input keyevent DPAD_DOWN` (or `DPAD_CENTER`, `BACK`) does the same from a script.
 - Both can run at once; their fixed ports keep the serials stable.
+- Another app's own AVD can hold one of these ports. `serial`, `start` and `stop` check which AVD is on the port (`adb -s <serial> emu avd name`) and refuse when it is not theirs, so the script never reports or stops another session's emulator.
 - Always set `ANDROID_SERIAL` before an `adb` or Gradle device task: without it, `installDebug` installs on every running emulator, including one another session is using.
 - The AVDs are API 36. An app spec that names another API level (for example API 34 for TV) can add an AVD from `system-images;android-34;android-tv;arm64-v8a`.
 - An emulator does not replace the hand check on a real TV or phone after a release ([Release cycle](release-cycle.md), step 5): remote, HDMI, performance and real-account behaviour differ.
