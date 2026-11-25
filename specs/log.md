@@ -1,5 +1,6 @@
 # 2026-11-25
 
+* **Update**: [Per-platform optimization rollout](plan-per-platform.md): `ks-vault` tags `android-vX.Y.Z`.
 * **Update**: [Per-platform optimization rollout](plan-per-platform.md): `ks-streamflix` bridge release is v1.2.0, after the plain v1.1.0.
 * **Update**: [Landing page](landing-page.md): each platform's download comes from the newest release that has its file (platform tags), and the card links to all releases.
 * **Update**: [Versioning and signing](versioning-signing.md), [Release cycle](release-cycle.md), [Per-platform optimization rollout](plan-per-platform.md) and `CLAUDE.md`: owner's rule, replacing the one-version rule: platform tags (`android-`, `google-tv-`, `mac-`, `windows-vX.Y.Z`) for every app, one-platform apps included; a plain tag still releases every platform; a bridge release first for apps that check for updates.

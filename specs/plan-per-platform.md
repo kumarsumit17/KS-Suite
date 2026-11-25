@@ -25,7 +25,7 @@ The rule is in [Platform folders](platform-folders.md#each-platform-build-is-opt
 | 2 | `ks-beam` | Android, Google TV, macOS, Windows | Plan approved. Steps 2 and 3 on `dev`: senders keep a cast alive (0915924); the Google TV receiver runs as a foreground service with a media session, audio focus and frame-rate matching, tested on every TV size except 75 inch (d868b2f). Next: step 4, desktop look and input, when the owner says go |
 | 3 | `ks-tv-launcher` | Google TV | Brief sent; every TV size, 43 to 100 inch |
 | 4 | `ks-download-manager` | macOS, Windows, Chrome extension | Brief sent |
-| 5 | `ks-vault` | Android | Plan approved 2026-11-25. Step 1 is on `dev` (199495e): the APK went from 9.6 to 7.3 MB. Next: cold start and unlock time on a real phone, TalkBack and font scale, then stage 2 |
+| 5 | `ks-vault` | Android | Plan approved 2026-11-25. Step 1 is on `dev` (199495e): the APK went from 9.6 to 7.3 MB. Next: cold start and unlock time on a real phone, TalkBack and font scale, then stage 2. Tags `android-vX.Y.Z` (4520666); the first release waits on the signing-secrets check and a rehearsal |
 | 6 | `ks-expense-manager` | Android | **Done**: plan approved 2026-11-25, released as v0.1.0 (47ffdef). Hand checks left (they don't block a release): cold start on a real phone, a TalkBack session by ear |
 | 7 | `ks-forge` | macOS, Windows | Plan approved 2026-11-25 (8c00f19). Building: macOS menus, Dock and Finder; Windows title-bar tabs, Explorer, jump list; blur, notifications, screen readers (9c7c48c). Unsigned until certificates; the owner's Windows hand check after step 4 |
 
