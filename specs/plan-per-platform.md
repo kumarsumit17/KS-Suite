@@ -20,9 +20,9 @@ The rule is in [Platform folders](platform-folders.md#each-platform-build-is-opt
 
 | # | App | Platforms | Status (2026-11-25) |
 |---|---|---|---|
-| 0 | `ks-jaiplayer` | Android, Google TV, macOS, Windows | Plan approved; building the optimizations, with one `vX.Y.Z` for all four builds |
+| 0 | `ks-jaiplayer` | Android, Google TV, macOS, Windows | Plan approved; building the optimizations. Back to one `vX.Y.Z` for all four builds (0368fb6) |
 | 1 | `ks-streamflix` | Android, Google TV, macOS and Windows server | Plan drafted on `dev` (a8f1835: optimizations only, one version), waiting for the owner's approval. v1.1.0 (the phone/TV split) is a normal release; no platform tags. Its own gaps: closing the desktop window stops the server; the computer may sleep mid-stream; FFmpeg is a separate install; the TV has no passthrough, HDR or frame-rate matching |
-| 2 | `ks-beam` | Android, Google TV, macOS, Windows | Brief sent; reuses ks-jaiplayer's Android work |
+| 2 | `ks-beam` | Android, Google TV, macOS, Windows | Plan approved, one version. Steps 2 and 3 on `dev`: senders keep a cast alive (0915924); the Google TV receiver runs as a foreground service with a media session, audio focus and frame-rate matching, tested on every TV size except 75 inch (d868b2f). Next: step 4, desktop look and input, when the owner says go |
 | 3 | `ks-tv-launcher` | Google TV | Brief sent; every TV size, 43 to 100 inch |
 | 4 | `ks-download-manager` | macOS, Windows, Chrome extension | Brief sent |
 | 5 | `ks-vault` | Android | Plan approved 2026-11-25. Step 1 is on `dev` (199495e): the APK went from 9.6 to 7.3 MB. Next: cold start and unlock time on a real phone, TalkBack and font scale, then stage 2 |

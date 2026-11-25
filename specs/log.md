@@ -1,5 +1,6 @@
 # 2026-11-25
 
+* **Update**: [Per-platform optimization rollout](plan-per-platform.md): `ks-beam` steps 2 and 3 on dev; `ks-jaiplayer` back to one version.
 * **Update**: [Testing](testing.md): `scripts/emulators.sh` checks the AVD on a port before `serial`, `start` or `stop`, and refuses when another AVD holds it.
 * **Update**: [Versioning and signing](versioning-signing.md), [Release cycle](release-cycle.md), [Per-platform optimization rollout](plan-per-platform.md) and `CLAUDE.md`: owner's rule for every app: one `vX.Y.Z` tag releases all platform builds with one version; platform tags and bridge releases are not used for now; the per-platform plans cover only the optimizations.
 * **Update**: [Per-platform optimization rollout](plan-per-platform.md): `ks-forge` plan drafted, waiting for approval.
