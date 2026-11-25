@@ -1,5 +1,7 @@
 # 2026-11-25
 
+* **Update**: [Landing page](landing-page.md): each platform's download comes from the newest release that has its file (platform tags), and the card links to all releases.
+* **Update**: [Versioning and signing](versioning-signing.md), [Release cycle](release-cycle.md), [Per-platform optimization rollout](plan-per-platform.md) and `CLAUDE.md`: owner's rule, replacing the one-version rule: platform tags (`android-`, `google-tv-`, `mac-`, `windows-vX.Y.Z`) for every app, one-platform apps included; a plain tag still releases every platform; a bridge release first for apps that check for updates.
 * **Update**: workspace `CLAUDE.md`: eight apps; `ks-forge` is the second desktop-only Rust/Tauri app, so the Kotlin, Gradle and package-root rules do not apply to it, and it takes `ks-utility` as git dependencies like `ks-download-manager`.
 * **Update**: [Per-platform optimization rollout](plan-per-platform.md): `ks-forge` plan approved, one version, building.
 * **Update**: [Per-platform optimization rollout](plan-per-platform.md): `ks-beam` steps 2 and 3 on dev; `ks-jaiplayer` back to one version.

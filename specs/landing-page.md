@@ -119,7 +119,7 @@ The `site/apps.json` entries stay as the fallback: a card replaces the fields it
 A GitHub call that fails leaves that part as it was (a warning in the run), so the page never loses its apps. The run uses the workflow's `GITHUB_TOKEN`, so the API rate limit is not a concern.
 
 ## Downloads
-- One request per app (every status), `GET https://api.github.com/repos/{repo}/releases?per_page=5`, unauthenticated. The newest entry that is not a draft wins, pre-releases included.
+- One request per app (every status), `GET https://api.github.com/repos/{repo}/releases?per_page=20`, unauthenticated. Drafts are skipped; pre-releases count. Apps release each platform on its own tag ([platform tags](versioning-signing.md#platform-tags-own-version-per-platform)), so each platform's button comes from the newest release that has its file, and the card names every version it shows (`mac-v1.6.0, v1.5.1`). The card's link opens the full release list, because a platform release is not marked latest.
 - Platform from the asset file name, first rule that matches, case-insensitive:
 
 | Button | File name |

@@ -40,7 +40,7 @@
   "release.info": "Version {version} · {date}",
   "release.checking": "Checking for the newest release...",
   "release.fallback": "Download from GitHub Releases",
-  "release.latest": "Latest release",
+  "release.all": "All releases",
   "access.private": "Private repository",
   "access.privateBadge": "Private",
   "link.source": "Source on GitHub",

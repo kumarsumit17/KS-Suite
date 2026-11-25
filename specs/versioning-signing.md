@@ -35,8 +35,13 @@ The cycle around a release (test on `dev`, merge to `main`, push the tag, the wo
   They are passed to Gradle as `-PversionName` / `-PversionCode`. MINOR and PATCH must stay below 100.
 - An app with a separate Google TV app ([Platform folders](platform-folders.md#phone-and-google-tv-builds)) gives the TV build `versionCode + 1,000,000,000` (`v1.4.2` → `1000010402`), set in its Gradle build. Google Play needs a different `versionCode` for every bundle of one package, and the lower phone code also keeps the phone build from being installed over the TV build.
 
-### One version for every platform
-Owner's rule (2026-11-25), for every app: one plain tag `vMAJOR.MINOR.PATCH` builds and releases all of an app's platform builds (Android phone, Google TV, macOS, Windows), so they all share one version. Platform tags (`android-vX.Y.Z`, `google-tv-vX.Y.Z`, `mac-vX.Y.Z`, `windows-vX.Y.Z`) are not used for now. Each build is still optimized for its own OS ([Platform folders](platform-folders.md#each-platform-build-is-optimized-for-its-os)); only the version is shared. No app needs a bridge release. ks-utility `v0.10.0` keeps its platform-tag helpers (the release workflow's `platform` input, `AppUpdate.evaluateReleases`); they stay unused until the owner turns platform tags on.
+### Platform tags (own version per platform)
+Owner's rule (2026-11-25, replacing the one-version rule of the same day), for every app: each release is tagged with the platform in front, `android-vX.Y.Z`, `google-tv-vX.Y.Z`, `mac-vX.Y.Z` or `windows-vX.Y.Z`, and the formulas above apply to the part after the prefix. Such a tag builds and releases only that platform, so each platform build has its own version.
+- **One-platform apps use their prefix too** (`ks-vault`, `ks-expense-manager`: `android-v…`; `ks-tv-launcher`: `google-tv-v…`), so every app's tags read the same way.
+- **A plain `vX.Y.Z` still releases every platform at once.** A platform's version is the higher of its own latest tag and the latest plain tag, and each platform's next tag is higher than both.
+- **A platform release is not marked latest.** Each app's updater reads the release list and takes the newest release that has its platform's file. This needs ks-utility `v0.10.0` or later: the release workflow's `platform` input, `AppUpdate.evaluateReleases` (Kotlin), `parse_releases` and `tag_prefix` (Rust).
+- **Bridge release:** before its first platform tag, an app that checks for updates ships one plain `vX.Y.Z` release whose builds already read the release list, because builds installed earlier only read `releases/latest`. Each platform's first own version is higher than that release. An app with no update checker needs no bridge release.
+- **A build with no prefix of its own** (the `ks-download-manager` Chrome extension) releases with a plain tag until ks-utility has a prefix for it.
 
 ## 2. Automated Signing
 

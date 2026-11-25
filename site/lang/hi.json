@@ -40,7 +40,7 @@
   "release.info": "वर्शन {version} · {date}",
   "release.checking": "नया रिलीज़ देखा जा रहा है...",
   "release.fallback": "GitHub Releases से डाउनलोड करें",
-  "release.latest": "नया रिलीज़",
+  "release.all": "सभी रिलीज़",
   "access.private": "प्राइवेट रिपॉज़िटरी",
   "access.privateBadge": "प्राइवेट",
   "link.source": "GitHub पर सोर्स",

@@ -196,24 +196,34 @@
     return null;
   }
 
+  // Apps release each platform on its own tag (mac-v1.6.0, android-v1.5.2; specs/versioning-signing.md),
+  // so the newest release may hold one platform only. Each download comes from the newest
+  // release that has that platform's file; the card names every version it shows.
   function pickRelease(list, repo) {
-    const release = (Array.isArray(list) ? list : []).find((r) => r && !r.draft);
-    if (!release) return null;
+    const releases = (Array.isArray(list) ? list : []).filter((r) => r && !r.draft);
     const repoName = repo.split("/")[1].toLowerCase();
     const best = {};
-    for (const a of release.assets || []) {
-      if (typeof a.name !== "string" || typeof a.browser_download_url !== "string") continue;
-      if (!a.browser_download_url.startsWith("https://github.com/")) continue;
-      if (!(a.size > 0)) continue;
-      const kind = kindOf(a.name, repoName);
-      if (kind && (!best[kind] || a.size > best[kind].size)) best[kind] = { url: a.browser_download_url, size: a.size };
+    const used = [];
+    for (const release of releases) {
+      const here = {};
+      for (const a of release.assets || []) {
+        if (typeof a.name !== "string" || typeof a.browser_download_url !== "string") continue;
+        if (!a.browser_download_url.startsWith("https://github.com/")) continue;
+        if (!(a.size > 0)) continue;
+        const kind = kindOf(a.name, repoName);
+        if (kind && !best[kind] && (!here[kind] || a.size > here[kind].size)) here[kind] = { url: a.browser_download_url, size: a.size };
+      }
+      if (!Object.keys(here).length) continue;
+      Object.assign(best, here);
+      used.push(release);
     }
     const downloads = KINDS.filter((k) => best[k.id]).map((k) => ({ kind: k.id, ...best[k.id] }));
     if (!downloads.length) return null;
+    const newest = used[0];
     return {
-      version: String(release.tag_name || release.name || ""),
-      date: release.published_at || release.created_at || "",
-      prerelease: Boolean(release.prerelease),
+      version: used.map((r) => String(r.tag_name || r.name || "")).filter(Boolean).join(", "),
+      date: newest.published_at || newest.created_at || "",
+      prerelease: Boolean(newest.prerelease),
       downloads,
     };
   }
@@ -228,7 +238,7 @@
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
     try {
-      const res = await fetch(`https://api.github.com/repos/${repo}/releases?per_page=5`, {
+      const res = await fetch(`https://api.github.com/repos/${repo}/releases?per_page=20`, {
         headers: { Accept: "application/vnd.github+json" },
         signal: controller.signal,
         referrerPolicy: "no-referrer",
@@ -308,7 +318,8 @@
       box.append(el("a", { class: "btn btn-small", href: d.url, "aria-label": t("download.button", { platform, size }) },
         icon("download"), el("span", null, platform), el("span", { class: "size" }, size)));
     }
-    box.append(el("a", { class: "btn btn-outline btn-small", href: `${releasesUrl(app)}/latest` }, el("span", null, t("release.latest")), icon("arrowUpRight")));
+    // Platform releases are not marked latest, so the link opens the full list.
+    box.append(el("a", { class: "btn btn-outline btn-small", href: releasesUrl(app) }, el("span", null, t("release.all")), icon("arrowUpRight")));
     return box;
   }
 
