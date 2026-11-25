@@ -1,3 +1,7 @@
+# 2026-11-25
+
+* **Update**: [Platform folders](platform-folders.md): `ks-beam` ships a separate Google TV app from v1.1.0 (the phone app sends, the TV app receives).
+
 # 2026-11-24
 
 * **Update**: [Platform folders](platform-folders.md): the one-APK bridge release before a TV split is only for apps that update themselves; `ks-beam` has no in-app updater and skips it.

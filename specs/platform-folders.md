@@ -53,11 +53,11 @@ Code moves outward only when it is needed there: from a platform folder to `shar
 | `ks-vault` | `mobile/android` | `tv/*`, `desktop/*`, `mobile/ios` | no |
 | `ks-expense-manager` | `mobile/android` | `tv/*`, `desktop/*`, `mobile/ios` | no |
 | `ks-download-manager` | `desktop/mac`, `desktop/windows` | `tv/*`, `mobile/*` | yes: `src/`, `src-tauri/` and `extension/`, once moved |
-| `ks-beam` | `mobile/android`, `tv/google-tv` (one APK until its TV split: sender on phones, receiver on TVs), `desktop/windows`, `desktop/mac` | `mobile/ios` | yes: the Kotlin Multiplatform module (casting core, receiver protocol and interface) |
+| `ks-beam` | `mobile/android`, `tv/google-tv` (separate TV app from v1.1.0: the phone app sends, the TV app receives), `desktop/windows`, `desktop/mac` | `mobile/ios` | yes: the Kotlin Multiplatform module (casting core, receiver protocol and interface) |
 
 ## Phone and Google TV builds
 Each app's folders decide which Android builds it ships; there is no "build both" rule:
-- **A `tv/google-tv` application module next to `mobile/android`:** two apps, a phone APK and AAB and a separate TV APK and AAB (`<app>-v<version>-google-tv.apk`, the release workflow's `tv-module`). The TV interface is a different one (D-pad focus, 10-foot layout, banner, Leanback entry), so a separate build keeps each small and keeps TV changes from breaking the phone app. Both have the same package name, version and keystore; the TV app's `versionCode` adds 1,000,000,000 ([Versioning and signing](versioning-signing.md)). Code both run lives in `shared/`. Each updates to its own build (ks-utility `UpdatePlatform.GOOGLE_TV` / `ANDROID`). `ks-jaiplayer` from v1.2.0; `ks-streamflix` and `ks-beam` next.
+- **A `tv/google-tv` application module next to `mobile/android`:** two apps, a phone APK and AAB and a separate TV APK and AAB (`<app>-v<version>-google-tv.apk`, the release workflow's `tv-module`). The TV interface is a different one (D-pad focus, 10-foot layout, banner, Leanback entry), so a separate build keeps each small and keeps TV changes from breaking the phone app. Both have the same package name, version and keystore; the TV app's `versionCode` adds 1,000,000,000 ([Versioning and signing](versioning-signing.md)). Code both run lives in `shared/`. Each updates to its own build (ks-utility `UpdatePlatform.GOOGLE_TV` / `ANDROID`). `ks-jaiplayer` from v1.2.0, `ks-beam` from v1.1.0; `ks-streamflix` next.
 - **Phone only** (`ks-vault`, `ks-expense-manager`): no TV build. A phone interface on a TV is unusable with a remote.
 - **TV only** (`ks-tv-launcher`): only the TV APK, with no Android build.
 - **No Android** (`ks-download-manager`): neither.
