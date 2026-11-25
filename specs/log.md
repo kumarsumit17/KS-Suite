@@ -1,5 +1,6 @@
 # 2026-11-25
 
+* **Update**: workspace `CLAUDE.md`: eight apps; `ks-forge` is the second desktop-only Rust/Tauri app, so the Kotlin, Gradle and package-root rules do not apply to it, and it takes `ks-utility` as git dependencies like `ks-download-manager`.
 * **Update**: [Per-platform optimization rollout](plan-per-platform.md): `ks-forge` plan approved, one version, building.
 * **Update**: [Per-platform optimization rollout](plan-per-platform.md): `ks-beam` steps 2 and 3 on dev; `ks-jaiplayer` back to one version.
 * **Update**: [Testing](testing.md): `scripts/emulators.sh` checks the AVD on a port before `serial`, `start` or `stop`, and refuses when another AVD holds it.

@@ -1,6 +1,6 @@
 # KS-Suite workspace
 
-Seven independent apps, each its own git repo, plus `ks-utility`, a repo of generic utility code. Six apps are Kotlin apps; `ks-download-manager` is a desktop-only Rust/Tauri app. This file holds suite-wide rules; each repo's own `CLAUDE.md` holds its stack, constraints, and commands. Read that one before working in a repo.
+Eight independent apps, each its own git repo, plus `ks-utility`, a repo of generic utility code. Six apps are Kotlin apps; `ks-download-manager` and `ks-forge` are desktop-only Rust/Tauri apps. This file holds suite-wide rules; each repo's own `CLAUDE.md` holds its stack, constraints, and commands. Read that one before working in a repo.
 
 ## Specs
 - All suite-wide specs live in `specs/` in the repository root, as an Open Knowledge Format (OKF) v0.2 bundle. Each app keeps its own specs in its repo's `specs/`. Start at `specs/index.md`.
@@ -10,7 +10,7 @@ Seven independent apps, each its own git repo, plus `ks-utility`, a repo of gene
 - Links to another repository use the full GitHub URL; relative links are only for files inside this repository.
 
 ## Rules that apply to every repo
-- Exception: `ks-download-manager` has no Android version, so the Kotlin, Gradle and package-root rules below do not apply to it. Its own `CLAUDE.md` defines its stack. All other rules (signing material, tag versions, Conventional Commits, no analytics or ads) still apply.
+- Exception: `ks-download-manager` and `ks-forge` are desktop-only Rust/Tauri apps with no Android version, so the Kotlin, Gradle and package-root rules below do not apply to them. Each one's own `CLAUDE.md` defines its stack. All other rules (signing material, tag versions, Conventional Commits, no analytics or ads) still apply.
 - Kotlin only. Gradle Kotlin DSL (`*.gradle.kts`) with a version catalog at `gradle/libs.versions.toml`. JDK 17.
 - Package root is `com.ks.<app>`.
 - Never commit or print signing material: `keystore.properties`, `*.jks`, `*.keystore`, or the `SIGNING_*` env vars.
@@ -19,7 +19,7 @@ Seven independent apps, each its own git repo, plus `ks-utility`, a repo of gene
 - Commits follow Conventional Commits (`feat:`, `fix:`, `feat!:`, `chore:`).
 - No analytics, crash-reporting, or ad SDKs in any app.
 - Every app supports English and Hindi through `ks-utility`: interface text in its language files (`en.json`, `hi.json`) with the shared catalogue, the suite's language rule (follow the system, allow a choice, remember it), the Hindi style guide, and the language-file check in the app's tests. See ks-utility's `specs/languages.md`.
-- Shared code lives only in `ks-utility`, and only when it is generic: reused across apps, with no application-specific logic. Every app takes `ks-utility` as a dependency pinned to a version tag (lock files and submodule entries keep the exact commit): the Kotlin apps as a git submodule at `ks-utility/` included with `includeBuild("ks-utility/kotlin")`, `ks-download-manager` as git dependencies in `package.json` and `src-tauri/Cargo.toml`. Never edit the submodule copy inside an app; change `ks-utility` itself, then move the app's pin. See `specs/cross-repo.md` and `ks-utility/CLAUDE.md`.
+- Shared code lives only in `ks-utility`, and only when it is generic: reused across apps, with no application-specific logic. Every app takes `ks-utility` as a dependency pinned to a version tag (lock files and submodule entries keep the exact commit): the Kotlin apps as a git submodule at `ks-utility/` included with `includeBuild("ks-utility/kotlin")`, the Tauri apps (`ks-download-manager`, `ks-forge`) as git dependencies in their `package.json` and `src-tauri/Cargo.toml`. Never edit the submodule copy inside an app; change `ks-utility` itself, then move the app's pin. See `specs/cross-repo.md` and `ks-utility/CLAUDE.md`.
 - `ks-utility` versioning: tags are `vMAJOR.MINOR.PATCH`; while in `0.x` a new helper or a behaviour change raises MINOR and a fix raises PATCH. A pushed tag is never moved or deleted; a mistake gets a new tag. Apps move to a newer tag deliberately, in their own commit. Publishing to public registries (crates.io, npm, Maven Central) is a future step, deferred until the helpers are stable. Details: ks-utility's `specs/usage.md`.
 - Every repo has the graphify setup (`.claude/`, and a `graphify` section in its `CLAUDE.md`). `graphify-out/` is generated and git-ignored. `ks-tv-launcher` uses its own code graph (`scripts/kb.py`) instead.
 - Every app repo has the same platform folders: `tv/google-tv/`, `desktop/mac/`, `desktop/windows/`, `mobile/android/` and `mobile/ios/`. All five exist in every app repo, even for platforms the app does not target. Code for one platform goes in its folder; code used by two or more platforms of the same app goes in `shared/` in that repo's root (fixed name), written once and never copied between platform folders; generic code used by several apps goes in `ks-utility`. `ks-utility` is a helpers repo and keeps its own layout. See `specs/platform-folders.md`.
