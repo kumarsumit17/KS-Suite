@@ -1,5 +1,6 @@
 # 2026-11-25
 
+* **Update**: [Versioning and signing](versioning-signing.md), [Release cycle](release-cycle.md): platform tags (`android-`, `google-tv-`, `mac-`, `windows-vX.Y.Z`) give each platform its own version (ks-utility v0.10.0); ks-jaiplayer first.
 * **Update**: [Platform folders](platform-folders.md): every app optimizes each platform build for its own OS, with as few dependencies as possible, and keeps a per-platform plan in its `specs/` (owner's rule).
 * **Update**: [Platform folders](platform-folders.md): `ks-beam` ships a separate Google TV app from v1.1.0 (the phone app sends, the TV app receives).
 

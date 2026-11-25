@@ -15,7 +15,7 @@ Seven independent apps, each its own git repo, plus `ks-utility`, a repo of gene
 - Package root is `com.ks.<app>`.
 - Never commit or print signing material: `keystore.properties`, `*.jks`, `*.keystore`, or the `SIGNING_*` env vars.
 - A new app repository gets its signing secrets first: before any code, CI or release work, the owner sets the four secrets from the suite keystore (alias `ks-release`) and they are checked. See `specs/versioning-signing.md`, "A new repository: signing first".
-- Version numbers come from git tags (`vMAJOR.MINOR.PATCH`) via `-PversionName` and `-PversionCode`. Never hardcode them in `build.gradle.kts`. See `specs/versioning-signing.md`.
+- Version numbers come from git tags (`vMAJOR.MINOR.PATCH`, or `<platform>-vMAJOR.MINOR.PATCH` for an app whose platforms have their own versions: `android`, `google-tv`, `mac`, `windows`) via `-PversionName` and `-PversionCode`. Never hardcode them in `build.gradle.kts`. See `specs/versioning-signing.md`.
 - Commits follow Conventional Commits (`feat:`, `fix:`, `feat!:`, `chore:`).
 - No analytics, crash-reporting, or ad SDKs in any app.
 - Every app supports English and Hindi through `ks-utility`: interface text in its language files (`en.json`, `hi.json`) with the shared catalogue, the suite's language rule (follow the system, allow a choice, remember it), the Hindi style guide, and the language-file check in the app's tests. See ks-utility's `specs/languages.md`.
