@@ -1,5 +1,6 @@
 # 2026-11-25
 
+* **Update**: [Per-platform optimization rollout](plan-per-platform.md): `ks-forge` plan drafted, waiting for approval.
 * **Update**: [Per-platform optimization rollout](plan-per-platform.md): `ks-expense-manager` done (v0.1.0); `ks-vault` step 1 on dev; `ks-streamflix` plan waiting for approval.
 * **New**: [Per-platform optimization rollout](plan-per-platform.md): the order the apps follow, how each audits and plans, the gaps to check, and each app's status (handed over from the per-platform session).
 * **Update**: [Versioning and signing](versioning-signing.md): before its first platform tag, an app that updates itself ships one plain bridge release that reads the release list.

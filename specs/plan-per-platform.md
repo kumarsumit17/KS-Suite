@@ -27,7 +27,7 @@ The rule is in [Platform folders](platform-folders.md#each-platform-build-is-opt
 | 4 | `ks-download-manager` | macOS, Windows, Chrome extension | Brief sent; Rust platform-tag helpers ready in ks-utility |
 | 5 | `ks-vault` | Android | Plan approved 2026-11-25. Step 1 is on `dev` (199495e): the APK went from 9.6 to 7.3 MB. Next: cold start and unlock time on a real phone, TalkBack and font scale, then stage 2. Plain tags, no bridge release (no update checker) |
 | 6 | `ks-expense-manager` | Android | **Done**: plan approved 2026-11-25, released as v0.1.0 (47ffdef). Plain tags, no bridge release (no update checker). Hand checks left (they don't block a release): cold start on a real phone, a TalkBack session by ear |
-| 7 | `ks-forge` | macOS, Windows | Brief sent |
+| 7 | `ks-forge` | macOS, Windows | Plan drafted on `dev` (6dfc444) with 7 owner decisions, waiting for approval. `mac-v`/`windows-v` tags after a plain bridge release v0.1.1. Decisions include the Windows title bar (tabs with Mica, or native), optional dependencies and macOS blur |
 
 The order is a preference, not a gate. Each app moves at its own pace, and this table is updated when an app's plan is approved or released.
 
