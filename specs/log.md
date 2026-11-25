@@ -1,5 +1,6 @@
 # 2026-11-25
 
+* **Update**: [Platform folders](platform-folders.md): every app optimizes each platform build for its own OS, with as few dependencies as possible, and keeps a per-platform plan in its `specs/` (owner's rule).
 * **Update**: [Platform folders](platform-folders.md): `ks-beam` ships a separate Google TV app from v1.1.0 (the phone app sends, the TV app receives).
 
 # 2026-11-24

@@ -63,6 +63,13 @@ Each app's folders decide which Android builds it ships; there is no "build both
 - **No Android** (`ks-download-manager`): neither.
 - One universal APK for phone and TV only when an app's TV and phone screens are nearly the same, which is rare. Before an app that updates itself first ships two APKs, it releases its new update checker in a one-APK release, so copies already installed pick the right file afterwards. An app with no in-app updater (`ks-beam`) skips this step.
 
+## Each platform build is optimized for its OS
+Owner's rule (2026-11-25), for every app: each platform build (macOS, Windows, Android phone, Google TV, and iOS when it comes) is its own app, made the best it can be on that OS, not one lowest-common-denominator build.
+- **Its own implementation where it pays:** the engine, media stack, rendering, input, look and OS integrations (media keys and Now Playing, file associations, keep-awake, picture-in-picture, accessibility) follow that platform's own frameworks and conventions. Code that is genuinely the same stays in `shared/`, written once.
+- **Speed and stability are measured per platform:** cold start (first start after install included), memory and frame pacing, on the platform itself.
+- **As few dependencies as possible:** use the platform's own frameworks first; bundle only what the app needs, and nothing the user has to install separately.
+- **Each app keeps a per-platform plan in its own `specs/`**, like [ks-jaiplayer's](https://github.com/kumarsumit17/ks-jaiplayer/blob/dev/specs/plan-per-platform.md), with what each build does today and what changes for each OS.
+
 ## Existing code
 
 The folders were added on 2026-11-21. Code that existed before then has not moved yet:
