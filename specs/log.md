@@ -1,5 +1,6 @@
 # 2026-11-26
 
+* **Update**: [Versioning and signing](versioning-signing.md) and `CLAUDE.md`: a Chrome extension tags `chrome-vX.Y.Z` (ks-utility `v0.11.0`).
 * **Update**: every spec and the landing page: `ks-beam` and `ks-forge` moved to the GitHub account `kumasumit` too; no suite link names `kumarsumit17` any more.
 * **Update**: [Testing](testing.md): the `ks-streamflix` row has the separate TV app's install command, the headless server and the .dmg build.
 * **Update**: [Platform folders](platform-folders.md), [Testing](testing.md): `ks-streamflix` ships a separate Google TV app from v1.1.0.
