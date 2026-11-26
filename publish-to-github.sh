@@ -48,6 +48,6 @@ publish ks-vault           ks-vault           "KS-Suite: fully offline secure va
 publish ks-expense-manager ks-expense-manager "KS-Suite: privacy-first personal expense tracker for Android"
 publish ks-download-manager ks-download-manager "KS-Suite: free download manager for images, audio and video"
 publish ks-utility         ks-utility         "KS-Suite: common generic utility functions shared across the suite apps"
-publish .                  KS-Suite           "KS-Suite: a family of privacy-focused apps, with links to every app repo"
+publish .                  ks-suite           "KS-Suite: a family of privacy-focused apps, with links to every app repo"
 
-echo; echo "Done: https://github.com/$OWNER/KS-Suite"
+echo; echo "Done: https://github.com/$OWNER/ks-suite"

@@ -8,7 +8,7 @@
 **KS-Suite** is a family of free, privacy-focused apps for the living room, the desktop, and your pocket.
 
 > ## ⬇️ Get the apps
-> **[kumasumit.github.io/KS-Suite](https://kumasumit.github.io/KS-Suite/)** lists every app with download buttons for the newest release, in English and Hindi.
+> **[kumasumit.github.io/ks-suite](https://kumasumit.github.io/ks-suite/)** lists every app with download buttons for the newest release, in English and Hindi.
 >
 > Everything below is for developers.
 
@@ -57,7 +57,7 @@ This repository is the suite's front door: it links to every app, and holds the 
 Each app is a separate repository, so clone only what you need. To recreate the whole workspace:
 
 ```bash
-git clone https://github.com/kumasumit/KS-Suite.git
+git clone https://github.com/kumasumit/ks-suite.git
 cd KS-Suite
 for app in ks-tv-launcher ks-jaiplayer ks-streamflix ks-vault ks-expense-manager ks-download-manager ks-utility; do
   git clone --recurse-submodules "https://github.com/kumasumit/$app.git"

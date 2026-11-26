@@ -484,7 +484,7 @@
     } catch (err) {
       console.error("KS-Suite page: could not load its data files.", err);
       document.getElementById("groups").replaceChildren(
-        el("p", null, el("a", { href: "https://github.com/kumasumit/KS-Suite#readme" }, "KS-Suite on GitHub")));
+        el("p", null, el("a", { href: "https://github.com/kumasumit/ks-suite#readme" }, "KS-Suite on GitHub")));
       return;
     }
 
