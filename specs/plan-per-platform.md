@@ -18,16 +18,16 @@ The rule is in [Platform folders](platform-folders.md#each-platform-build-is-opt
 
 ## Order and status
 
-| # | App | Platforms | Status (2026-11-25) |
+| # | App | Platforms | Status (2026-11-26) |
 |---|---|---|---|
-| 0 | `ks-jaiplayer` | Android, Google TV, macOS, Windows | Plan approved; building the optimizations. Moved to one `vX.Y.Z` (0368fb6); platform tags are back, so it moves again |
-| 1 | `ks-streamflix` | Android, Google TV, macOS and Windows server | Plan drafted on `dev` (a8f1835), waiting for the owner's approval. v1.1.0 (the phone/TV split) ships as a plain release on ks-utility v0.9.0; v1.2.0 (ks-utility v0.10.0, updaters read the release list) is the bridge release, then platform tags. Its own gaps: closing the desktop window stops the server; the computer may sleep mid-stream; FFmpeg is a separate install; the TV has no passthrough, HDR or frame-rate matching |
-| 2 | `ks-beam` | Android, Google TV, macOS, Windows | Plan approved. Steps 2 and 3 on `dev`: senders keep a cast alive (0915924); the Google TV receiver runs as a foreground service with a media session, audio focus and frame-rate matching, tested on every TV size except 75 inch (d868b2f). Next: step 4, desktop look and input, when the owner says go. Platform tags built (ce1b272, ks-utility v0.10.1): a google-tv rehearsal built only the TV app; no bridge release (no updater) |
-| 3 | `ks-tv-launcher` | Google TV | Brief sent; every TV size, 43 to 100 inch |
-| 4 | `ks-download-manager` | macOS, Windows, Chrome extension | Brief sent |
-| 5 | `ks-vault` | Android | Plan approved 2026-11-25. Step 1 is on `dev` (199495e): the APK went from 9.6 to 7.3 MB. Next: cold start and unlock time on a real phone, TalkBack and font scale, then stage 2. Tags `android-vX.Y.Z` (4520666); the first release waits on the signing-secrets check and a rehearsal |
-| 6 | `ks-expense-manager` | Android | **Done**: plan approved 2026-11-25, released as v0.1.0 (47ffdef). Hand checks left (they don't block a release): cold start on a real phone, a TalkBack session by ear |
-| 7 | `ks-forge` | macOS, Windows | Plan approved 2026-11-25 (8c00f19). Building: macOS menus, Dock and Finder; Windows title-bar tabs, Explorer, jump list; blur, notifications, screen readers (9c7c48c). Unsigned until certificates; the owner's Windows hand check after step 4 |
+| 0 | `ks-jaiplayer` | Android, Google TV, macOS, Windows | Plan approved. Built: step 1 (platform tags), step 2 in part (audio focus, decoder fallback, media session, PiP), step 3 (Google TV, Continue watching) and step 4 (phone, background audio). Latest release v1.7.0 (plain tag). Next: macOS and Windows steps |
+| 1 | `ks-streamflix` | Android, Google TV, macOS and Windows server | Plan approved. Built: step 1 (separate phone and TV apps, released in v1.1.0) and step 2 (platform tags, shipping in the v1.2.0 bridge release). Next: the always-on desktop server, bundled FFmpeg |
+| 2 | `ks-beam` | Android, Google TV, macOS, Windows | Plan approved. Steps 1 to 5 built: platform tags, casts kept alive, the Google TV receiver, desktop look and input, phone look and OS integrations. v1.3.0 releasing. Next: step 6, packaging and performance (R8, `jdk.accessibility`) |
+| 3 | `ks-tv-launcher` | Google TV | Plan approved. Releases on `google-tv-v…` tags (latest `google-tv-v0.9.1`). Built: step 2, start-up (`reportFullyDrawn`, baseline profile, English and Hindi only). Every step tested on every TV size |
+| 4 | `ks-download-manager` | macOS, Windows, Chrome extension | Plan approved. Built: step 1 (Tauri project in `shared/`, per-OS crates) and macOS step 2 in part (keep awake, Dock progress and badge, notifications, drag and drop). Next: Windows, then platform tags (`mac-`, `windows-`, `chrome-v`) from ks-utility v0.11.0 |
+| 5 | `ks-vault` | Android | Plan approved. Step 1 (hardening, smaller APK) built and released as `android-v1.0.0`, the suite's first platform tag. Next: measurements, TalkBack and font scale, then stage 2 |
+| 6 | `ks-expense-manager` | Android | Plan approved. Steps 1 to 3 built; latest release v0.1.1; tags move to `android-v…`. Hand checks left (they don't block a release): cold start on a real phone, a TalkBack session by ear |
+| 7 | `ks-forge` | macOS, Windows | Plan approved. Built: step 3 (macOS menus, Dock, Finder services) and step 4 (Windows title-bar tabs, Explorer, Ctrl+C/V; CI only). Latest release v0.1.0; v0.1.1 is the bridge before `mac-v`/`windows-v` tags. Unsigned until certificates; the owner's Windows hand check is next |
 
 The order is a preference, not a gate. Each app moves at its own pace, and this table is updated when an app's plan is approved or released.
 
