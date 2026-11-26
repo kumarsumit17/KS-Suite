@@ -1,5 +1,6 @@
 # 2026-11-26
 
+* **Update**: [Release cycle](release-cycle.md) and `CLAUDE.md`: owner's rule for every repository: build, test, release without waiting; no approval before a tag; hand checks never block a release.
 * **Update**: [Per-platform optimization rollout](plan-per-platform.md): every app's status refreshed from its own plan and releases.
 * **Update**: [Versioning and signing](versioning-signing.md) and `CLAUDE.md`: a Chrome extension tags `chrome-vX.Y.Z` (ks-utility `v0.11.0`).
 * **Update**: every spec and the landing page: `ks-beam` and `ks-forge` moved to the GitHub account `kumasumit` too; no suite link names `kumarsumit17` any more.

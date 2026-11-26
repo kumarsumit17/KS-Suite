@@ -9,6 +9,10 @@ tags: [release, ci, versioning, policy]
 
 Every KS-Suite app releases the same way. Version numbers and signing are in [Versioning and signing](versioning-signing.md); this page is the cycle around them.
 
+## Build, test, release, no waiting
+
+Owner's rule (2026-11-26), for every repository: every feature or fix is built, tested on the emulators or CI ([Testing on every platform](testing.md)), committed and pushed to `dev`, and released with the next tag, by the cycle below. No one's approval is asked before a tag, and nothing waits for a review. The owner's hand checks on real devices come later (step 5), never block a release, and what they find goes into the next version. Never commit or release while a test fails. A feature raises MINOR, a fix raises PATCH ([Versioning and signing](versioning-signing.md)).
+
 ## The cycle
 
 1. **Test on `dev`.** All work is committed on `dev` ([Branches](#branches)). CI is green on `dev`, and a **rehearsal** of the release (below) is green on `dev`. The release build is installed and tried on the emulators before every release: the phone emulator, the Google TV emulators for a TV app ([Testing on every platform](testing.md)), the Mac for macOS, and Windows through CI. The version's changelog section is dated, if the app keeps a `CHANGELOG.md`.
