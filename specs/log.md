@@ -1,5 +1,6 @@
 # 2026-11-26
 
+* **Update**: [Platform folders](platform-folders.md), [Testing](testing.md): `ks-streamflix` ships a separate Google TV app from v1.1.0.
 * **Update**: every spec, `README.md`, the landing page and its collector: the repositories moved from the GitHub account `kumarsumit17` to `kumasumit` (the landing page is now `https://kumasumit.github.io/KS-Suite/`); `ks-beam` and `ks-forge` keep their old links until they move.
 
 # 2026-11-25
