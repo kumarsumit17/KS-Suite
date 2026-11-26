@@ -1,5 +1,6 @@
 # 2026-11-26
 
+* **Update**: [Release cycle](release-cycle.md), [Cross-repository relationships](cross-repo.md) and `CLAUDE.md`: owner's rule: every app moves to the newest ks-utility tag before each release.
 * **Update**: [Landing page](landing-page.md): releases are ordered by version, not GitHub's list order, and a card names only the versions of the downloads it shows.
 * **Update**: [Release cycle](release-cycle.md) and `CLAUDE.md`: owner's rule for every repository: build, test, release without waiting; no approval before a tag; hand checks never block a release.
 * **Update**: [Per-platform optimization rollout](plan-per-platform.md): every app's status refreshed from its own plan and releases.
