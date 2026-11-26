@@ -6,7 +6,7 @@
   const STORAGE_LANGUAGE = "ks-suite.language";
   const STORAGE_THEME = "ks-suite.theme"; // also read by theme-init.js
   const THEMES = ["light", "dark"];
-  const CACHE_PREFIX = "ks-suite.release.";
+  const CACHE_PREFIX = "ks-suite.release.v2.";
   const CACHE_MS = 10 * 60 * 1000;
   const FETCH_TIMEOUT_MS = 8000;
   const LANGUAGES = ["en", "hi"];
@@ -197,13 +197,23 @@
   }
 
   // Apps release each platform on its own tag (mac-v1.6.0, android-v1.5.2; specs/versioning-signing.md),
-  // so the newest release may hold one platform only. Each download comes from the newest
-  // release that has that platform's file; the card names every version it shows.
+  // so one release may hold one platform only. Releases are taken highest version first (the
+  // part after any platform prefix; GitHub's list order is not version order), and each
+  // download comes from the first release that has that platform's file. Each download keeps
+  // its release's tag and date, so the card names exactly the versions it shows.
+  function versionOf(tag) {
+    const m = /^(?:[a-z-]+-)?v?(\d+)\.(\d+)\.(\d+)$/.exec(String(tag || ""));
+    return m ? [Number(m[1]), Number(m[2]), Number(m[3])] : [-1, -1, -1];
+  }
+  function newerFirst(a, b) {
+    const x = versionOf(a.tag_name), y = versionOf(b.tag_name);
+    for (let i = 0; i < 3; i++) if (x[i] !== y[i]) return y[i] - x[i];
+    return String(b.published_at || b.created_at || "").localeCompare(String(a.published_at || a.created_at || ""));
+  }
   function pickRelease(list, repo) {
-    const releases = (Array.isArray(list) ? list : []).filter((r) => r && !r.draft);
+    const releases = (Array.isArray(list) ? list : []).filter((r) => r && !r.draft).sort(newerFirst);
     const repoName = repo.split("/")[1].toLowerCase();
     const best = {};
-    const used = [];
     for (const release of releases) {
       const here = {};
       for (const a of release.assets || []) {
@@ -213,19 +223,25 @@
         const kind = kindOf(a.name, repoName);
         if (kind && !best[kind] && (!here[kind] || a.size > here[kind].size)) here[kind] = { url: a.browser_download_url, size: a.size };
       }
-      if (!Object.keys(here).length) continue;
-      Object.assign(best, here);
-      used.push(release);
+      const tag = String(release.tag_name || release.name || "");
+      const date = release.published_at || release.created_at || "";
+      for (const [kind, d] of Object.entries(here)) best[kind] = { ...d, tag, date, prerelease: Boolean(release.prerelease) };
     }
     const downloads = KINDS.filter((k) => best[k.id]).map((k) => ({ kind: k.id, ...best[k.id] }));
-    if (!downloads.length) return null;
-    const newest = used[0];
-    return {
-      version: used.map((r) => String(r.tag_name || r.name || "")).filter(Boolean).join(", "),
-      date: newest.published_at || newest.created_at || "",
-      prerelease: Boolean(newest.prerelease),
-      downloads,
-    };
+    return downloads.length ? { downloads } : null;
+  }
+
+  // The versions a card shows (only those of its shown downloads), newest first, with the newest date.
+  function shownRelease(app, release) {
+    const shown = downloadsFor(app, release);
+    const tags = [];
+    let date = "", prerelease = false;
+    for (const d of shown) {
+      if (!tags.includes(d.tag)) tags.push(d.tag);
+      if (d.date > date) { date = d.date; prerelease = d.prerelease; }
+    }
+    tags.sort((a, b) => newerFirst({ tag_name: a }, { tag_name: b }));
+    return { version: tags.join(", "), date, prerelease };
   }
 
   async function fetchRelease(repo) {
@@ -334,7 +350,7 @@
     const status = statusOf(app);
     const badges = el("span", { class: "badges" },
       app.restricted ? badge("beta", "access.privateBadge") : badge(status, statusKey(status)));
-    if (!app.restricted && release && release.prerelease && status !== "beta") badges.append(badge("prerelease", "status.prerelease"));
+    if (!app.restricted && release && shownRelease(app, release).prerelease && status !== "beta") badges.append(badge("prerelease", "status.prerelease"));
 
     const platforms = el("span", { class: "platform-pill" },
       el("span", { class: "visually-hidden" }, `${t("platforms.label")}: `),
@@ -352,8 +368,9 @@
     const meta = el("p", { class: "card-meta" });
     if (app.stack) meta.append(el("span", null, app.stack));
     if (release) {
-      const date = formatDate(release.date);
-      meta.append(el("span", null, date ? t("release.info", { version: release.version, date }) : release.version));
+      const shown = shownRelease(app, release);
+      const date = formatDate(shown.date);
+      meta.append(el("span", null, date ? t("release.info", { version: shown.version, date }) : shown.version));
     }
 
     const hue = `hue-${state.apps.indexOf(app) % 6}`; // one colour per app, in apps.json order
