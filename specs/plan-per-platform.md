@@ -27,7 +27,7 @@ The rule is in [Platform folders](platform-folders.md#each-platform-build-is-opt
 | 4 | `ks-download-manager` | macOS, Windows, Chrome extension | Plan approved. Built: step 1 (Tauri project in `shared/`, per-OS crates) and macOS step 2 in part (keep awake, Dock progress and badge, notifications, drag and drop). Next: Windows, then platform tags (`mac-`, `windows-`, `chrome-v`) from ks-utility v0.11.0 |
 | 5 | `ks-vault` | Android | Plan approved. Step 1 (hardening, smaller APK) built and released as `android-v1.0.0`, the suite's first platform tag. Next: measurements, TalkBack and font scale, then stage 2 |
 | 6 | `ks-expense-manager` | Android | Plan approved. Steps 1 to 3 built; latest release v0.1.1; tags move to `android-v…`. Hand checks left (they don't block a release): cold start on a real phone, a TalkBack session by ear |
-| 7 | `ks-forge` | macOS, Windows | Plan approved. Built: step 3 (macOS menus, Dock, Finder services) and step 4 (Windows title-bar tabs, Explorer, Ctrl+C/V; CI only). Latest release v0.1.0; v0.1.1 is the bridge before `mac-v`/`windows-v` tags. Unsigned until certificates; the owner's Windows hand check is next |
+| 7 | `ks-forge` | macOS, Windows | Plan approved. Built: step 3 (macOS menus, Dock, Finder services) and step 4 (Windows title-bar tabs, Explorer, Ctrl+C/V; CI only). Latest release v0.1.0; v0.2.0 is the bridge release before `mac-v`/`windows-v` tags. Unsigned until certificates; the owner's Windows hand check is next |
 
 The order is a preference, not a gate. Each app moves at its own pace, and this table is updated when an app's plan is approved or released.
 
