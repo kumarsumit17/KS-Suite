@@ -36,8 +36,8 @@ Each app is its own git repository with its own bundle; these links point to eac
 * [ks-vault](https://github.com/kumasumit/ks-vault/blob/main/specs/index.md) - The specs of `ks-vault`.
 * [ks-expense-manager](https://github.com/kumasumit/ks-expense-manager/blob/main/specs/index.md) - The specs of `ks-expense-manager`.
 * [ks-download-manager](https://github.com/kumasumit/ks-download-manager/blob/dev/specs/index.md) - The specs of `ks-download-manager`.
-* [ks-beam](https://github.com/kumarsumit17/ks-beam/blob/dev/specs/index.md) - The specs of `ks-beam`, which casts from Android, Windows and macOS to TVs and projectors.
-* [ks-forge](https://github.com/kumarsumit17/ks-forge/blob/dev/specs/index.md) - The specs of `ks-forge`, a fast, private terminal for macOS and Windows.
+* [ks-beam](https://github.com/kumasumit/ks-beam/blob/dev/specs/index.md) - The specs of `ks-beam`, which casts from Android, Windows and macOS to TVs and projectors.
+* [ks-forge](https://github.com/kumasumit/ks-forge/blob/dev/specs/index.md) - The specs of `ks-forge`, a fast, private terminal for macOS and Windows.
 
 # Shared code
 
