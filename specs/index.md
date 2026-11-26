@@ -30,15 +30,15 @@ okf_version: "0.2"
 
 Each app is its own git repository with its own bundle; these links point to each app's repository on GitHub.
 
-* [ks-tv-launcher](https://github.com/kumarsumit17/ks-tv-launcher/blob/dev/specs/index.md) - The specs of `ks-tv-launcher`.
-* [ks-jaiplayer](https://github.com/kumarsumit17/ks-jaiplayer/blob/main/specs/index.md) - The specs of `ks-jaiplayer`.
-* [ks-streamflix](https://github.com/kumarsumit17/ks-streamflix/blob/main/specs/index.md) - The specs of `ks-streamflix`.
-* [ks-vault](https://github.com/kumarsumit17/ks-vault/blob/main/specs/index.md) - The specs of `ks-vault`.
-* [ks-expense-manager](https://github.com/kumarsumit17/ks-expense-manager/blob/main/specs/index.md) - The specs of `ks-expense-manager`.
-* [ks-download-manager](https://github.com/kumarsumit17/ks-download-manager/blob/dev/specs/index.md) - The specs of `ks-download-manager`.
+* [ks-tv-launcher](https://github.com/kumasumit/ks-tv-launcher/blob/dev/specs/index.md) - The specs of `ks-tv-launcher`.
+* [ks-jaiplayer](https://github.com/kumasumit/ks-jaiplayer/blob/main/specs/index.md) - The specs of `ks-jaiplayer`.
+* [ks-streamflix](https://github.com/kumasumit/ks-streamflix/blob/main/specs/index.md) - The specs of `ks-streamflix`.
+* [ks-vault](https://github.com/kumasumit/ks-vault/blob/main/specs/index.md) - The specs of `ks-vault`.
+* [ks-expense-manager](https://github.com/kumasumit/ks-expense-manager/blob/main/specs/index.md) - The specs of `ks-expense-manager`.
+* [ks-download-manager](https://github.com/kumasumit/ks-download-manager/blob/dev/specs/index.md) - The specs of `ks-download-manager`.
 * [ks-beam](https://github.com/kumarsumit17/ks-beam/blob/dev/specs/index.md) - The specs of `ks-beam`, which casts from Android, Windows and macOS to TVs and projectors.
 * [ks-forge](https://github.com/kumarsumit17/ks-forge/blob/dev/specs/index.md) - The specs of `ks-forge`, a fast, private terminal for macOS and Windows.
 
 # Shared code
 
-* [ks-utility](https://github.com/kumarsumit17/ks-utility/blob/main/specs/index.md) - The specs of `ks-utility`, the generic utilities every app depends on.
+* [ks-utility](https://github.com/kumasumit/ks-utility/blob/main/specs/index.md) - The specs of `ks-utility`, the generic utilities every app depends on.

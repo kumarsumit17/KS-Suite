@@ -15,7 +15,7 @@
 import { readFile, writeFile } from "node:fs/promises";
 
 const FILE = process.argv[2] || "site/apps.json";
-const OWNER = process.env.KS_OWNER || "kumarsumit17";
+const OWNER = process.env.KS_OWNER || "kumasumit";
 const CARD = "ks-suite.json";
 const API = "https://api.github.com";
 

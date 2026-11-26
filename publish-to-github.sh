@@ -4,7 +4,7 @@
 # Requires the GitHub CLI:  brew install gh && gh auth login
 set -euo pipefail
 
-OWNER="kumarsumit17"
+OWNER="kumasumit"
 VISIBILITY="--public"
 APPS=(ks-tv-launcher ks-jaiplayer ks-streamflix ks-vault ks-expense-manager ks-download-manager)
 

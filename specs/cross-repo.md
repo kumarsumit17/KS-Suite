@@ -7,7 +7,7 @@ tags: [cross-repo, intents, contracts]
 
 # Cross-repository relationships
 
-The apps share **no runtime services** and never depend on each other. Each one builds, ships, and works alone. The only shared code is generic utilities in [`ks-utility`](https://github.com/kumarsumit17/ks-utility), which every app takes as a dependency pinned to a commit.
+The apps share **no runtime services** and never depend on each other. Each one builds, ships, and works alone. The only shared code is generic utilities in [`ks-utility`](https://github.com/kumasumit/ks-utility), which every app takes as a dependency pinned to a commit.
 Every link between them is an explicit Android intent that the user starts. Each link is listed below so that a change to one side can be checked against the other.
 
 ```mermaid
@@ -52,4 +52,4 @@ Every app repository keeps a `ks-suite.json` at its root: its card on the KS-Sui
 
 ## Shared code
 
-`ks-utility` is a build-time dependency only: it adds no runtime link between apps. An app gets a change to it only when the app moves its pinned version tag (a pushed tag never moves), so `ks-utility` never changes the meaning or signature of a function that is in use. The mechanism is described in [ks-utility's usage spec](https://github.com/kumarsumit17/ks-utility/blob/main/specs/usage.md).
+`ks-utility` is a build-time dependency only: it adds no runtime link between apps. An app gets a change to it only when the app moves its pinned version tag (a pushed tag never moves), so `ks-utility` never changes the meaning or signature of a function that is in use. The mechanism is described in [ks-utility's usage spec](https://github.com/kumasumit/ks-utility/blob/main/specs/usage.md).

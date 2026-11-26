@@ -92,7 +92,7 @@ An Apple-silicon Mac cannot build Windows installers (Compose's `jpackage` and T
   - `ks-download-manager`: `.github/workflows/ci.yml`, jobs `check-windows` and `installer-windows`, artifact `windows-installer-unsigned`.
   - `ks-jaiplayer`: a CI workflow of the same shape is added with its first desktop build (job `windows`, artifact `windows-msi-unsigned`).
 - **Release rehearsals** (`workflow_dispatch` on `release.yml`) build the real release files without publishing ([Release cycle](release-cycle.md)).
-- **Hands-on testing (optional):** a Windows 11 ARM virtual machine on the Mac, in UTM (free) or Parallels Desktop, with a Windows 11 licence the owner provides. Windows 11 ARM runs the x64 installers through its built-in x64 emulation, so the CI artifacts install as they are. Download the artifact with `gh run download <run-id> -n <artifact> -R kumarsumit17/<repo>` and copy it into the VM. The installers are unsigned test builds, so SmartScreen warns before they run. This is closer to a real PC than CI but is still not an x64 machine; the hand check on a real Windows PC after a release stays.
+- **Hands-on testing (optional):** a Windows 11 ARM virtual machine on the Mac, in UTM (free) or Parallels Desktop, with a Windows 11 licence the owner provides. Windows 11 ARM runs the x64 installers through its built-in x64 emulation, so the CI artifacts install as they are. Download the artifact with `gh run download <run-id> -n <artifact> -R kumasumit/<repo>` and copy it into the VM. The installers are unsigned test builds, so SmartScreen warns before they run. This is closer to a real PC than CI but is still not an x64 machine; the hand check on a real Windows PC after a release stays.
 
 ## Chrome extension
 

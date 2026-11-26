@@ -7,7 +7,7 @@ tags: [versioning, signing, release, ci]
 
 # CI/CD: semantic versioning and automated signing
 
-Every Kotlin app repository ships the same GitHub Actions pipeline in `.github/workflows/release.yml`. `ks-download-manager` (Rust/Tauri) has its own release workflow with the same cycle ([release steps](https://github.com/kumarsumit17/ks-download-manager/blob/main/docs/release.md)).
+Every Kotlin app repository ships the same GitHub Actions pipeline in `.github/workflows/release.yml`. `ks-download-manager` (Rust/Tauri) has its own release workflow with the same cycle ([release steps](https://github.com/kumasumit/ks-download-manager/blob/main/docs/release.md)).
 
 The cycle around a release (test on `dev`, merge to `main`, push the tag, the workflow publishes) is in [Release cycle](release-cycle.md).
 
@@ -80,11 +80,11 @@ When a new app repository is created, its signing secrets are set and checked **
 1. Create the repository on GitHub.
 2. The owner sets the four secrets from the suite keystore. Claude never types or handles the passwords. The alias goes in without a prompt, and the password line saves the password only after `keytool` has opened the keystore with it, so a mistyped one is never stored (run it in a terminal where you can type, not in a non-interactive box):
    ```bash
-   base64 -i ~/keys/ks-release.jks | gh secret set KEYSTORE_BASE64 -R kumarsumit17/<repo>
-   gh secret set KEY_ALIAS -R kumarsumit17/<repo> --body ks-release
-   read -s "P?Keystore password: "; echo; export P; if keytool -list -keystore ~/keys/ks-release.jks -storepass:env P -alias ks-release > /dev/null 2>&1; then printf '%s' "$P" | gh secret set KEYSTORE_PASSWORD -R kumarsumit17/<repo> && printf '%s' "$P" | gh secret set KEY_PASSWORD -R kumarsumit17/<repo>; else echo "Wrong password: nothing saved"; fi; unset P
+   base64 -i ~/keys/ks-release.jks | gh secret set KEYSTORE_BASE64 -R kumasumit/<repo>
+   gh secret set KEY_ALIAS -R kumasumit/<repo> --body ks-release
+   read -s "P?Keystore password: "; echo; export P; if keytool -list -keystore ~/keys/ks-release.jks -storepass:env P -alias ks-release > /dev/null 2>&1; then printf '%s' "$P" | gh secret set KEYSTORE_PASSWORD -R kumasumit/<repo> && printf '%s' "$P" | gh secret set KEY_PASSWORD -R kumasumit/<repo>; else echo "Wrong password: nothing saved"; fi; unset P
    ```
-3. Check: `gh secret list -R kumarsumit17/<repo>` lists all four. Once the repository has its release workflow, a rehearsal (manual run) must pass the **Decode and check keystore** step and verify the APK's signing certificate before the first tag.
+3. Check: `gh secret list -R kumasumit/<repo>` lists all four. Once the repository has its release workflow, a rehearsal (manual run) must pass the **Decode and check keystore** step and verify the APK's signing certificate before the first tag.
 4. Never change a secret while a release or rehearsal run is in progress: each job reads the secrets when it starts.
 
 ## 3. Pipeline Stages

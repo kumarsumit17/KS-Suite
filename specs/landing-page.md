@@ -74,13 +74,13 @@ The page opens on the intro only. The apps and the install notes show when the a
 
 ```json
 {
-  "owner": "kumarsumit17",
+  "owner": "kumasumit",
   "apps": [
     {
       "id": "ks-download-manager",
       "name": "KS Download Manager",
       "group": "desktop",
-      "repo": "kumarsumit17/ks-download-manager",
+      "repo": "kumasumit/ks-download-manager",
       "icon": "hardDriveDownload",
       "status": "released",
       "platforms": ["macos", "windows", "chrome"],
@@ -113,7 +113,7 @@ The `site/apps.json` entries stay as the fallback: a card replaces the fields it
 
 ## Collecting the apps
 `.github/scripts/collect-apps.mjs` (Node, no packages) rebuilds `site/apps.json` inside the Pages run, never committed:
-1. Lists the public repositories of `kumarsumit17` (no forks, nothing archived) and reads each one's `ks-suite.json` from its default branch. A repository without the file is not an app.
+1. Lists the public repositories of `kumasumit` (no forks, nothing archived) and reads each one's `ks-suite.json` from its default branch. A repository without the file is not an app.
 2. Keeps the entries already in `site/apps.json` in their order and merges each card into its entry (matched by `id` or `repo`); apps found only through a card come after them.
 3. Sets each app's `status` from its releases: a published release gives `released`, only pre-releases give `beta`, none gives `coming-soon`. An entry or card that says `beta` stays `beta`.
 A GitHub call that fails leaves that part as it was (a warning in the run), so the page never loses its apps. The run uses the workflow's `GITHUB_TOKEN`, so the API rate limit is not a concern.
@@ -143,8 +143,8 @@ A GitHub call that fails leaves that part as it was (a warning in the run), so t
 - Results are kept in `sessionStorage` for 10 minutes, to stay well under the 60-requests-per-hour limit.
 
 ## Languages
-- Text in `site/lang/en.json` and `site/lang/hi.json` in the [suite translation format](https://github.com/kumarsumit17/ks-utility/blob/main/specs/translation-format.md); Hindi follows the [Hindi style guide](https://github.com/kumarsumit17/ks-utility/blob/main/specs/hindi-style.md). App taglines live in `apps.json`.
-- The [language rule](https://github.com/kumarsumit17/ks-utility/blob/main/specs/languages.md): follow `navigator.languages` with no choice made, a language dropdown in the header (a native `<select>`, whose list opens vertically) offers Same as system, English and हिंदी; the choice is saved in `localStorage` and wins from then on; an unknown saved value counts as "same as the system". The page sets `<html lang>`.
+- Text in `site/lang/en.json` and `site/lang/hi.json` in the [suite translation format](https://github.com/kumasumit/ks-utility/blob/main/specs/translation-format.md); Hindi follows the [Hindi style guide](https://github.com/kumasumit/ks-utility/blob/main/specs/hindi-style.md). App taglines live in `apps.json`.
+- The [language rule](https://github.com/kumasumit/ks-utility/blob/main/specs/languages.md): follow `navigator.languages` with no choice made, a language dropdown in the header (a native `<select>`, whose list opens vertically) offers Same as system, English and हिंदी; the choice is saved in `localStorage` and wins from then on; an unknown saved value counts as "same as the system". The page sets `<html lang>`.
 - Latin digits in both: all numbers and dates go through `Intl` with `numberingSystem: "latn"`.
 
 ## Theme and access
@@ -158,10 +158,10 @@ A GitHub call that fails leaves that part as it was (a warning in the run), so t
 `.github/workflows/pages.yml`, on `push` to `main` with `paths: [site/**, .github/workflows/pages.yml, .github/scripts/collect-apps.mjs]`, hourly (`17 * * * *`), plus `workflow_dispatch`. Before the upload, `build` runs the collector; an hourly run compares the result with the live `apps.json` and skips the upload and deploy when nothing changed. GitHub turns hourly runs off after 60 days without activity in the repository; turn them on again in the Actions tab, or run the workflow by hand. Runner `ubuntu-24.04`. Permissions `contents: read`, `pages: write`, `id-token: write`; concurrency group `pages`. Two jobs, as in GitHub's Pages starter workflow: `build` runs `actions/checkout`, `actions/configure-pages` and `actions/upload-pages-artifact` (path `site`); `deploy` (`needs: build`) runs `actions/deploy-pages`. Before the upload, `build` replaces `__VERSION__` in `site/index.html` and `site/app.js` with the short commit id and the run number (an hourly run can redeploy the same commit with a new app list); `app.js` also requests `apps.json` and the language files with it,, so the CSS and JavaScript links (`style.css?v=__VERSION__`) change with every deploy and browsers never mix a new page with cached old files (GitHub Pages lets browsers keep files for 10 minutes). Locally the placeholder is harmless. Each action is pinned to a full commit SHA with the version in a comment. (A single job failed when the deploy step looked for the artifact a fraction of a second after the upload, before GitHub listed it.) The SHAs are looked up from each action's release tag when building.
 
 ## Repository page
-The repository's Website field (the About box) points to `https://kumarsumit17.github.io/KS-Suite/`, GitHub lists the `github-pages` deployment, and site releases are tagged `vMAJOR.MINOR.PATCH` with a GitHub release (`v1.0.0` is the first).
+The repository's Website field (the About box) points to `https://kumasumit.github.io/KS-Suite/`, GitHub lists the `github-pages` deployment, and site releases are tagged `vMAJOR.MINOR.PATCH` with a GitHub release (`v1.0.0` is the first).
 
 ## README
-A short section at the top: what KS-Suite is, a link to the page (`https://kumarsumit17.github.io/KS-Suite/`) to download the apps, then the existing developer material below. 
+A short section at the top: what KS-Suite is, a link to the page (`https://kumasumit.github.io/KS-Suite/`) to download the apps, then the existing developer material below. 
 
 ## Checks before committing
 Open `site/` with a local static server; test both languages, light and dark, keyboard only, reduced motion, 320 px width, API failure (offline) and a coming-soon card; run the ks-utility language-file check on `site/lang/` if it can be run without installing packages (see decision 1).

@@ -69,7 +69,7 @@ Owner's rule (2026-11-25), for every app: each platform build (macOS, Windows, A
 - **Its own implementation where it pays:** the engine, media stack, rendering, input, look and OS integrations (media keys and Now Playing, file associations, keep-awake, picture-in-picture, accessibility) follow that platform's own frameworks and conventions. Code that is genuinely the same stays in `shared/`, written once.
 - **Speed and stability are measured per platform:** cold start (first start after install included), memory and frame pacing, on the platform itself.
 - **As few dependencies as possible:** use the platform's own frameworks first; bundle only what the app needs, and nothing the user has to install separately.
-- **Each app keeps a per-platform plan in its own `specs/`**, like [ks-jaiplayer's](https://github.com/kumarsumit17/ks-jaiplayer/blob/dev/specs/plan-per-platform.md), with what each build does today and what changes for each OS.
+- **Each app keeps a per-platform plan in its own `specs/`**, like [ks-jaiplayer's](https://github.com/kumasumit/ks-jaiplayer/blob/dev/specs/plan-per-platform.md), with what each build does today and what changes for each OS.
 
 ## Existing code
 

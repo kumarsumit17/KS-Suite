@@ -11,7 +11,7 @@ The rule is in [Platform folders](platform-folders.md#each-platform-build-is-opt
 
 ## How each app does it
 
-1. The app's own session writes an audit and a plan in the app's `specs/`, modelled on ks-jaiplayer's [`specs/plan-per-platform.md`](https://github.com/kumarsumit17/ks-jaiplayer/blob/dev/specs/plan-per-platform.md): an audit table, one section per platform, the decisions it needs from the owner, and a build order with tests.
+1. The app's own session writes an audit and a plan in the app's `specs/`, modelled on ks-jaiplayer's [`specs/plan-per-platform.md`](https://github.com/kumasumit/ks-jaiplayer/blob/dev/specs/plan-per-platform.md): an audit table, one section per platform, the decisions it needs from the owner, and a build order with tests.
 2. The owner approves the plan before any building starts.
 3. The app builds it on `dev` and releases it by the [Release cycle](release-cycle.md). It tests every platform by [Testing on every platform](testing.md). Hand checks and paid signing never block a release.
 4. Each app moves to platform tags (one-platform apps too). An app that checks for updates ships one plain bridge release first ([Versioning and signing](versioning-signing.md#platform-tags-own-version-per-platform)).

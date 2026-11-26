@@ -8,11 +8,11 @@
 **KS-Suite** is a family of free, privacy-focused apps for the living room, the desktop, and your pocket.
 
 > ## ⬇️ Get the apps
-> **[kumarsumit17.github.io/KS-Suite](https://kumarsumit17.github.io/KS-Suite/)** lists every app with download buttons for the newest release, in English and Hindi.
+> **[kumasumit.github.io/KS-Suite](https://kumasumit.github.io/KS-Suite/)** lists every app with download buttons for the newest release, in English and Hindi.
 >
 > Everything below is for developers.
 
-This repository is the suite's front door: it links to every app, and holds the conventions they all share. Each app lives in its own repository, and so does [`ks-utility`](https://github.com/kumarsumit17/ks-utility), the generic utility code every app depends on.
+This repository is the suite's front door: it links to every app, and holds the conventions they all share. Each app lives in its own repository, and so does [`ks-utility`](https://github.com/kumasumit/ks-utility), the generic utility code every app depends on.
 
 - **Private by default.** Your data stays on your device unless you choose otherwise.
 - **Lean and fast.** No bloat, no ads and no tracking SDKs, with UIs tuned for the device in your hand or the remote on your couch.
@@ -26,12 +26,12 @@ This repository is the suite's front door: it links to every app, and holds the 
 
 | App | What it does | Platform | Status |
 |---|---|---|---|
-| 📺 [**ks-tv-launcher**](https://github.com/kumarsumit17/ks-tv-launcher) | Ad-free, Apple TV-style launcher with a glass UI, a live weather widget, and a streaming-subscription tracker with renewal reminders. | Android TV / Google TV | ✅ Released · [v0.7.3](https://github.com/kumarsumit17/ks-tv-launcher/releases) |
-| ▶️ [**ks-jaiplayer**](https://github.com/kumarsumit17/ks-jaiplayer) | Multi-platform media player with a shared Kotlin core and a native playback engine on each target. | Android · Google TV · Windows · macOS | 🛠 Planned |
-| 🎬 [**ks-streamflix**](https://github.com/kumarsumit17/ks-streamflix) | Lean, D-pad optimized streaming media manager with fast focus navigation. | Android TV | 🛠 Planned |
-| 🔐 [**ks-vault**](https://github.com/kumarsumit17/ks-vault) | Fully offline secure vault and notekeeper behind pattern/password authentication, for notes, government IDs, and tickets. | Android | 🛠 Planned |
-| 💰 [**ks-expense-manager**](https://github.com/kumarsumit17/ks-expense-manager) | Minimalist, privacy-first personal finance and expense tracker. | Android | 🛠 Planned |
-| ⬇️ [**ks-download-manager**](https://github.com/kumarsumit17/ks-download-manager) | Free download manager for images, audio and video, with up to 20× faster downloads. | Windows · macOS (Chrome extension under consideration) | 🚧 In development · [stages 1–4 of 9 done](https://github.com/kumarsumit17/ks-download-manager/blob/dev/specs/stages.md) |
+| 📺 [**ks-tv-launcher**](https://github.com/kumasumit/ks-tv-launcher) | Ad-free, Apple TV-style launcher with a glass UI, a live weather widget, and a streaming-subscription tracker with renewal reminders. | Android TV / Google TV | ✅ Released · [v0.7.3](https://github.com/kumasumit/ks-tv-launcher/releases) |
+| ▶️ [**ks-jaiplayer**](https://github.com/kumasumit/ks-jaiplayer) | Multi-platform media player with a shared Kotlin core and a native playback engine on each target. | Android · Google TV · Windows · macOS | 🛠 Planned |
+| 🎬 [**ks-streamflix**](https://github.com/kumasumit/ks-streamflix) | Lean, D-pad optimized streaming media manager with fast focus navigation. | Android TV | 🛠 Planned |
+| 🔐 [**ks-vault**](https://github.com/kumasumit/ks-vault) | Fully offline secure vault and notekeeper behind pattern/password authentication, for notes, government IDs, and tickets. | Android | 🛠 Planned |
+| 💰 [**ks-expense-manager**](https://github.com/kumasumit/ks-expense-manager) | Minimalist, privacy-first personal finance and expense tracker. | Android | 🛠 Planned |
+| ⬇️ [**ks-download-manager**](https://github.com/kumasumit/ks-download-manager) | Free download manager for images, audio and video, with up to 20× faster downloads. | Windows · macOS (Chrome extension under consideration) | 🚧 In development · [stages 1–4 of 9 done](https://github.com/kumasumit/ks-download-manager/blob/dev/specs/stages.md) |
 
 "Planned" means the repository holds the project structure and its rules, with app code still to come. "In development" means app code is being built in stages, with no release yet.
 
@@ -48,7 +48,7 @@ This repository is the suite's front door: it links to every app, and holds the 
 
 ### Shared utilities
 
-[**ks-utility**](https://github.com/kumarsumit17/ks-utility) holds common, generic utility functions for the suite. Every app takes it as a dependency pinned to a commit: the Kotlin apps as a git submodule built by Gradle, `ks-download-manager` through `package.json` and `Cargo.toml`. Application-specific logic stays in the app. `ks-tv-launcher` is still being moved onto it: its submodule and Gradle wiring are not committed yet. Status: 🛠 Planned.
+[**ks-utility**](https://github.com/kumasumit/ks-utility) holds common, generic utility functions for the suite. Every app takes it as a dependency pinned to a commit: the Kotlin apps as a git submodule built by Gradle, `ks-download-manager` through `package.json` and `Cargo.toml`. Application-specific logic stays in the app. `ks-tv-launcher` is still being moved onto it: its submodule and Gradle wiring are not committed yet. Status: 🛠 Planned.
 
 ---
 
@@ -57,10 +57,10 @@ This repository is the suite's front door: it links to every app, and holds the 
 Each app is a separate repository, so clone only what you need. To recreate the whole workspace:
 
 ```bash
-git clone https://github.com/kumarsumit17/KS-Suite.git
+git clone https://github.com/kumasumit/KS-Suite.git
 cd KS-Suite
 for app in ks-tv-launcher ks-jaiplayer ks-streamflix ks-vault ks-expense-manager ks-download-manager ks-utility; do
-  git clone --recurse-submodules "https://github.com/kumarsumit17/$app.git"
+  git clone --recurse-submodules "https://github.com/kumasumit/$app.git"
 done
 ```
 
@@ -113,7 +113,7 @@ Every app repository has all five platform folders, including those for platform
 
 ## 🕸 Cross-Repository Relationships
 
-The apps share **no runtime services** and never depend on each other. Each one builds, ships, and works alone. The only shared code is generic utilities in [`ks-utility`](https://github.com/kumarsumit17/ks-utility), which every app takes as a dependency pinned to a commit. Every link between the apps is an explicit Android intent that the user starts. The diagram and the contract on each edge are in [specs/cross-repo.md](specs/cross-repo.md), and the conventions the repos share in [specs/conventions.md](specs/conventions.md).
+The apps share **no runtime services** and never depend on each other. Each one builds, ships, and works alone. The only shared code is generic utilities in [`ks-utility`](https://github.com/kumasumit/ks-utility), which every app takes as a dependency pinned to a commit. Every link between the apps is an explicit Android intent that the user starts. The diagram and the contract on each edge are in [specs/cross-repo.md](specs/cross-repo.md), and the conventions the repos share in [specs/conventions.md](specs/conventions.md).
 
 > When an edge contract changes, update [specs/cross-repo.md](specs/cross-repo.md) and the `CLAUDE.md` files on **both** sides in the same release cycle.
 

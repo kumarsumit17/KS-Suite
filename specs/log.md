@@ -1,3 +1,7 @@
+# 2026-11-26
+
+* **Update**: every spec, `README.md`, the landing page and its collector: the repositories moved from the GitHub account `kumarsumit17` to `kumasumit` (the landing page is now `https://kumasumit.github.io/KS-Suite/`); `ks-beam` and `ks-forge` keep their old links until they move.
+
 # 2026-11-25
 
 * **Update**: [Per-platform optimization rollout](plan-per-platform.md): `ks-beam` releases with platform tags.
