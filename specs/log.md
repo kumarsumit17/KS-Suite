@@ -1,5 +1,6 @@
 # 2026-11-27
 
+* **Update**: [Shared conventions](conventions.md) "App icons": legacy Android icons only below `minSdk` 26; check the built APK.
 * **Update**: [Shared conventions](conventions.md) and `CLAUDE.md`: owner's rule: no default framework icon in any build on any platform; each platform's icon places listed. The language row names `ks-forge` as the second Tauri app.
 * **Update**: [Per-platform optimization rollout](plan-per-platform.md): `ks-tv-launcher` on ks-utility v0.14.0 and step 5, released as `google-tv-v0.11.1`.
 * **Update**: [Per-platform optimization rollout](plan-per-platform.md): every app's status refreshed (built steps, latest releases, ks-utility versions).

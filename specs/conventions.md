@@ -26,7 +26,7 @@ The rules themselves are listed in the root `CLAUDE.md`.
 
 Owner's rule (2026-11-27), for every app: no build on any platform shows a default framework icon (the Kotlin or Compose Multiplatform logo, Android's default green robot `ic_launcher`, Tauri's default logo). Each one uses the app's own icon, made for that platform:
 
-- **Android phone:** an adaptive launcher icon (foreground, background and monochrome layers) plus the round and legacy versions.
+- **Android phone:** an adaptive launcher icon (foreground, background and monochrome layers), also set as `android:roundIcon`; a legacy bitmap icon only when `minSdk` is below 26. No icon from a library or template may remain in the built APK (check with `aapt2 dump badging`).
 - **Google TV:** the launcher icon and the 320×180 `android:banner` that the TV home screen shows.
 - **macOS:** an `.icns` set in `nativeDistributions { macOS { iconFile } }` (Compose) or `bundle.icon` (Tauri), so the `.app`, the Dock, Finder and the `.dmg` all show it; the window, menu bar or tray icon too where the app has one.
 - **Windows:** an `.ico` with every size from 16 to 256 px in `nativeDistributions { windows { iconFile } }` or `bundle.icon`, so the installer, Start menu, taskbar and Explorer show it; the window icon (`Window(icon = …)` in Compose) as well, since a Compose window otherwise shows the Kotlin logo in its title bar and taskbar.
