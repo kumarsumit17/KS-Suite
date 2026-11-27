@@ -1,5 +1,6 @@
 # 2026-11-27
 
+* **Update**: [Cross-repository relationships](cross-repo.md) and `CLAUDE.md`: ks-utility tags at most once a day (urgent security fixes excepted); the newest-tag check stays strict (owner's decision).
 * **Update**: [Cross-repository relationships](cross-repo.md): ks-utility v0.18.0 requires `@main` (a rehearsal may use `@dev`); the bump runs only once its caller is on `main`.
 * **Update**: [Cross-repository relationships](cross-repo.md), [Release cycle](release-cycle.md), [Rule architecture](rule-architecture.md) and `CLAUDE.md`: apps call ks-utility's shared workflows at `@main` (always its newest release); no `KS_WORKFLOWS_TOKEN`; only the code pin moves (owner's decision). `KS_APPS_DISPATCH_TOKEN` is set.
 * **Update**: [Cross-repository relationships](cross-repo.md), [Rule architecture](rule-architecture.md): from ks-utility v0.16.0 the shared-workflow refs move with the pin; the optional `KS_WORKFLOWS_TOKEN` lets the bump rewrite them.

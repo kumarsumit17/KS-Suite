@@ -58,6 +58,8 @@ Every app repository keeps a `ks-suite.json` at its root: its card on the KS-Sui
 
 Owner's rule (2026-11-27, replacing "before each release"): when ks-utility pushes a `vX.Y.Z` tag, every app moves to it the same day.
 
+- **ks-utility tags at most once a day** (owner's decision, 2026-11-27): it collects its changes on `dev` and releases them together, an urgent security fix excepted. `ks-suite-check` stays strict (the pin must be the newest tag), and an app release takes about 1.5 hours, so tags in quick succession would stop every app's release in progress.
+
 - **What moves:** the Kotlin apps' `ks-utility/` submodule; the Tauri apps' git tag in `package.json` and `src-tauri/Cargo.toml` and their lock files.
 - **Shared workflows are called at `@main`** (owner's decision, 2026-11-27): every `uses: kumasumit/ks-utility/.github/workflows/…` in an app says `@main`. ks-utility's `main` only fast-forwards at a release, so `@main` is always the newest ks-utility release; there are no workflow refs to move and no token that can change workflow files. `ks-suite-check` requires `@main` (ks-utility v0.18.0 and later); a rehearsal may call `@dev`, so a shared-workflow change can be tried from one app before ks-utility tags it.
 - **How:** its own commit, `chore: move ks-utility to vX.Y.Z`, tested as usual and pushed to `dev`. If the new tag changes behaviour, the app releases with its next tag as usual (a fix raises PATCH, a feature raises MINOR), without waiting ([Release cycle](release-cycle.md)).
