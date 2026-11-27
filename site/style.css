@@ -216,7 +216,8 @@ html[data-view="home"] .intro { border-bottom: 0; padding-block: var(--space-8);
 .grid {
   list-style: none; padding: 0; margin: 0;
   display: grid; gap: var(--space-4);
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--card-min)), 1fr));
+  /* At most two columns: the groups hold two or four apps, so rows always fill evenly. */
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, max(var(--card-min), calc((100% - var(--space-4)) / 2))), 1fr));
 }
 .grid > li { display: flex; }
 
