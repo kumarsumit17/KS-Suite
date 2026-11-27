@@ -1,5 +1,6 @@
 # 2026-11-27
 
+* **Update**: [Per-platform optimization rollout](plan-per-platform.md): `ks-tv-launcher` on ks-utility v0.14.0 and step 5, released as `google-tv-v0.11.1`.
 * **Update**: [Per-platform optimization rollout](plan-per-platform.md): every app's status refreshed (built steps, latest releases, ks-utility versions).
 
 # 2026-11-26
