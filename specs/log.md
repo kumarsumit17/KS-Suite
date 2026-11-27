@@ -1,5 +1,6 @@
 # 2026-11-27
 
+* **Update**: [Landing page](landing-page.md) "Repository page": every app repository has a description, this page as its Website, and topics.
 * **Update**: [Landing page](landing-page.md) "Repository page": the repository's description and 20 topics.
 * **Update**: [Landing page](landing-page.md) "Search engines": the app list is written into the page as plain HTML with structured data and a sitemap at every deploy, for crawlers that do not run JavaScript; canonical and social tags. README's app table lists all eight apps.
 * **Update**: [Cross-repository relationships](cross-repo.md) and `CLAUDE.md`: ks-utility tags at most once a day (urgent security fixes excepted); the newest-tag check stays strict (owner's decision).
