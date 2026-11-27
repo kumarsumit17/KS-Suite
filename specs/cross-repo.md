@@ -61,7 +61,8 @@ Owner's rule (2026-11-27, replacing "before each release"): when ks-utility push
 - **What moves:** the Kotlin apps' `ks-utility/` submodule; the Tauri apps' git tag in `package.json` and `src-tauri/Cargo.toml` and their lock files.
 - **How:** its own commit, `chore: move ks-utility to vX.Y.Z`, tested as usual and pushed to `dev`. If the new tag changes behaviour, the app releases with its next tag as usual (a fix raises PATCH, a feature raises MINOR), without waiting ([Release cycle](release-cycle.md)).
 - **Automated:** each app has a small `.github/workflows/ks-utility-bump.yml` that calls ks-utility's bump workflow. It runs when ks-utility's tag push dispatches it (`repository_dispatch`) and once a day as a safety net. The bump pushes to `dev` only when the app's tests pass; when they fail it opens an issue and the owner is notified, and nothing is released while a test fails.
-- **Checked:** the shared release workflow refuses to release an app whose pin is not the newest ks-utility tag.
+- **Checked:** `ks-suite-check` in the shared release workflows (ks-utility v0.15.0 and later) refuses to release an app whose pin is not the newest ks-utility tag.
+- **Started by** ks-utility's `notify-apps.yml` on every tag push, using the `KS_APPS_DISPATCH_TOKEN` secret; each app's `ks-utility-bump.yml` follows the example in ks-utility's [release workflow spec](https://github.com/kumasumit/ks-utility/blob/main/specs/release-workflow.md).
 - **Owner step (needed for same-day moves):** one fine-grained GitHub token, owned by `kumasumit`, with Contents read and write on every app repository, stored as the secret `KS_APPS_DISPATCH_TOKEN` in ks-utility, so its tag push can dispatch the app bumps. Without it, the daily schedule still moves every app within a day.
 - Rules carried by the new tag reach the app through this move ([Rule architecture](rule-architecture.md)).
 

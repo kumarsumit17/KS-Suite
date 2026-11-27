@@ -13,15 +13,16 @@ Owner's decision (2026-11-27): every shared rule that code can carry comes from 
 
 A rule a program can apply or check lives in [`ks-utility`](https://github.com/kumasumit/ks-utility) as code: helpers, the shared release workflows, shared build settings, and a conformance check, **`ks-suite-check`**, that every app runs in CI and that fails the build when the app breaks a rule. An app gets a new or changed rule by moving its `ks-utility` pin ([Cross-repository relationships](cross-repo.md)).
 
-Rules that belong here, among others:
+Since ks-utility `v0.15.0`, `ks-suite-check` ([its spec](https://github.com/kumasumit/ks-utility/blob/main/specs/suite-check.md)) checks these, and a release that breaks one is stopped. Rules that belong here:
 
-- The macOS updater quits the app after opening the `.dmg`, so Finder can replace it.
+- The macOS updater quits the app after opening the `.dmg`, so Finder can replace it (ks-utility `DesktopInstaller` / `app_update::install::open`, v0.15.0 and later).
 - Language files (`en.json`, `hi.json`), the shared catalogue and the Hindi check.
 - Versions from tags (plain and [platform tags](versioning-signing.md#platform-tags-own-version-per-platform)).
 - No analytics, advertising or crash-reporting SDKs.
 - No default framework icon in any build ([App icons](conventions.md#app-icons)).
 - The five platform folders ([Platform folders](platform-folders.md)).
-- The app uses ks-utility's updater.
+- The app uses ks-utility's updater (the only exception: `ks-suite-check.json` with `no-updater` and the reason).
+- The app's ks-utility pin is the newest tag ([Cross-repository relationships](cross-repo.md#moving-to-a-new-ks-utility-tag)).
 
 ## Process rules: in KS-Suite
 

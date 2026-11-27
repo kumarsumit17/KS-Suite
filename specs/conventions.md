@@ -32,4 +32,4 @@ Owner's rule (2026-11-27), for every app: no build on any platform shows a defau
 - **Windows:** an `.ico` with every size from 16 to 256 px in `nativeDistributions { windows { iconFile } }` or `bundle.icon`, so the installer, Start menu, taskbar and Explorer show it; the window icon (`Window(icon = …)` in Compose) as well, since a Compose window otherwise shows the Kotlin logo in its title bar and taskbar.
 - **Chrome extension:** its own 16, 32, 48 and 128 px icons in `manifest.json`.
 
-Each app keeps its icon sources in its repository and checks before a release that no default icon is left in any build. A build that still shows one is a bug, fixed in the next release.
+`ks-suite-check` (ks-utility v0.15.0 and later) stops a release that still has a default it can recognise: Android Studio's robot, a Compose Desktop build without `iconFile`, Tauri's template icons. A resized or older copy of a framework logo is caught only by looking at the built app. Each app keeps its icon sources in its repository and checks before a release that no default icon is left in any build. A build that still shows one is a bug, fixed in the next release.
