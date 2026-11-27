@@ -40,7 +40,7 @@ Paused apps' own to-dos (the DEV variant, clean PROD data, the approval wording 
 
 | Change | Where | Adopted by |
 |---|---|---|
-| `SHA256SUMS`, ks-utility version and signing status in release notes, `environment: production` on publish, DEV build mode and DEV signing, `isDevBuild` | ks-utility `dev`, for v0.19.0 | none yet; each app when active |
+| `SHA256SUMS`, ks-utility version and signing status in release notes, `environment: production` on publish, DEV build mode and DEV signing, `isDevBuild` | ks-utility `dev`, for v0.19.0 | none yet; each app when active. To adopt: pass the four `DEV_*` secrets in its release caller, read `ksVariant`/`ksDevVersion` for the DEV IDs (Kotlin) or the `variant` output and `tauri.dev.conf.json` (Tauri), add the Tauri publish inputs `ks-utility` and `signing`, and have its `ks-utility-bump.yml` caller on `main` |
 
 ## Done (suite)
 
