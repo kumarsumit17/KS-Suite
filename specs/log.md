@@ -1,5 +1,6 @@
 # 2026-11-27
 
+* **Update**: [Working method](working-method.md) and `CLAUDE.md`: knowledge management stays minimal (Markdown first); graphify only where checked to save tokens.
 * **Update**: [Progress](progress.md): ks-jaiplayer audit, plan and DEV variant done; waiting for the DEV signing secrets.
 * **Update**: [Working method](working-method.md): ks-utility's automatic moves stay on for paused apps (`dev` only, never a release).
 * **Update**: [Progress](progress.md): ks-utility v0.19.0 released.

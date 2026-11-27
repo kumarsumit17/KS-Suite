@@ -17,8 +17,11 @@ Owner's rules (2026-11-27), for every Claude Code session in the suite.
 
 ## Knowledge and context
 
+Knowledge management exists to cut effort and tokens; it is never a project of its own (owner, 2026-11-27). Markdown in `specs/` first; nothing else is added unless it measurably saves work.
+
+
 - **Where knowledge lives:** suite rules in KS-Suite `specs/` (start at its [index](index.md)); each app's architecture, storage, platforms, tests, decisions, known issues and progress in that app's own `specs/` (its `index.md`, and a `progress.md`). No second documentation tree; facts are written once and linked.
-- **Code navigation:** graphify where set up (`graphify query`, `path`, `explain`, `section`); targeted search otherwise. No full-repository scans, no paid or cloud graph services.
+- **Code navigation:** targeted search (`grep`, file names) by default. Graphify is optional: used only in a repository where it has been checked to work and to actually save tokens there; otherwise it is not maintained or required. No full-repository scans, no paid or cloud graph services.
 - **Source of truth:** the code, configuration and test results. A spec or graph that may be stale is checked against them.
 
 ## A session's start
@@ -26,7 +29,7 @@ Owner's rules (2026-11-27), for every Claude Code session in the suite.
 1. Read the root `CLAUDE.md` and this repository's `specs/index.md`.
 2. Read [Progress](progress.md): the active app and its last checkpoint.
 3. Read that app's `specs/index.md` and `progress.md`.
-4. Find the files for the task with graphify or a targeted search, and read only those.
+4. Find the files for the task with a targeted search (or graphify where it is proven useful), and read only those.
 5. Continue from the recorded next action.
 
 ## Checkpoints
