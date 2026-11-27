@@ -204,15 +204,31 @@ html[data-view="home"] .intro { border-bottom: 0; padding-block: var(--space-8);
 .section-head h2 { font-size: var(--font-size-large); font-weight: var(--font-weight-strong); margin: 0; color: var(--color-heading); }
 .section-head p { margin: 0; font-size: var(--font-size-xs); }
 .groups { display: grid; gap: var(--space-6); }
+.group { --group-from: var(--color-group); --group-to: var(--color-group); }
+.group[data-group="media"] { --group-from: light-dark(#6d28d9, #c4b5fd); --group-to: light-dark(#be185d, #f9a8d4); }
+.group[data-group="personal"] { --group-from: light-dark(#047857, #6ee7b7); --group-to: light-dark(#0e7490, #67e8f9); }
+.group[data-group="desktop"] { --group-from: light-dark(#1d4ed8, #93c5fd); --group-to: light-dark(#4338ca, #a5b4fc); }
+/* Group headings: centred, in the group's own colours, between two fading rules. */
 .group-head {
-  display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between;
-  gap: var(--space-1) var(--space-3); margin-bottom: var(--space-3);
+  display: flex; flex-direction: column; align-items: center; text-align: center;
+  gap: var(--space-1); margin: var(--space-2) 0 var(--space-4);
 }
 .group-head h3 {
-  margin: 0; font-size: var(--font-size-xs); font-weight: var(--font-weight-strong);
-  text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-group);
+  display: flex; align-items: center; gap: var(--space-3); width: 100%; justify-content: center;
+  margin: 0; font-size: var(--font-size-body); font-weight: 800;
+  text-transform: uppercase; letter-spacing: 0.12em; color: var(--group-from);
 }
+.group-head h3 span {
+  background: linear-gradient(90deg, var(--group-from), var(--group-to));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.group-head h3::before, .group-head h3::after {
+  content: ""; flex: 1 1 0; max-width: 10rem; height: 2px; border-radius: 1px;
+  background: linear-gradient(90deg, transparent, var(--group-from));
+}
+.group-head h3::after { background: linear-gradient(90deg, var(--group-to), transparent); }
 .group-head p { margin: 0; font-size: var(--font-size-xs); color: var(--color-muted); }
+@media (forced-colors: active) { .group-head h3 span { color: CanvasText; background: none; } }
 .grid {
   list-style: none; padding: 0; margin: 0;
   display: grid; gap: var(--space-4);

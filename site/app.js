@@ -402,9 +402,9 @@
       const apps = state.apps.filter((a) => a.group === g.id);
       if (!apps.length) return null;
       const headingId = `group-${g.id}`;
-      return el("section", { class: "group", "aria-labelledby": headingId },
+      return el("section", { class: "group", "data-group": g.id, "aria-labelledby": headingId },
         el("div", { class: "group-head" },
-          el("h3", { id: headingId }, g.title[state.language]),
+          el("h3", { id: headingId }, el("span", null, g.title[state.language])),
           g.note ? el("p", null, g.note[state.language]) : null),
         el("ul", { class: "grid" }, ...apps.map(card)));
     }).filter(Boolean);
