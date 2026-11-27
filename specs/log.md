@@ -1,3 +1,7 @@
+# 2026-11-27
+
+* **Update**: [Per-platform optimization rollout](plan-per-platform.md): every app's status refreshed (built steps, latest releases, ks-utility versions).
+
 # 2026-11-26
 
 * **Update**: every link and the landing page: the repository is now `kumasumit/ks-suite` (lower case, like the app repositories), and the landing page is `https://kumasumit.github.io/ks-suite/`.
