@@ -7,6 +7,7 @@ on:
       - "site/**"
       - ".github/workflows/pages.yml"
       - ".github/scripts/collect-apps.mjs"
+      - ".github/scripts/render-static.mjs"
   # Hourly: picks up a new app (a repository with a ks-suite.json card) or an app's first
   # release. Versions and downloads need no run; the page reads them live from GitHub.
   schedule:
@@ -41,6 +42,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
         run: node .github/scripts/collect-apps.mjs site/apps.json
+      # The app list as plain HTML, structured data (JSON-LD) and sitemap.xml, for search
+      # engines and AI assistants that do not run JavaScript (.github/scripts/render-static.mjs).
+      - name: Render the app list for search engines
+        run: node .github/scripts/render-static.mjs site
       # An hourly run deploys only when the app list differs from the live one.
       - name: Compare with the live app list
         id: compare

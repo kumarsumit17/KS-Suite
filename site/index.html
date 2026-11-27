@@ -6,12 +6,26 @@
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self' https://api.github.com; img-src 'self' data:; style-src 'self'; script-src 'self'; base-uri 'none'; form-action 'none'">
   <meta name="referrer" content="no-referrer">
   <title>KS-Suite: free, private apps</title>
-  <meta name="description" content="Free, privacy-focused apps for the TV, the desktop and the phone. No ads, no tracking.">
+  <meta name="description" content="KS-Suite: free, open-source, privacy-focused apps with no ads and no tracking. A Google TV launcher, a media player, a home media server, casting to TVs, an offline vault, an expense tracker, a download manager and a terminal, for Android, Google TV, macOS and Windows.">
+  <link rel="canonical" href="https://kumasumit.github.io/ks-suite/">
+  <link rel="sitemap" type="application/xml" href="https://kumasumit.github.io/ks-suite/sitemap.xml">
+  <meta name="robots" content="index, follow">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="KS-Suite">
+  <meta property="og:title" content="KS-Suite: free, private apps">
+  <meta property="og:description" content="Free, open-source apps for Android, Google TV, macOS and Windows. No ads, no tracking.">
+  <meta property="og:url" content="https://kumasumit.github.io/ks-suite/">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="hi_IN">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="KS-Suite: free, private apps">
+  <meta name="twitter:description" content="Free, open-source apps for Android, Google TV, macOS and Windows. No ads, no tracking.">
   <link rel="icon" href="icons/ks-suite.svg" type="image/svg+xml">
   <link rel="stylesheet" href="theme.css?v=__VERSION__">
   <link rel="stylesheet" href="style.css?v=__VERSION__">
   <script src="theme-init.js?v=__VERSION__"></script>
   <script src="app.js?v=__VERSION__" defer></script>
+  <!-- json-ld:start --><!-- json-ld:end -->
 </head>
 <body>
   <a class="skip" href="#apps" data-t="nav.skip">Skip to apps</a>
@@ -60,9 +74,9 @@
         <h2 id="apps-heading" data-t="apps.heading">Applications</h2>
         <p class="muted" data-t="apps.intro">Each card shows the newest release. Downloads come straight from GitHub.</p>
       </div>
-      <div class="groups" id="groups"></div>
+      <div class="groups" id="groups"><!-- static-apps:start --><!-- static-apps:end --></div>
       <noscript>
-        <p>This page needs JavaScript to list the apps. The same list, with links to each app's releases, is in the <a href="https://github.com/kumasumit/ks-suite#readme">README</a>.</p>
+        <p>The download buttons need JavaScript; the list above links to each app's releases. The same list is in the <a href="https://github.com/kumasumit/ks-suite#readme">README</a>.</p>
       </noscript>
     </section>
 

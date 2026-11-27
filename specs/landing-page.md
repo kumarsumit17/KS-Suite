@@ -154,6 +154,16 @@ A GitHub call that fails leaves that part as it was (a warning in the run), so t
 - Mobile first: one column under 640 px, buttons at least 44 px tall, no horizontal scroll at 320 px.
 - Without JavaScript, a `<noscript>` block lists every app with a link to its Releases page.
 
+## Search engines
+
+The cards are drawn by JavaScript, which many crawlers and AI assistants do not run. So at every deploy `.github/scripts/render-static.mjs`, after the collector:
+
+- writes the app list as plain HTML into `#groups` in `index.html` (between `static-apps` markers): each app's name, description, platforms, status and stack, with links to its releases and source; `app.js` replaces it with the cards when it runs;
+- adds structured data (JSON-LD, schema.org `WebSite` and an `ItemList` of `SoftwareApplication`) in the page's head;
+- writes `sitemap.xml` for the one page.
+
+`index.html` also has a canonical link, a full description, Open Graph and Twitter tags. A `robots.txt` would have to sit at `https://kumasumit.github.io/robots.txt`, the root of the owner's user site, which does not exist; without one every crawler may index the page. The owner can register the page in Google Search Console and submit `sitemap.xml` there.
+
 ## Deploy
 `.github/workflows/pages.yml`, on `push` to `main` with `paths: [site/**, .github/workflows/pages.yml, .github/scripts/collect-apps.mjs]`, hourly (`17 * * * *`), plus `workflow_dispatch`. Before the upload, `build` runs the collector; an hourly run compares the result with the live `apps.json` and skips the upload and deploy when nothing changed. GitHub turns hourly runs off after 60 days without activity in the repository; turn them on again in the Actions tab, or run the workflow by hand. Runner `ubuntu-24.04`. Permissions `contents: read`, `pages: write`, `id-token: write`; concurrency group `pages`. Two jobs, as in GitHub's Pages starter workflow: `build` runs `actions/checkout`, `actions/configure-pages` and `actions/upload-pages-artifact` (path `site`); `deploy` (`needs: build`) runs `actions/deploy-pages`. Before the upload, `build` replaces `__VERSION__` in `site/index.html` and `site/app.js` with the short commit id and the run number (an hourly run can redeploy the same commit with a new app list); `app.js` also requests `apps.json` and the language files with it,, so the CSS and JavaScript links (`style.css?v=__VERSION__`) change with every deploy and browsers never mix a new page with cached old files (GitHub Pages lets browsers keep files for 10 minutes). Locally the placeholder is harmless. Each action is pinned to a full commit SHA with the version in a comment. (A single job failed when the deploy step looked for the artifact a fraction of a second after the upload, before GitHub listed it.) The SHAs are looked up from each action's release tag when building.
 

@@ -24,31 +24,35 @@ This repository is the suite's front door: it links to every app, and holds the 
 
 ## 📂 Apps
 
-| App | What it does | Platform | Status |
+| App | What it does | Platforms | Status |
 |---|---|---|---|
-| 📺 [**ks-tv-launcher**](https://github.com/kumasumit/ks-tv-launcher) | Ad-free, Apple TV-style launcher with a glass UI, a live weather widget, and a streaming-subscription tracker with renewal reminders. | Android TV / Google TV | ✅ Released · [v0.7.3](https://github.com/kumasumit/ks-tv-launcher/releases) |
-| ▶️ [**ks-jaiplayer**](https://github.com/kumasumit/ks-jaiplayer) | Multi-platform media player with a shared Kotlin core and a native playback engine on each target. | Android · Google TV · Windows · macOS | 🛠 Planned |
-| 🎬 [**ks-streamflix**](https://github.com/kumasumit/ks-streamflix) | Lean, D-pad optimized streaming media manager with fast focus navigation. | Android TV | 🛠 Planned |
-| 🔐 [**ks-vault**](https://github.com/kumasumit/ks-vault) | Fully offline secure vault and notekeeper behind pattern/password authentication, for notes, government IDs, and tickets. | Android | 🛠 Planned |
-| 💰 [**ks-expense-manager**](https://github.com/kumasumit/ks-expense-manager) | Minimalist, privacy-first personal finance and expense tracker. | Android | 🛠 Planned |
-| ⬇️ [**ks-download-manager**](https://github.com/kumasumit/ks-download-manager) | Free download manager for images, audio and video, with up to 20× faster downloads. | Windows · macOS (Chrome extension under consideration) | 🚧 In development · [stages 1–4 of 9 done](https://github.com/kumasumit/ks-download-manager/blob/dev/specs/stages.md) |
+| 📺 [**ks-tv-launcher**](https://github.com/kumasumit/ks-tv-launcher) | Ad-free TV launcher with a glass look, live weather, and a tracker for your streaming subscriptions with renewal reminders. | Google TV | ✅ Released · [releases](https://github.com/kumasumit/ks-tv-launcher/releases) |
+| ⬇️ [**ks-download-manager**](https://github.com/kumasumit/ks-download-manager) | Free download manager for images, audio and video, with up to 20× faster downloads. | macOS · Windows (beta) · Chrome extension | ✅ Released · [releases](https://github.com/kumasumit/ks-download-manager/releases) |
+| ⌨️ [**ks-forge**](https://github.com/kumasumit/ks-forge) | Fast, private terminal for macOS and Windows, with tabs, split panes, themes and profiles. | macOS · Windows (beta) | ✅ Released · [releases](https://github.com/kumasumit/ks-forge/releases) |
+| ▶️ [**ks-jaiplayer**](https://github.com/kumasumit/ks-jaiplayer) | Media player for phone, TV and desktop, with a native playback engine on each. | Android · Google TV · Windows (beta) · macOS | ✅ Released · [releases](https://github.com/kumasumit/ks-jaiplayer/releases) |
+| 🎬 [**ks-streamflix**](https://github.com/kumasumit/ks-streamflix) | Free, open-source home media server: run it on your Mac or Windows PC, then browse and stream your library on phone and TV. | macOS · Windows (beta) · Android · Google TV | ✅ Released · [releases](https://github.com/kumasumit/ks-streamflix/releases) |
+| 📡 [**ks-beam**](https://github.com/kumasumit/ks-beam) | Cast videos, music and photos from your phone or computer to a TV or projector. | Android · Windows (beta) · macOS · Google TV | ✅ Released · [releases](https://github.com/kumasumit/ks-beam/releases) |
+| 🔐 [**ks-vault**](https://github.com/kumasumit/ks-vault) | Fully offline vault for notes, IDs and tickets, behind a pattern or password. | Android | ✅ Released · [releases](https://github.com/kumasumit/ks-vault/releases) |
+| 💰 [**ks-expense-manager**](https://github.com/kumasumit/ks-expense-manager) | Minimal, private tracker for your personal expenses. | Android | ✅ Released · [releases](https://github.com/kumasumit/ks-expense-manager/releases) |
 
-"Planned" means the repository holds the project structure and its rules, with app code still to come. "In development" means app code is being built in stages, with no release yet.
+Every release, with its files for each platform, is on the app's releases page; the [landing page](https://kumasumit.github.io/ks-suite/) offers the newest file for each platform.
 
 ### Tech stacks
 
 | App | Stack |
 |---|---|
-| `ks-tv-launcher` | Kotlin · Jetpack Compose for TV (tv-material) · DataStore · Coil · WorkManager |
-| `ks-jaiplayer` | Kotlin Multiplatform · Compose Multiplatform · Media3/ExoPlayer · VLCJ |
-| `ks-streamflix` | Kotlin · Jetpack Compose for TV · Media3/ExoPlayer · Room · Hilt |
-| `ks-vault` | Kotlin · Jetpack Compose · Room + SQLCipher · Android Keystore · BiometricPrompt |
-| `ks-expense-manager` | Kotlin · Jetpack Compose · Room · Vico · DataStore |
-| `ks-download-manager` | Rust · Tauri · TypeScript + React · shadcn/ui (Chrome extension: TypeScript, Manifest V3) |
+| `ks-tv-launcher` | Kotlin · Compose for TV |
+| `ks-download-manager` | Rust · Tauri |
+| `ks-forge` | Rust · Tauri · TypeScript |
+| `ks-jaiplayer` | Kotlin Multiplatform |
+| `ks-streamflix` | Kotlin Multiplatform |
+| `ks-beam` | Kotlin Multiplatform |
+| `ks-vault` | Kotlin · Compose |
+| `ks-expense-manager` | Kotlin · Compose |
 
 ### Shared utilities
 
-[**ks-utility**](https://github.com/kumasumit/ks-utility) holds common, generic utility functions for the suite. Every app takes it as a dependency pinned to a commit: the Kotlin apps as a git submodule built by Gradle, `ks-download-manager` through `package.json` and `Cargo.toml`. Application-specific logic stays in the app. `ks-tv-launcher` is still being moved onto it: its submodule and Gradle wiring are not committed yet. Status: 🛠 Planned.
+[**ks-utility**](https://github.com/kumasumit/ks-utility) holds the generic code every app shares: the updater, language files, the shared release workflows and `ks-suite-check`, which checks every app against the suite's rules before each release. Each app pins the newest ks-utility tag (the Kotlin apps as a git submodule, the Tauri apps through `package.json` and `Cargo.toml`) and moves to each new tag the same day.
 
 ---
 

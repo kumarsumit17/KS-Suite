@@ -130,7 +130,7 @@
       "group": "personal",
       "repo": "kumasumit/ks-vault",
       "icon": "shieldCheck",
-      "status": "coming-soon",
+      "status": "released",
       "platforms": ["android"],
       "stack": "Kotlin · Compose",
       "tagline": {
@@ -144,7 +144,7 @@
       "group": "personal",
       "repo": "kumasumit/ks-expense-manager",
       "icon": "wallet",
-      "status": "coming-soon",
+      "status": "released",
       "platforms": ["android"],
       "stack": "Kotlin · Compose",
       "tagline": {
