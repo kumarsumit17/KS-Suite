@@ -1,5 +1,6 @@
 # 2026-11-27
 
+* **Update**: [Release cycle](release-cycle.md) and `CLAUDE.md`: PROD stays clean (no shared storage, no import from DEV); each OS user has their own data; the stable DEV keystore is the owner's choice.
 * **Update**: [Release cycle](release-cycle.md) and `CLAUDE.md`: DEV and PROD side by side (separate IDs, names, icons, data, DEV signing key; DEV builds as workflow artifacts, never releases); the release pull request; GitHub enforcement applied (production environment with the owner as reviewer, rulesets on `main` and release tags).
 * **Update**: [Release cycle](release-cycle.md), `CLAUDE.md`, [Cross-repository relationships](cross-repo.md), [Rule architecture](rule-architecture.md): owner's rule replacing "build, test, release, no waiting": DEV from the latest production release, DEV builds (rehearsals), automated and manual testing, the owner's explicit approval per app and platform before a production release; first-release and initial-rollout exceptions; ks-utility versions never trigger a release; Android signing mandatory, macOS and Windows may be unsigned; `SHA256SUMS` and the ks-utility version in every release; the proposed GitHub enforcement.
 * **Update**: [Landing page](landing-page.md) "Repository page": every app repository has a description, this page as its Website, and topics.

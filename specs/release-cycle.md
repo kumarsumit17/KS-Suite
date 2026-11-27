@@ -36,8 +36,10 @@ Owner's rule (2026-11-27): a DEV build installs next to the production (PROD) ap
 | Windows | its own MSI `UpgradeCode` (and product code), name "<App> DEV", install folder and shortcuts | `%APPDATA%` / `%LOCALAPPDATA%` folder under the DEV name; installing or removing DEV leaves PROD alone |
 | Chrome extension | a separate unpacked DEV extension with " DEV" in its name | its own extension ID and storage |
 
+- **PROD stays clean** (owner's rule, 2026-11-27): no DEV data ever reaches PROD. DEV and PROD share no storage: no `sharedUserId`, no shared files, folders, databases, keychain items or content providers, no import or migration from DEV to PROD, and Android backups of one never restore into the other (separate application IDs). Test data, logins and settings made in DEV stay in DEV.
+- **Each user has their own data:** every install keeps its data per OS user, never machine-wide. Android keeps it per user profile; macOS under the user's `~/Library` (Application Support, Preferences, Caches); Windows under the user's `%APPDATA%` / `%LOCALAPPDATA%`, never `ProgramData` or the install folder. Two people on one computer or one TV never see each other's data, in DEV or PROD.
 - **PROD identities never change:** production application IDs, bundle identifiers, MSI upgrade codes and signing stay exactly as they are.
-- **Signing:** DEV Android files are signed with a separate DEV keystore (`DEV_KEYSTORE_BASE64`, `DEV_KEYSTORE_PASSWORD`, `DEV_KEY_ALIAS`, `DEV_KEY_PASSWORD` secrets), never with the production `ks-release` key; macOS and Windows DEV builds are unsigned.
+- **Signing (owner's choice, 2026-11-27):** DEV Android files are signed with a separate, stable DEV keystore, so each new DEV build installs as an update over the last one, (`DEV_KEYSTORE_BASE64`, `DEV_KEYSTORE_PASSWORD`, `DEV_KEY_ALIAS`, `DEV_KEY_PASSWORD` secrets), never with the production `ks-release` key; macOS and Windows DEV builds are unsigned.
 - **Updates:** a DEV build checks only for DEV builds or not at all; it never offers a production file.
 - **Checks:** side-by-side install is checked on the emulators and the Mac where possible; on a real phone, TV or Windows PC it is reported as pending the owner's check, never claimed.
 
