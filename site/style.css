@@ -64,6 +64,8 @@ a { color: var(--color-link); text-underline-offset: 0.18em; }
 }
 .brand img { width: 1.75rem; height: 1.75rem; }
 .controls { display: flex; gap: var(--space-2); flex-wrap: wrap; }
+/* On a phone the header wraps to two rows; it scrolls away there instead of covering the screen. */
+@media (max-width: 40rem) { .site-header { position: static; } }
 
 .switch {
   display: inline-flex; border: var(--border-width) solid var(--color-border);
@@ -268,7 +270,13 @@ html[data-view="home"] .intro { border-bottom: 0; padding-block: var(--space-8);
   margin: 0; display: flex; flex-direction: column; gap: 0.1rem;
   font-size: var(--font-size-xs); color: var(--color-muted);
 }
-.actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: var(--space-2); margin-left: auto; }
+/* Download buttons: an even grid that fills the card (one per row on a phone, two or more on wider cards). */
+.actions {
+  flex: 1 1 100%; display: grid; gap: var(--space-2);
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 13.5rem), 1fr));
+}
+.actions .btn { justify-content: center; white-space: nowrap; }
+.actions .lock-note { grid-column: 1 / -1; justify-content: flex-end; }
 .btn-small { min-height: var(--touch); padding: var(--space-1) var(--space-3); font-size: var(--font-size-xs); border-radius: var(--radius-small); }
 .btn-small .icon { width: 0.95rem; height: 0.95rem; }
 .btn .size { font-weight: normal; opacity: 0.8; }
@@ -295,7 +303,7 @@ html[data-view="home"] .intro { border-bottom: 0; padding-block: var(--space-8);
   margin: 0; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
   gap: var(--space-2) var(--space-5); font-size: var(--font-size-xs); color: var(--color-muted);
 }
-.site-footer a { color: var(--color-muted); }
+.site-footer a { color: var(--color-muted); display: inline-flex; align-items: center; min-height: var(--touch); }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
