@@ -1,5 +1,6 @@
 # 2026-11-27
 
+* **Update**: [Progress](progress.md): ks-jaiplayer release pull request #6 open, waiting for the owner.
 * **Update**: [Working method](working-method.md) and `CLAUDE.md`: knowledge management stays minimal (Markdown first); graphify only where checked to save tokens.
 * **Update**: [Progress](progress.md): ks-jaiplayer audit, plan and DEV variant done; waiting for the DEV signing secrets.
 * **Update**: [Working method](working-method.md): ks-utility's automatic moves stay on for paused apps (`dev` only, never a release).

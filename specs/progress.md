@@ -11,7 +11,7 @@ Updated 2026-11-27. How it is kept: [Working method](working-method.md).
 
 ## Active app
 
-**`ks-jaiplayer`** (owner's choice, 2026-11-27). Phase: **waiting for the owner's DEV signing secrets** before DEV builds. Done on `dev`: audit and plan (class C confirmed: preferences per OS user, nothing to remove; plan in its `specs/plan-standards.md`), ks-utility v0.19.0 (5b6d770), the DEV variant side by side (2f7abc6, checked on the emulators and the Mac; Windows and real devices pending the owner). Size baseline from v1.11.3: APK 1.98 MB, AAB 5.19 MB, dmg 103/113 MB, msi 96.9 MB. Next: DEV builds for all platforms, then the release pull request with the DEV build report. Its checkpoint: [ks-jaiplayer `specs/progress.md`](https://github.com/kumasumit/ks-jaiplayer/blob/dev/specs/progress.md). No other app is worked on until the owner names it.
+**`ks-jaiplayer`** (owner's choice, 2026-11-27). Phase: **release pull request [#6](https://github.com/kumasumit/ks-jaiplayer/pull/6) (`dev` → `main`, 1.12.0) open, waiting for the owner's manual test and approval.** It carries the DEV variant side by side, audio effects (presets, Bass and Dialogue, a 10-band EQ; Android and Google TV with JaiPlayer's own processor, desktop with libVLC's EQ), phone player-bar extras on a second row, and ks-utility v0.19.0. DEV builds: run 46047978458 at 2fb2afd, all green, Android signed with the DEV key. Tests: 52 desktop tests and a phone emulator smoke test pass. Size versus v1.11.3: APK +18 KB, dmg and msi about the same; cold start and memory not yet compared. Next: the owner tests each platform and preset, then approves or reports fixes.
 
 ## Apps
 
