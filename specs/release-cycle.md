@@ -19,11 +19,31 @@ latest production tag ─▶ dev ─▶ work ─▶ DEV build ─▶ automated t
 
 - **Baseline.** `main` holds each app's latest production release (it only fast-forwards at a release, [Branches](#branches)), so `dev` always starts from it. A change for one platform starts from that platform's latest production tag; platforms that share code share `dev`. There are no per-platform branches.
 - **Development.** Every feature, improvement and fix is made and committed on `dev`, never on `main`. Nothing untested reaches `main`.
-- **DEV builds** are the release workflow's **rehearsal** (a manual run on `dev`): it builds every file exactly as a release would, signs the Android files with the suite key, and keeps them as run artifacts; it never tags, attests or publishes. DEV files are named and kept apart from production files (artifacts of a rehearsal run, never a release).
+- **DEV builds** are made by the release workflow on `dev` for every platform a change touches. They are the DEV variant ([DEV and PROD side by side](#dev-and-prod-side-by-side)), named with app, platform, version and commit (`ks-beam-dev-1.8.0-dev+3f2a1c9-android.apk`), and published as downloadable workflow artifacts, never as a GitHub release or prerelease, so the landing page and the apps' updaters never see them. The owner gets the download links for manual testing.
 - **Testing.** CI and the automated tests pass on `dev`; the owner then installs the DEV build and tests it by hand. What the owner reports is fixed on `dev` and a new DEV build is made, until the owner is satisfied.
 - **Approval.** A production release needs, all together: every requested feature done, every reported release-blocking bug fixed, automated tests green, the owner's manual test done, and the owner's **explicit approval for that app and platform**. Approval for one app or platform never covers another.
 - **Release.** Only after approval: fast-forward `main` to `dev`, CI green on `main`, push the platform tag, the release workflow publishes (steps below), the published files are checked, `main` is the new baseline, and the owner is notified with the release details.
 - **Never** a production release from unapproved `dev` work, and no automatic production release from an ordinary `dev` commit.
+
+### DEV and PROD side by side
+
+Owner's rule (2026-11-27): a DEV build installs next to the production (PROD) app on the same device and never touches it.
+
+| Platform | DEV identity | Kept apart |
+|---|---|---|
+| Android, Google TV | application ID with `.dev` (`com.ks.beam` → `com.ks.beam.dev`), name with " DEV", a DEV-marked icon and TV banner | data, preferences, databases and caches (Android keeps them per application ID); a DEV APK can never update or remove PROD |
+| macOS | bundle identifier with `.dev`, app name "<App> DEV" | Application Support, preferences, caches and databases under the DEV identifier; both apps sit in Applications |
+| Windows | its own MSI `UpgradeCode` (and product code), name "<App> DEV", install folder and shortcuts | `%APPDATA%` / `%LOCALAPPDATA%` folder under the DEV name; installing or removing DEV leaves PROD alone |
+| Chrome extension | a separate unpacked DEV extension with " DEV" in its name | its own extension ID and storage |
+
+- **PROD identities never change:** production application IDs, bundle identifiers, MSI upgrade codes and signing stay exactly as they are.
+- **Signing:** DEV Android files are signed with a separate DEV keystore (`DEV_KEYSTORE_BASE64`, `DEV_KEYSTORE_PASSWORD`, `DEV_KEY_ALIAS`, `DEV_KEY_PASSWORD` secrets), never with the production `ks-release` key; macOS and Windows DEV builds are unsigned.
+- **Updates:** a DEV build checks only for DEV builds or not at all; it never offers a production file.
+- **Checks:** side-by-side install is checked on the emulators and the Mac where possible; on a real phone, TV or Windows PC it is reported as pending the owner's check, never claimed.
+
+### The release pull request
+
+When the DEV builds are tested, the session opens a pull request from `dev` to `main` listing the tested DEV builds (commits and links). The owner's approval of that pull request, or explicit approval in the conversation, is the approval for the platforms it names. The session checks that `dev` is still exactly what was tested, then fast-forwards `main` to it (GitHub marks the pull request merged), and tags. `main` still only fast-forwards ([Branches](#branches)).
 
 ### First release of an app on a platform
 
@@ -43,14 +63,14 @@ A new ks-utility tag moves each app's pin on `dev` the same day ([Cross-reposito
 ### How the gate is enforced
 
 - **By the workflow:** a release runs only from a tag on `main`; a rehearsal never publishes; `ks-suite-check` and the Android signature check stop a release that breaks a rule; pushed tags and published files are never changed.
-- **By GitHub (proposed, needs the owner's approval of the settings):** a `production` environment in each app repository with the owner (`kumasumit`) as required reviewer on the release workflow's publish job, so a tag pushed by anyone else waits for the owner's click; and repository rulesets that block force-pushes and deletion of `main` and of release tags.
-- **Until those settings are applied, the approval gate is a process rule only:** sessions do not push a production tag without the owner's explicit approval in the conversation, but GitHub does not technically prevent it.
+- **By GitHub (applied 2026-11-27 with the owner's approval):** every app repository has a `production` environment with the owner (`kumasumit`) as required reviewer, deployable only from release tags (`v*`, `android-v*`, `google-tv-v*`, `mac-v*`, `windows-v*`, `chrome-v*`); every app repository, ks-utility and ks-suite have the rulesets "Protect main" (no deletion, no force-push) and "Protect release tags" (no deletion, no moving).
+- **Limit:** the environment pauses a release only once the shared publish job declares `environment: production` (ks-utility's next tag). Until then the approval gate is a process rule: sessions push a production tag only after the owner's explicit approval.
 
 ## Branches
 
 Every KS-Suite repository (the apps, `ks-utility` and this workspace repository) has exactly two branches, `dev` and `main`, both on GitHub. No other branch is kept, locally or on GitHub.
 
-- **All work is committed on `dev`:** features, fixes, tests, docs. There are no feature or fix branches and no pull requests between branches.
+- **All work is committed on `dev`:** features, fixes, tests, docs. There are no feature or fix branches; the only pull request is the [release pull request](#the-release-pull-request) from `dev` to `main`, which records the owner's approval.
 - **`main` only moves by fast-forward to `dev`**, as step 2 of the cycle. Nothing is ever committed straight to `main`.
 - **Starting new work:** bring `dev` up to date with `main` first (`git checkout dev && git pull --ff-only && git merge --ff-only origin/main`). Because `main` only fast-forwards to `dev`, this is normally already true; the merge only catches a `main` that moved some other way.
 - **A branch made by mistake or by a tool** is fast-forwarded into `dev` (or rebased onto it) and deleted from the computer and from GitHub as soon as its work is on `dev`. A branch whose work is not on `dev` is never deleted without the owner's say, since that loses the work.
