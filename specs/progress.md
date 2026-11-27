@@ -33,17 +33,17 @@ Paused apps' own to-dos (the DEV variant, clean PROD data, the approval wording 
 ## Owner steps pending
 
 - **DEV keystore:** create it and add `DEV_KEYSTORE_BASE64`, `DEV_KEYSTORE_PASSWORD`, `DEV_KEY_ALIAS`, `DEV_KEY_PASSWORD` to each Kotlin app repository ([Release cycle](release-cycle.md#dev-and-prod-side-by-side)). Needed before that app's DEV builds can be signed.
-- **ks-utility v0.19.0:** a production release of ks-utility; tagged only with the owner's approval.
 - **Google Search Console:** the verification file is live; submit `sitemap.xml` ([Landing page](landing-page.md#search-engines)).
 
 ## Shared changes waiting to be adopted
 
 | Change | Where | Adopted by |
 |---|---|---|
-| `SHA256SUMS`, ks-utility version and signing status in release notes, `environment: production` on publish, DEV build mode and DEV signing, `isDevBuild` | ks-utility `dev`, for v0.19.0 | none yet; each app when active. To adopt: pass the four `DEV_*` secrets in its release caller, read `ksVariant`/`ksDevVersion` for the DEV IDs (Kotlin) or the `variant` output and `tauri.dev.conf.json` (Tauri), add the Tauri publish inputs `ks-utility` and `signing`, and have its `ks-utility-bump.yml` caller on `main` |
+| `SHA256SUMS`, ks-utility version and signing status in release notes, `environment: production` on publish, DEV build mode and DEV signing, `isDevBuild` | ks-utility v0.19.0 (tagged 2026-11-27 with the owner's approval; DEV mode not yet run in an app) | none yet; each app when active. To adopt: pass the four `DEV_*` secrets in its release caller, read `ksVariant`/`ksDevVersion` for the DEV IDs (Kotlin) or the `variant` output and `tauri.dev.conf.json` (Tauri), add the Tauri publish inputs `ks-utility` and `signing`, and have its `ks-utility-bump.yml` caller on `main` |
 
 ## Done (suite)
 
+- ks-utility v0.19.0 released with the owner's approval.
 - GitHub protection applied: `production` environment (owner as reviewer, release tags only) on every app; "Protect main" and "Protect release tags" rulesets on every app, ks-utility and ks-suite.
 - Rules written: [Release cycle](release-cycle.md), [Architecture standards](architecture-standards.md), [Working method](working-method.md), [Rule architecture](rule-architecture.md).
 - Landing page readable by search engines; all repositories under `kumasumit`, with descriptions and topics.
