@@ -31,6 +31,8 @@ Eight independent apps, each its own git repo, plus `ks-utility`, a repo of gene
 - Changes are scoped to one repo. If a change touches a cross-repo contract (`specs/cross-repo.md`), update the docs on both sides.
 
 ## Working efficiently (keep token use low)
+- One app at a time: only the active app in `specs/progress.md` is worked on, until it is released with the owner's approval and the owner names the next. Each session starts from `specs/index.md`, `specs/progress.md` and the active app's `specs/progress.md`, and records a checkpoint before it ends. See `specs/working-method.md`.
+- Apps follow `specs/architecture-standards.md`: minimal, local-first, zero-cost, with storage and security matched to each app's class (A sensitive, B persistent, C basic).
 - Use the knowledge graph first: follow the rules in the `graphify` section at the end of this file. [graphify](https://github.com/Graphify-Labs/graphify) is a development tool only; it is never a dependency of the code and is never bundled or shipped.
 - One-time setup on a new machine (owner): `uv tool install graphifyy` (the package name has two y's), then `/graphify .` in Claude Code. The setup in `.claude/` is committed; `graphify-out/` is generated and git-ignored.
 - Read only the specs the task needs, and do not re-read a file that has not changed in this session.

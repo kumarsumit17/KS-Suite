@@ -24,6 +24,9 @@ latest production tag ─▶ dev ─▶ work ─▶ DEV build ─▶ automated t
 - **Approval.** A production release needs, all together: every requested feature done, every reported release-blocking bug fixed, automated tests green, the owner's manual test done, and the owner's **explicit approval for that app and platform**. Approval for one app or platform never covers another.
 - **Release.** Only after approval: fast-forward `main` to `dev`, CI green on `main`, push the platform tag, the release workflow publishes (steps below), the published files are checked, `main` is the new baseline, and the owner is notified with the release details.
 - **Never** a production release from unapproved `dev` work, and no automatic production release from an ordinary `dev` commit.
+- **Stale approval:** any change after approval cancels it; the change is tested again and approved again.
+- **DEV build report**, for every affected app and platform when DEV builds are ready: app, platform, DEV version, commit, what changed, automated test results, DEV download link, manual test steps, release pull request link, known issues.
+- **No DEV build, no manual test. No manual test, no approval. No approval, no merge. No merge, no production release.**
 
 ### DEV and PROD side by side
 
@@ -36,7 +39,7 @@ Owner's rule (2026-11-27): a DEV build installs next to the production (PROD) ap
 | Windows | its own MSI `UpgradeCode` (and product code), name "<App> DEV", install folder and shortcuts | `%APPDATA%` / `%LOCALAPPDATA%` folder under the DEV name; installing or removing DEV leaves PROD alone |
 | Chrome extension | a separate unpacked DEV extension with " DEV" in its name | its own extension ID and storage |
 
-- **PROD stays clean** (owner's rule, 2026-11-27): no DEV data ever reaches PROD. DEV and PROD share no storage: no `sharedUserId`, no shared files, folders, databases, keychain items or content providers, no import or migration from DEV to PROD, and Android backups of one never restore into the other (separate application IDs). Test data, logins and settings made in DEV stay in DEV.
+- **PROD stays clean** (owner's rule, 2026-11-27): DEV never opens or changes the live PROD database, and DEV and PROD share no storage: no `sharedUserId`, no shared files, folders, databases, encryption keys, keychain items, credentials, backups, attachments, caches or content providers; Android backups of one never restore into the other. The only crossing is by the user's own explicit backup file: a PROD backup may be imported into DEV for testing, and a DEV backup into PROD only with a compatible schema, explicit confirmation and a backup of PROD first. Automated tests use synthetic data; personal production data never goes into a workflow artifact, repository or log.
 - **Each user has their own data:** every install keeps its data per OS user, never machine-wide. Android keeps it per user profile; macOS under the user's `~/Library` (Application Support, Preferences, Caches); Windows under the user's `%APPDATA%` / `%LOCALAPPDATA%`, never `ProgramData` or the install folder. Two people on one computer or one TV never see each other's data, in DEV or PROD.
 - **PROD identities never change:** production application IDs, bundle identifiers, MSI upgrade codes and signing stay exactly as they are.
 - **Signing (owner's choice, 2026-11-27):** DEV Android files are signed with a separate, stable DEV keystore, so each new DEV build installs as an update over the last one, (`DEV_KEYSTORE_BASE64`, `DEV_KEYSTORE_PASSWORD`, `DEV_KEY_ALIAS`, `DEV_KEY_PASSWORD` secrets), never with the production `ks-release` key; macOS and Windows DEV builds are unsigned.
@@ -45,7 +48,7 @@ Owner's rule (2026-11-27): a DEV build installs next to the production (PROD) ap
 
 ### The release pull request
 
-When the DEV builds are tested, the session opens a pull request from `dev` to `main` listing the tested DEV builds (commits and links). The owner's approval of that pull request, or explicit approval in the conversation, is the approval for the platforms it names. The session checks that `dev` is still exactly what was tested, then fast-forwards `main` to it (GitHub marks the pull request merged), and tags. `main` still only fast-forwards ([Branches](#branches)).
+When DEV builds are ready, the session opens a pull request from `dev` to `main` listing them (commits, links, test steps) and leaves it open and unmerged while the owner tests; fixes go to `dev` with new DEV builds. The owner's approval of that pull request, or explicit approval in the conversation, is the approval for the platforms it names. A session never merges a release pull request by itself. The session checks that `dev` is still exactly what was tested, then fast-forwards `main` to it (GitHub marks the pull request merged), and tags. `main` still only fast-forwards ([Branches](#branches)).
 
 ### First release of an app on a platform
 
