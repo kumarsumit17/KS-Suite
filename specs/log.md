@@ -1,3 +1,7 @@
+# 2026-11-28
+
+* **Update**: [Progress](progress.md): ks-jaiplayer's newer, smaller DEV builds for release pull request #6.
+
 # 2026-11-27
 
 * **Update**: [Progress](progress.md): ks-jaiplayer release pull request #6 open, waiting for the owner.
