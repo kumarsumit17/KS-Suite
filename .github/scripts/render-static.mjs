@@ -1,11 +1,6 @@
-// Writes the app list into site/index.html as plain HTML, adds structured data (JSON-LD)
-// for search engines, and writes site/sitemap.xml. Search engines and AI assistants that do
-// not run JavaScript then still see every app; app.js replaces the static list when it runs.
-// See specs/landing-page.md, "Search engines".
-//
-//   node .github/scripts/render-static.mjs [site dir]   (default: site)
-//
-// No dependencies; needs Node 20+.
+// KS-Suite landing page. Draws every app card from apps.json and fills the download
+// buttons from the GitHub releases API. Plain JavaScript, no build step, no libraries.
+"use strict";
 
 import { readFile, writeFile } from "node:fs/promises";
 
@@ -28,7 +23,6 @@ const en = JSON.parse(await readFile(`${SITE}/lang/en.json`, "utf8"));
 const PLATFORM = { "google-tv": "Google TV", android: "Android", ios: "iOS", windows: "Windows", macos: "macOS", chrome: "Chrome extension" };
 const STATUS = { released: "Released", beta: "Beta", "coming-soon": "Coming soon" };
 const OS = { "google-tv": "Android TV", android: "Android", ios: "iOS", windows: "Windows", macos: "macOS", chrome: "ChromeOS" };
-
 const apps = data.apps.filter((a) => !a.restricted);
 
 // 1. The static list, grouped like the page.
@@ -94,13 +88,47 @@ const ldHtml = `\n  <script type="application/ld+json">${JSON.stringify(ld).repl
 let page = await readFile(`${SITE}/index.html`, "utf8");
 page = replaceBetween(page, START, END, staticHtml);
 page = replaceBetween(page, LD_START, LD_END, ldHtml);
+// Keep language alternates and share-preview metadata in the deployed HTML even when the
+// source template is edited. This page presents both languages at one canonical URL.
+const seoTags = [
+  `  <link rel="alternate" hreflang="en" href="${PAGE}">`,
+  `  <link rel="alternate" hreflang="hi" href="${PAGE}">`,
+  `  <link rel="alternate" hreflang="x-default" href="${PAGE}">`,
+  '  <meta name="author" content="Kumar Sumit">',
+  '  <meta name="keywords" content="KS-Suite, free apps, open-source, privacy-first, no ads, no tracking, Android, Google TV, macOS, Windows">',
+  '  <meta name="theme-color" content="#101114">',
+  `  <meta property="og:image" content="${PAGE}icons/avatar.jpg">`,
+  '  <meta property="og:image:alt" content="KS-Suite free, privacy-first apps">',
+  '  <meta name="twitter:image" content="https://kumasumit.github.io/ks-suite/icons/avatar.jpg">',
+];
+for (const tag of seoTags) {
+  const key = tag.match(/(?:hreflang="([^"]+)"|name="([^"]+)"|property="([^"]+)")/);
+  const value = key?.[1] || key?.[2] || key?.[3];
+  const attr = tag.includes("hreflang") ? "hreflang" : tag.includes("property=") ? "property" : "name";
+  const pattern = new RegExp(`<link\\b(?=[^>]*\\b${attr}="${value}")[^>]*>|<meta\\b(?=[^>]*\\b${attr}="${value}")[^>]*>`, "i");
+  if (pattern.test(page)) page = page.replace(pattern, tag.trim());
+  else page = page.replace("</head>", `${tag}\n</head>`);
+}
 await writeFile(`${SITE}/index.html`, page);
 
-// 3. The sitemap: the one page, with today's date.
+// 3. Sitemap with language alternates and robots.txt for the GitHub Pages site.
 const today = new Date().toISOString().slice(0, 10);
 await writeFile(`${SITE}/sitemap.xml`, `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>${PAGE}</loc><lastmod>${today}</lastmod><changefreq>daily</changefreq></url>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>${PAGE}</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="${PAGE}" />
+    <xhtml:link rel="alternate" hreflang="hi" href="${PAGE}" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="${PAGE}" />
+  </url>
 </urlset>
 `);
-console.log(`Rendered ${apps.length} apps into ${SITE}/index.html; wrote ${SITE}/sitemap.xml.`);
+await writeFile(`${SITE}/robots.txt`, `User-agent: *
+Allow: /
+
+Sitemap: ${PAGE}sitemap.xml
+`);
+console.log(`Rendered ${apps.length} apps into ${SITE}/index.html; wrote ${SITE}/sitemap.xml and ${SITE}/robots.txt.`);
