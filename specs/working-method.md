@@ -13,7 +13,7 @@ Owner's rules (2026-11-27), for every Claude Code session in the suite.
 
 - Only the **active app** (in [Progress](progress.md)) is developed, tested or released, with ks-utility changed only where it needs. No parallel work on other apps, no parallel agents per app, no suite-wide audits.
 - The active app is finished only when its applicable [standards](architecture-standards.md) and requested changes are done, tests pass, the owner has tested its DEV builds, approved its release pull request, and its production releases are published and verified. Then work stops and the owner is notified. The owner picks the next app; nothing starts by itself, and nothing starts while the active app waits for testing or approval.
-- A ks-utility change made for the active app is recorded in [Progress](progress.md) for the apps that adopt it later, when each becomes active. Other apps are not upgraded, rebuilt or released meanwhile.
+- A ks-utility change made for the active app is recorded in [Progress](progress.md) for the apps that adopt it later, when each becomes active. Other apps are not developed, rebuilt or released meanwhile. The one exception is ks-utility's automatic move (owner's decision, 2026-11-27): its bump workflow may still push a tested `chore: move ks-utility` commit to a paused app's `dev`; it never releases anything, and the app adopts the rest when it becomes active.
 
 ## Knowledge and context
 

@@ -1,5 +1,6 @@
 # 2026-11-27
 
+* **Update**: [Working method](working-method.md): ks-utility's automatic moves stay on for paused apps (`dev` only, never a release).
 * **Update**: [Progress](progress.md): ks-utility v0.19.0 released.
 * **Update**: [Progress](progress.md): what each app adopts from ks-utility's next tag.
 * **New**: [Architecture, security and storage standards](architecture-standards.md) (zero cost, classes A/B/C with every app classified, storage, encryption, authentication, backups, `.ksbackup`, import/export, migrations, performance baselines, tests), [Working method](working-method.md) (one app at a time, token-efficient sessions, checkpoints) and [Progress](progress.md) (active app: `ks-jaiplayer`).
