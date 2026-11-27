@@ -9,21 +9,42 @@ tags: [release, ci, versioning, policy]
 
 Every KS-Suite app releases the same way. Version numbers and signing are in [Versioning and signing](versioning-signing.md); this page is the cycle around them.
 
-## Build, test, release, no waiting
+## DEV, test, approval, production
 
-Owner's rule (2026-11-26), for every repository: every feature or fix is built, tested on the emulators or CI ([Testing on every platform](testing.md)), committed and pushed to `dev`, and released with the next tag, by the cycle below. No one's approval is asked before a tag, and nothing waits for a review. The owner's hand checks on real devices come later (step 5), never block a release, and what they find goes into the next version. Never commit or release while a test fails. A feature raises MINOR, a fix raises PATCH ([Versioning and signing](versioning-signing.md)).
-
-## The cycle
-
-1. **Test on `dev`.** All work is committed on `dev` ([Branches](#branches)). The app's `ks-utility` pin is the newest ks-utility tag: apps move the same day a tag is released ([Cross-repository relationships](cross-repo.md#moving-to-a-new-ks-utility-tag)), and the shared release workflow refuses a pin that is not the newest tag. ks-utility's shared workflows are called at `@main`, which is always its newest release. CI is green on `dev`, and a **rehearsal** of the release (below) is green on `dev`. The release build is installed and tried on the emulators before every release: the phone emulator, the Google TV emulators for a TV app ([Testing on every platform](testing.md)), the Mac for macOS, and Windows through CI. The version's changelog section is dated, if the app keeps a `CHANGELOG.md`.
-2. **Merge to `main`.** Fast-forward `main` to `dev` and push it. CI is green on `main`.
-3. **Push the tag.** An annotated [platform tag](versioning-signing.md#platform-tags-own-version-per-platform) `<platform>-vMAJOR.MINOR.PATCH` (a plain `vMAJOR.MINOR.PATCH` releases every platform) on `main`, pushed on its own.
-4. **The workflow publishes.** The tag's run builds every file, checks them, and publishes the GitHub release as a **full release, marked latest**, once every build and check has passed. There is no draft step and no one publishes by hand.
-5. **Hand checks after the release.** The checks that need a person (installing on real devices, store or OS prompts) are done on the published files. Anything they find goes into the **next version**; the published release is not changed.
+Owner's rule (2026-11-27, replacing "build, test, release, no waiting"), for every app and every platform it ships on:
 
 ```
-dev (CI green, rehearsal green) ──ff──▶ main (CI green) ──tag vX.Y.Z──▶ release workflow ──▶ published, latest
+latest production tag ─▶ dev ─▶ work ─▶ DEV build ─▶ automated tests ─▶ owner's manual test ─▶ fixes … ─▶ owner's approval ─▶ production release
 ```
+
+- **Baseline.** `main` holds each app's latest production release (it only fast-forwards at a release, [Branches](#branches)), so `dev` always starts from it. A change for one platform starts from that platform's latest production tag; platforms that share code share `dev`. There are no per-platform branches.
+- **Development.** Every feature, improvement and fix is made and committed on `dev`, never on `main`. Nothing untested reaches `main`.
+- **DEV builds** are the release workflow's **rehearsal** (a manual run on `dev`): it builds every file exactly as a release would, signs the Android files with the suite key, and keeps them as run artifacts; it never tags, attests or publishes. DEV files are named and kept apart from production files (artifacts of a rehearsal run, never a release).
+- **Testing.** CI and the automated tests pass on `dev`; the owner then installs the DEV build and tests it by hand. What the owner reports is fixed on `dev` and a new DEV build is made, until the owner is satisfied.
+- **Approval.** A production release needs, all together: every requested feature done, every reported release-blocking bug fixed, automated tests green, the owner's manual test done, and the owner's **explicit approval for that app and platform**. Approval for one app or platform never covers another.
+- **Release.** Only after approval: fast-forward `main` to `dev`, CI green on `main`, push the platform tag, the release workflow publishes (steps below), the published files are checked, `main` is the new baseline, and the owner is notified with the release details.
+- **Never** a production release from unapproved `dev` work, and no automatic production release from an ordinary `dev` commit.
+
+### First release of an app on a platform
+
+The first production release of an app on a platform (a new app, or an existing app adding a platform) needs no manual test beforehand: a stable implementation, green automated tests and build checks, and the required signing are enough, and it needs no separate approval. Every later release of that app on that platform follows the full rule above.
+
+### A new ks-utility version
+
+A new ks-utility tag moves each app's pin on `dev` the same day ([Cross-repository relationships](cross-repo.md#moving-to-a-new-ks-utility-tag)), with the compatibility and regression tests, and a DEV build where the app changes. It never starts a production release by itself: that waits for the owner's manual test and approval like any other change. Every release records the exact ks-utility version it was built on (in the release notes). The one exception was the initial rollout of 2026-11-27, when every app released on ks-utility v0.18.4 without a separate approval.
+
+### Signing and checksums
+
+- **Android and Google TV:** signing with the suite key is mandatory and the release workflow verifies each APK and AAB signature before publishing; a release whose signing or verification fails is blocked. The keystore and its secrets are never replaced or regenerated ([Versioning and signing](versioning-signing.md)).
+- **macOS and Windows:** unsigned `.dmg`, `.app`, `.msi` and `.exe` files are allowed; no Apple Developer ID, notarisation, Authenticode or other paid signing is required or added without the owner's approval. The workflow checks that each installer is built and complete.
+- **Chrome extension and other platforms:** their existing packaging and distribution.
+- **Every production release** carries a SHA-256 checksum of each file (`SHA256SUMS`), each file's GitHub build-provenance attestation, and its signing status per platform in the release notes. No key, password or secret is ever printed in a log.
+
+### How the gate is enforced
+
+- **By the workflow:** a release runs only from a tag on `main`; a rehearsal never publishes; `ks-suite-check` and the Android signature check stop a release that breaks a rule; pushed tags and published files are never changed.
+- **By GitHub (proposed, needs the owner's approval of the settings):** a `production` environment in each app repository with the owner (`kumasumit`) as required reviewer on the release workflow's publish job, so a tag pushed by anyone else waits for the owner's click; and repository rulesets that block force-pushes and deletion of `main` and of release tags.
+- **Until those settings are applied, the approval gate is a process rule only:** sessions do not push a production tag without the owner's explicit approval in the conversation, but GitHub does not technically prevent it.
 
 ## Branches
 
@@ -54,5 +75,5 @@ Every KS-Suite repository (the apps, `ks-utility` and this workspace repository)
 - Never tag while anything is red (CI on `dev` or `main`, or the rehearsal).
 - A tag whose run fails stays as it is; the fix goes to `dev` and the release gets the **next PATCH** version. The changelog says which tags were never released.
 - **Paid signing never blocks a release.** Apple Developer ID signing and notarisation, Windows Authenticode, and any other certificate that costs money are skipped for now and kept as a to-do in each app's specs. Free signing is always done: the suite's Android keystore and the build-provenance attestation. An unsigned dmg or msi shows a Gatekeeper or SmartScreen warning; each app's release notes or README say how to open it.
-- **Hand checks never block a release.** Checks that need a person (real devices, the TV remote, store or OS prompts) happen after the release (step 5) and are kept as a to-do until done; what they find goes into the next version.
+- **Manual testing comes before a release.** The owner tests the DEV build by hand before approving a production release; only an app's first release on a platform skips it ([First release](#first-release-of-an-app-on-a-platform)).
 - Each app records its own decisions and its exact file list in its repository (for example ks-download-manager's [release steps](https://github.com/kumasumit/ks-download-manager/blob/main/docs/release.md)).

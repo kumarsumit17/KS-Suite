@@ -28,7 +28,7 @@ Since ks-utility `v0.15.0`, `ks-suite-check` ([its spec](https://github.com/kuma
 
 A rule about how people and sessions work, which no build can check, lives only in KS-Suite's specs and `CLAUDE.md`, and applies the moment it is written, with no pin to move:
 
-- Branches (`dev` and `main`) and the [Release cycle](release-cycle.md), including build, test, release, no waiting.
+- Branches (`dev` and `main`) and the [Release cycle](release-cycle.md), including DEV, test, approval, production.
 - Conventional Commits.
 - Each platform build optimized for its own OS ([Platform folders](platform-folders.md#each-platform-build-is-optimized-for-its-os)).
 - Icons beyond the default files `ks-suite-check` recognises: a resized or older framework logo is caught only by looking at the built app ([App icons](conventions.md#app-icons)).
