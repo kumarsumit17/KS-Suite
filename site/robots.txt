@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://kumasumit.github.io/ks-suite/sitemap.xml

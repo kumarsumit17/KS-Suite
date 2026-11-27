@@ -62,3 +62,7 @@ desktop.ini
 
 # ---- graphify: generated output ----
 graphify-out/
+
+# Generated at deploy by .github/scripts/render-static.mjs
+/site/sitemap.xml
+/site/robots.txt

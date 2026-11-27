@@ -1,6 +1,12 @@
-// KS-Suite landing page. Draws every app card from apps.json and fills the download
-// buttons from the GitHub releases API. Plain JavaScript, no build step, no libraries.
-"use strict";
+// Writes the app list into site/index.html as plain HTML, adds structured data (JSON-LD),
+// language alternates and share-preview tags for search engines, and writes site/sitemap.xml
+// and site/robots.txt. Search engines and AI assistants that do not run JavaScript then still
+// see every app; app.js replaces the static list when it runs. See specs/landing-page.md,
+// "Search engines".
+//
+//   node .github/scripts/render-static.mjs [site dir]   (default: site)
+//
+// No dependencies; needs Node 20+.
 
 import { readFile, writeFile } from "node:fs/promises";
 
