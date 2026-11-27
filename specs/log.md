@@ -1,5 +1,6 @@
 # 2026-11-27
 
+* **Update**: [Cross-repository relationships](cross-repo.md), [Rule architecture](rule-architecture.md): from ks-utility v0.16.0 the shared-workflow refs move with the pin; the optional `KS_WORKFLOWS_TOKEN` lets the bump rewrite them.
 * **Update**: [Rule architecture](rule-architecture.md): per-platform optimization and icons beyond the known default files stay process rules.
 * **Update**: `CLAUDE.md`, [Rule architecture](rule-architecture.md), [Cross-repository relationships](cross-repo.md), [Shared conventions](conventions.md): the rules `ks-suite-check` enforces from ks-utility v0.15.0 (platform folders, tag versions, no tracking SDKs, default icons, language files, ks-utility's updater, the newest pin) now point to it; every app uses ks-utility's updater.
 * **New**: [Rule architecture](rule-architecture.md): rules code can carry live in ks-utility (with `ks-suite-check`), process rules in KS-Suite, one home per rule (owner's decision).

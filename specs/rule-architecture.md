@@ -22,7 +22,7 @@ Since ks-utility `v0.15.0`, `ks-suite-check` ([its spec](https://github.com/kuma
 - No default framework icon in any build ([App icons](conventions.md#app-icons)).
 - The five platform folders ([Platform folders](platform-folders.md)).
 - The app uses ks-utility's updater (the only exception: `ks-suite-check.json` with `no-updater` and the reason).
-- The app's ks-utility pin is the newest tag ([Cross-repository relationships](cross-repo.md#moving-to-a-new-ks-utility-tag)).
+- The app's ks-utility pin, and every ref to ks-utility's shared workflows, is the newest tag ([Cross-repository relationships](cross-repo.md#moving-to-a-new-ks-utility-tag)).
 
 ## Process rules: in KS-Suite
 
