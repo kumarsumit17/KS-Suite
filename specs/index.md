@@ -8,6 +8,7 @@ okf_version: "0.2"
 * [Versioning and signing](versioning-signing.md) - Tag-driven SemVer, the version fields derived from the tag, CI signing from repository secrets, and the release pipeline stages.
 * [Release cycle](release-cycle.md) - The one release cycle every KS-Suite app follows: test on dev, merge to main, push the tag, and the release workflow publishes the release.
 * [Dependencies](dependencies.md) - Third-party dependencies are kept to the minimum; the order of preference and what must be reported for each new one.
+* [Rule architecture](rule-architecture.md) - Where each KS-Suite rule lives: rules code can carry live in ks-utility as code and a conformance check, process rules live only in KS-Suite specs, and each rule has exactly one home.
 * [Platform folders](platform-folders.md) - The platform folders every KS-Suite app repository has, which platforms each app targets, and the shared/ folder for code several platforms use.
 
 # Plans
