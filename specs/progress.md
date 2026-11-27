@@ -11,13 +11,13 @@ Updated 2026-11-27. How it is kept: [Working method](working-method.md).
 
 ## Active app
 
-**`ks-jaiplayer`** (owner's choice, 2026-11-27). Phase: audit and plan against the [standards](architecture-standards.md), then DEV builds, owner's test, release pull request, approval, production. Its checkpoint: [ks-jaiplayer `specs/progress.md`](https://github.com/kumasumit/ks-jaiplayer/blob/dev/specs/progress.md). No other app is worked on until the owner names it.
+**`ks-jaiplayer`** (owner's choice, 2026-11-27). Phase: **waiting for the owner's DEV signing secrets** before DEV builds. Done on `dev`: audit and plan (class C confirmed: preferences per OS user, nothing to remove; plan in its `specs/plan-standards.md`), ks-utility v0.19.0 (5b6d770), the DEV variant side by side (2f7abc6, checked on the emulators and the Mac; Windows and real devices pending the owner). Size baseline from v1.11.3: APK 1.98 MB, AAB 5.19 MB, dmg 103/113 MB, msi 96.9 MB. Next: DEV builds for all platforms, then the release pull request with the DEV build report. Its checkpoint: [ks-jaiplayer `specs/progress.md`](https://github.com/kumasumit/ks-jaiplayer/blob/dev/specs/progress.md). No other app is worked on until the owner names it.
 
 ## Apps
 
 | App | Latest production | ks-utility | State |
 |---|---|---|---|
-| `ks-jaiplayer` | v1.11.3 (plus `windows-v1.8.0`) | v0.18.4 | **active** |
+| `ks-jaiplayer` | v1.11.3 (plus `windows-v1.8.0`) | v0.19.0 on `dev` | **active** |
 | `ks-beam` | v1.7.2 | v0.18.4 | paused |
 | `ks-tv-launcher` | `google-tv-v0.12.4` | v0.18.4 | paused |
 | `ks-vault` | `android-v1.4.6` | v0.18.4 | paused |
