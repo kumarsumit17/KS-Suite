@@ -58,6 +58,8 @@ The first production release of an app on a platform (a new app, or an existing 
 
 A new ks-utility tag moves each app's pin on `dev` the same day ([Cross-repository relationships](cross-repo.md#moving-to-a-new-ks-utility-tag)), with the compatibility and regression tests, and a DEV build where the app changes. It never starts a production release by itself: that waits for the owner's manual test and approval like any other change. Every release records the exact ks-utility version it was built on (in the release notes). The one exception was the initial rollout of 2026-11-27, when every app released on ks-utility v0.18.4 without a separate approval.
 
+ks-utility changes go through the same DEV, test and approval steps before they are tagged (owner's rule, 2026-11-28): they land on ks-utility's `dev` untagged, the active app pins that `dev` commit and tries it in its DEV build (callers at `@dev`), the owner tests it, approves ks-utility's release pull request, ks-utility is tagged, and the app moves to the tag and back to `@main` before its own production release. A DEV pin never reaches production: a release needs the newest tag. Details: [Trying ks-utility changes in a DEV build](cross-repo.md#trying-ks-utility-changes-in-a-dev-build).
+
 ### Signing and checksums
 
 - **Android and Google TV:** signing with the suite key is mandatory and the release workflow verifies each APK and AAB signature before publishing; a release whose signing or verification fails is blocked. The keystore and its secrets are never replaced or regenerated ([Versioning and signing](versioning-signing.md)).

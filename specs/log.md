@@ -1,5 +1,7 @@
 # 2026-11-28
 
+* **Update**: [Cross-repository relationships](cross-repo.md), [Release cycle](release-cycle.md) and `CLAUDE.md`: every app follows the DEV process for ks-utility (try a ks-utility `dev` commit in a DEV build, release only on the newest tag).
+
 * **Update**: [Progress](progress.md): ks-jaiplayer's newer, smaller DEV builds for release pull request #6.
 
 # 2026-11-27

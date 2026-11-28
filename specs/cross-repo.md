@@ -52,7 +52,7 @@ Every app repository keeps a `ks-suite.json` at its root: its card on the KS-Sui
 
 ## Shared code
 
-`ks-utility` is a build-time dependency only: it adds no runtime link between apps. An app gets a change to it only when the app moves its pinned version tag (a pushed tag never moves). Every app moves to each new tag the same day it is released (below), so `ks-utility` never changes the meaning or signature of a function that is in use. The mechanism is described in [ks-utility's usage spec](https://github.com/kumasumit/ks-utility/blob/main/specs/usage.md).
+`ks-utility` is a build-time dependency only: it adds no runtime link between apps. An app gets a change to it only when the app moves its pinned version tag (a pushed tag never moves), or, in a DEV build only, when it tries a ks-utility `dev` commit ([below](#trying-ks-utility-changes-in-a-dev-build)). Every app moves to each new tag the same day it is released (below), so `ks-utility` never changes the meaning or signature of a function that is in use. The mechanism is described in [ks-utility's usage spec](https://github.com/kumasumit/ks-utility/blob/main/specs/usage.md).
 
 ## Moving to a new ks-utility tag
 
@@ -69,4 +69,14 @@ Owner's rule (2026-11-27, replacing "before each release"): when ks-utility push
 - **Owner step (done 2026-11-27):** one fine-grained GitHub token, owned by `kumasumit`, with Contents read and write on every app repository (90 days; renew before it expires), stored as the secret `KS_APPS_DISPATCH_TOKEN` in ks-utility, so its tag push can dispatch the app bumps. Without it, the daily schedule still moves every app within a day.
 - **No workflow token:** apps have no `KS_WORKFLOWS_TOKEN`; the bump moves only the code pin, with GitHub's own token.
 - Rules carried by the new tag reach the app through this move ([Rule architecture](rule-architecture.md)).
+
+## Trying ks-utility changes in a DEV build
+
+Owner's rule (2026-11-28): every app follows the DEV process for ks-utility, so a ks-utility change is tested in a real app before it is tagged. KS JaiPlayer is the first app to use it. Built on ks-utility `dev` (`e43563e`, release pull request [kumasumit/ks-utility#1](https://github.com/kumasumit/ks-utility/pull/1)).
+
+1. **ks-utility first, untagged.** A ks-utility change lands on ks-utility's `dev` without a tag.
+2. **The active app tries it in its DEV build.** In its own commit on the app's `dev`, the app pins ks-utility at a commit on ks-utility's `dev` that is ahead of the newest tag. Kotlin apps: the `ks-utility/` submodule. Tauri apps: `ks-utility.git#<commit>` in `package.json` and `rev = "<commit>"` in `src-tauri/Cargo.toml`, with their lock files. The DEV build then runs with its shared-workflow callers at `@dev`.
+3. **Checked.** `ks-suite-check` accepts that pin only in a DEV build (a manual run), and only for a commit on ks-utility's `dev` that is ahead of the newest tag; it then runs from ks-utility's `dev`. A production release still needs the newest ks-utility tag and `@main`: a commit pin fails a release, and a branch pin always fails.
+4. **Approval, tag, move back.** After the owner has tested the DEV build, the owner approves ks-utility's release pull request (`dev` to `main`), ks-utility is tagged, and the app moves to the new tag and its callers back to `@main` before its own production release ([Release cycle](release-cycle.md#a-new-ks-utility-version)).
+5. **Never backwards.** The automatic move ([above](#moving-to-a-new-ks-utility-tag)) never moves a pin backwards: a pin ahead of the newest tag stays (ks-utility v0.19.1 and later). Until v0.19.1 is tagged, an app's daily move still runs v0.19.0 and can move a DEV pin back to that tag; re-pin before the next DEV build if it does.
 
