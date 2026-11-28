@@ -36,7 +36,7 @@ Fields: [Handoffs](working-method.md#handoffs).
 
 | Source → target | Responsible session | Requirement | Acceptance | Blockers | Next action |
 |---|---|---|---|---|---|
-| none | | | | | |
+| owner → `ks-download-manager` (2026-11-28) | Claude Code, ks-download-manager (paused; starts only on the owner's authorization) | On a YouTube video page in Chrome the extension shows a visible download button, as Internet Download Manager does.<br>**Reason and evidence:** the app's approved plan already includes a one-click best-quality YouTube download through the extension; the owner sees no button today.<br>**Expected:** a small floating "Download" button anchored to the video player (not in YouTube's button row, so layout changes do not hide it); on watch pages, also after moving between videos without a reload, in theatre and full-window modes; dismissible. One click sends the video to the desktop app at the best available quality; if the app is not running, the button says so. The same button on other sites with a video player; the image hover download on X stays as it is. English and Hindi text through ks-utility.<br>**Dependency:** the current ks-utility tag at the time of work. | First find and record why the button does not show (extension not loaded, outdated build, or page detection). Then it shows within 2 seconds on 5 different YouTube videos in a row without reloading, a click starts the download in the app, and a test covers page detection. | The app is paused. | Wait for the owner to make `ks-download-manager` active. |
 
 ## Open decisions for the owner
 

@@ -1,5 +1,7 @@
 # 2026-11-28
 
+* **Update**: [Progress](progress.md), "Open handoffs": ks-download-manager's YouTube download button (waits until the app is active).
+
 * **Update**: [Architecture standards](architecture-standards.md), "Performance": optimizations are correct first, measured in comparable builds, and compared on the whole system.
 
 * **Update**: [Progress](progress.md) and [Working method](working-method.md): execution order in the active group (ks-utility for JaiPlayer's needs, then ks-jaiplayer, then ks-streamflix once authorized); open decision on StreamFlix integrating JaiPlayer's playback module.
