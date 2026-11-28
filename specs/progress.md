@@ -30,6 +30,13 @@ Claude Code sessions, one per repository ([Sessions and ownership](working-metho
 
 **`ks-jaiplayer`** (active since 2026-11-27). Phase: **release pull request [#6](https://github.com/kumasumit/ks-jaiplayer/pull/6) (`dev` → `main`, 1.12.0) open, waiting for the owner's manual test and approval.** It carries the DEV variant side by side, audio effects (presets, Bass and Dialogue, a 10-band EQ; Android and Google TV with JaiPlayer's own processor, desktop with libVLC's EQ), phone player-bar extras on a second row, and ks-utility v0.19.0. DEV builds: run 46055963743 at fe14942 (replacing 46047978458), all green, Android signed with the DEV key; this round adds a 64 MB Skia GPU cache limit (187–237 MB less memory while playing on macOS), 99 unused libVLC plugins removed and the other chip's Skia library dropped from the Mac app. Tests: 52 desktop tests and a phone emulator smoke test pass. Size versus v1.11.3: APK +18 KB; dmg arm64 103.4 → 83.3 MB, x64 110.4 → 89.1 MB; msi 96.2 → 82.2 MB. Measured on the owner's Mac: starts faster than VLC and IINA; VLC uses less while playing. Next: the owner tests each platform and preset, then approves or reports fixes.
 
+HDR handling in `ks-jaiplayer`, the owner's note for its next session (2026-11-28; details: [macOS playback](https://github.com/kumasumit/ks-jaiplayer/blob/dev/specs/plan-macos-playback.md), [playback plan](https://github.com/kumasumit/ks-jaiplayer/blob/dev/specs/plan-playback.md)):
+
+1. Release 1.12.0 ships HDR tone-mapped to SDR by the app's shader. HDR is not changed before that release.
+2. Completion criterion 1 (HDR colour correct) stays open. To close it: a real HDR film; an HDR check with real content on the Pixel 11 and a real Google TV (installed over adb), confirming the device actually outputs HDR (emulators are not valid for this); true HDR on macOS checked on the owner's HDR TV over HDMI with HDR on, because the Mac's built-in screen is not an XDR display; Windows later.
+3. After 1.12.0: macOS route A from the trial (`AVSampleBufferDisplayLayer`), approved by the owner in principle. First a DEV-only "Experimental video output" switch for the owner to judge on the HDR TV, then the full build from Claude Chat's specification. The current shader path stays as the fallback and for Windows.
+4. Routine work on Sonnet Medium.
+
 ## Open handoffs
 
 Fields: [Handoffs](working-method.md#handoffs).

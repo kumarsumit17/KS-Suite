@@ -1,5 +1,7 @@
 # 2026-11-28
 
+* **Update**: [Progress](progress.md), ks-jaiplayer: the owner's note on HDR handling for its next session.
+
 * **Update**: [Progress](progress.md), "Open handoffs": ks-download-manager's YouTube download button (waits until the app is active).
 
 * **Update**: [Architecture standards](architecture-standards.md), "Performance": optimizations are correct first, measured in comparable builds, and compared on the whole system.
