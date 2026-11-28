@@ -1,5 +1,7 @@
 # 2026-11-28
 
+* **Update**: [Progress](progress.md) and [Working method](working-method.md): execution order in the active group (ks-utility for JaiPlayer's needs, then ks-jaiplayer, then ks-streamflix once authorized); open decision on StreamFlix integrating JaiPlayer's playback module.
+
 * **Update**: [Testing](testing.md), ks-streamflix: `checkInstallerSize` is now `installerSizeReport`, which fails no build; no automated size or speed budgets (owner's decision).
 
 * **Update**: [Landing page](landing-page.md) "Download counts": `scripts/count-downloads.mjs` counts release downloads per app and platform.
