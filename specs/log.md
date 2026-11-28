@@ -1,5 +1,7 @@
 # 2026-11-28
 
+* **Update**: [Testing](testing.md): rule for real Android phones over wireless debugging: longest screen timeout while testing, back to 5 minutes after, clean up, one session at a time.
+
 * **Update**: [Cross-repository relationships](cross-repo.md), [Release cycle](release-cycle.md) and `CLAUDE.md`: every app follows the DEV process for ks-utility (try a ks-utility `dev` commit in a DEV build, release only on the newest tag).
 
 * **Update**: [Progress](progress.md): ks-jaiplayer's newer, smaller DEV builds for release pull request #6.

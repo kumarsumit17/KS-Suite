@@ -110,6 +110,16 @@ To test it by hand: open the desktop app once (it registers its native-messaging
 
 Google Chrome 137 and later ignore the `--load-extension` switch, so a script cannot load the extension into the installed Chrome; automated loading would need Chrome for Testing or Chromium, which is not set up. Loading it is a hand step.
 
+## Real Android phones (wireless debugging)
+
+When a session tests on the owner's Android phone over wireless debugging (adb):
+- At the start: screen timeout as long as Android allows, and stay awake while charging, so the phone never locks in the middle of a test (a session never types the PIN):
+  `adb shell settings put system screen_off_timeout 2147483647` and `adb shell svc power stayon true`.
+- When testing ends, or wireless debugging is turned off: back to **5 minutes**, and stay-awake off:
+  `adb shell settings put system screen_off_timeout 300000` and `adb shell svc power stayon false`.
+- Also when testing ends: remove the session's test files, apps and builds from the phone, and leave the apps it used as they were.
+- Set `ANDROID_SERIAL` to the phone's serial, and only one session uses the phone at a time; the others wait until it says it is done.
+
 ## What cannot be tested from the Mac
 
 - Windows installers: built and installed only on CI (or in the optional VM).
