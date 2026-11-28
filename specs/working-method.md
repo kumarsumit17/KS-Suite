@@ -56,6 +56,8 @@ Knowledge management exists to cut effort and tokens; it is never a project of i
 
 Before a session ends, and at every approval gate, its repository's `progress.md` (and its row in [Progress](progress.md)) records: phase, work done, pending tasks, decisions, files changed, commit, test results, DEV build links, pull request, blockers and the exact next action.
 
+Every session commits and pushes to `dev` after each finished step whose tests pass, not only at the end of a session, so completed work is never lost. Work that is unfinished when a session must stop is recorded in `progress.md` as unfinished. Never commit while a test fails.
+
 ## Economy
 
 Incremental changes over rewrites; no re-reading unchanged files; short reports; targeted builds and tests while developing, full validation before a DEV build or release; few GitHub Actions runs (watch with `gh run watch --interval 60`, the account's API limit is shared). Local scripts for repetitive work; logs filtered locally; no large logs, binaries or generated files in context; no unneeded web searches, MCP calls or polling; no new paid API, subscription or service without the owner's approval. Never skip security, migration, regression or release checks to save tokens.

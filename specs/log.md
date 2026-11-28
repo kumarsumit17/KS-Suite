@@ -1,5 +1,7 @@
 # 2026-11-28
 
+* **Update**: [Working method](working-method.md), "Checkpoints": sessions commit and push to `dev` after each finished, passing step; unfinished work is recorded in `progress.md`.
+
 * **Update**: [Progress](progress.md): the four Claude Code sessions, one per repository of the active group and ks-suite.
 
 * **Update**: [Working method](working-method.md): one development group at a time (ks-utility, ks-jaiplayer, ks-streamflix) with a completion gate; sessions and ownership; handoffs; findings to rules; significant features; economy additions. [Progress](progress.md): active group, open handoffs, open decisions. [Rule architecture](rule-architecture.md), [index](index.md) and `CLAUDE.md` point to it. [Cross-repository relationships](cross-repo.md): ks-utility is pinned to a version tag.
