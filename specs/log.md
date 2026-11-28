@@ -1,5 +1,7 @@
 # 2026-11-28
 
+* **Update**: [Architecture standards](architecture-standards.md), "Performance": optimizations are correct first, measured in comparable builds, and compared on the whole system.
+
 * **Update**: [Progress](progress.md) and [Working method](working-method.md): execution order in the active group (ks-utility for JaiPlayer's needs, then ks-jaiplayer, then ks-streamflix once authorized); open decision on StreamFlix integrating JaiPlayer's playback module.
 
 * **Update**: [Testing](testing.md), ks-streamflix: `checkInstallerSize` is now `installerSizeReport`, which fails no build; no automated size or speed budgets (owner's decision).

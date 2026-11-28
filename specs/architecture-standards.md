@@ -68,6 +68,12 @@ No telemetry, analytics, ads or third-party tracking ([`ks-suite-check`](rule-ar
 
 Each app keeps a measured baseline per platform (download size, installed size, cold start, memory, and where measurable CPU, background activity, network, disk and battery) in its `specs/`. A DEV build is compared with it before approval is asked, and any meaningful growth is explained. No arbitrary targets before measuring, no claimed gains without measurements. Optimise for older phones and Google TV: native first, lazy loading, no unused dependencies or resources, minimal background work.
 
+Optimizations (owner's rules, 2026-11-28; evidence: ks-jaiplayer's [Android and Pixel report](https://github.com/kumasumit/ks-jaiplayer/blob/dev/specs/plan-android-cpu.md) and [macOS report](https://github.com/kumasumit/ks-jaiplayer/blob/dev/specs/plan-macos-playback.md)), applied by each app when it becomes active:
+
+- **Correctness first:** kept only if the output (picture, colour, sound, data) stays correct, checked by a test or a reference comparison.
+- **Evidence:** measured before and after with the same file, device, build type and method, at least two rounds, in release-equivalent builds in the same compiled state; a change within the noise between rounds is not kept.
+- **Whole system:** apps are compared on whole-device figures (the device's CPU, or the app plus the system processes doing its work), never the app process alone.
+
 ## Shared code in ks-utility
 
 Reusable pieces (storage paths, settings, SQLite helpers, migrations, backup and `.ksbackup`, import validation, integrity checks, encryption, secure storage, PIN and biometric helpers, recovery keys, DEV/PROD environment) go into ks-utility only when an active app needs them and they are generic, as separate modules an app takes only if it uses them, with their own tests. No app bundles database, crypto or auth code it does not use. Across languages, share the format and behaviour spec, not one implementation.
