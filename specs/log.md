@@ -1,5 +1,7 @@
 # 2026-11-28
 
+* **Update**: [Testing](testing.md), ks-streamflix: `checkInstallerSize` is now `installerSizeReport`, which fails no build; no automated size or speed budgets (owner's decision).
+
 * **Update**: [Landing page](landing-page.md) "Download counts": `scripts/count-downloads.mjs` counts release downloads per app and platform.
 
 * **Update**: [Working method](working-method.md), "Checkpoints": sessions commit and push to `dev` after each finished, passing step; unfinished work is recorded in `progress.md`.
