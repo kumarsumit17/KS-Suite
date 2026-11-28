@@ -1,5 +1,7 @@
 # 2026-11-28
 
+* **Update**: [Landing page](landing-page.md) "Download counts": `scripts/count-downloads.mjs` counts release downloads per app and platform.
+
 * **Update**: [Working method](working-method.md), "Checkpoints": sessions commit and push to `dev` after each finished, passing step; unfinished work is recorded in `progress.md`.
 
 * **Update**: [Progress](progress.md): the four Claude Code sessions, one per repository of the active group and ks-suite.
