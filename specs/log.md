@@ -1,5 +1,7 @@
 # 2026-11-28
 
+* **Update**: [Working method](working-method.md): one development group at a time (ks-utility, ks-jaiplayer, ks-streamflix) with a completion gate; sessions and ownership; handoffs; findings to rules; significant features; economy additions. [Progress](progress.md): active group, open handoffs, open decisions. [Rule architecture](rule-architecture.md), [index](index.md) and `CLAUDE.md` point to it. [Cross-repository relationships](cross-repo.md): ks-utility is pinned to a version tag.
+
 * **Update**: [Testing](testing.md): rule for real Android phones over wireless debugging: longest screen timeout while testing, back to 5 minutes after, clean up, one session at a time.
 
 * **Update**: [Cross-repository relationships](cross-repo.md), [Release cycle](release-cycle.md) and `CLAUDE.md`: every app follows the DEV process for ks-utility (try a ks-utility `dev` commit in a DEV build, release only on the newest tag).

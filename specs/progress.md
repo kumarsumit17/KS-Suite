@@ -1,32 +1,53 @@
 ---
 type: Plan
 title: Progress
-description: The suite's checkpoint: the active app, where each app stands, owner steps pending, and shared changes waiting to be adopted.
+description: The suite's checkpoint: the active group, open handoffs and decisions, where each app stands, owner steps pending, and shared changes waiting to be adopted.
 tags: [plan, progress, tracker]
 ---
 
 # Progress
 
-Updated 2026-11-27. How it is kept: [Working method](working-method.md).
+Updated 2026-11-28. How it is kept: [Working method](working-method.md).
 
-## Active app
+## Active group
 
-**`ks-jaiplayer`** (owner's choice, 2026-11-27). Phase: **release pull request [#6](https://github.com/kumasumit/ks-jaiplayer/pull/6) (`dev` → `main`, 1.12.0) open, waiting for the owner's manual test and approval.** It carries the DEV variant side by side, audio effects (presets, Bass and Dialogue, a 10-band EQ; Android and Google TV with JaiPlayer's own processor, desktop with libVLC's EQ), phone player-bar extras on a second row, and ks-utility v0.19.0. DEV builds: run 46055963743 at fe14942 (replacing 46047978458), all green, Android signed with the DEV key; this round adds a 64 MB Skia GPU cache limit (187–237 MB less memory while playing on macOS), 99 unused libVLC plugins removed and the other chip's Skia library dropped from the Mac app. Tests: 52 desktop tests and a phone emulator smoke test pass. Size versus v1.11.3: APK +18 KB; dmg arm64 103.4 → 83.3 MB, x64 110.4 → 89.1 MB; msi 96.2 → 82.2 MB. Measured on the owner's Mac: starts faster than VLC and IINA; VLC uses less while playing. Next: the owner tests each platform and preset, then approves or reports fixes.
+`ks-utility`, `ks-jaiplayer` and `ks-streamflix` (owner's decision, 2026-11-28; [One development group at a time](working-method.md#one-development-group-at-a-time)).
+
+| Repository | Phase |
+|---|---|
+| `ks-utility` | v0.19.0 released. On `dev`: the DEV-build pin process (`e43563e`), in release pull request [kumasumit/ks-utility#1](https://github.com/kumasumit/ks-utility/pull/1), not tagged yet. |
+| `ks-jaiplayer` | Release pull request #6 (1.12.0) waits for the owner; details below. |
+| `ks-streamflix` | v1.3.1 in production; `v1.4.0` not released (see [Apps](#apps)). Its approved plan's scope is an open decision. |
+
+**`ks-jaiplayer`** (active since 2026-11-27). Phase: **release pull request [#6](https://github.com/kumasumit/ks-jaiplayer/pull/6) (`dev` → `main`, 1.12.0) open, waiting for the owner's manual test and approval.** It carries the DEV variant side by side, audio effects (presets, Bass and Dialogue, a 10-band EQ; Android and Google TV with JaiPlayer's own processor, desktop with libVLC's EQ), phone player-bar extras on a second row, and ks-utility v0.19.0. DEV builds: run 46055963743 at fe14942 (replacing 46047978458), all green, Android signed with the DEV key; this round adds a 64 MB Skia GPU cache limit (187–237 MB less memory while playing on macOS), 99 unused libVLC plugins removed and the other chip's Skia library dropped from the Mac app. Tests: 52 desktop tests and a phone emulator smoke test pass. Size versus v1.11.3: APK +18 KB; dmg arm64 103.4 → 83.3 MB, x64 110.4 → 89.1 MB; msi 96.2 → 82.2 MB. Measured on the owner's Mac: starts faster than VLC and IINA; VLC uses less while playing. Next: the owner tests each platform and preset, then approves or reports fixes.
+
+## Open handoffs
+
+Fields: [Handoffs](working-method.md#handoffs).
+
+| Source → target | Responsible session | Requirement | Acceptance | Blockers | Next action |
+|---|---|---|---|---|---|
+| none | | | | | |
+
+## Open decisions for the owner
+
+1. **How StreamFlix uses JaiPlayer's playback:** a handoff (StreamFlix opens JaiPlayer, as today) or a shared playback module. [Cross-repository relationships](cross-repo.md) currently allows no code dependency between apps.
+2. **The scope of StreamFlix's approved plan.**
 
 ## Apps
 
 | App | Latest production | ks-utility | State |
 |---|---|---|---|
-| `ks-jaiplayer` | v1.11.3 (plus `windows-v1.8.0`) | v0.19.0 on `dev` | **active** |
+| `ks-jaiplayer` | v1.11.3 (plus `windows-v1.8.0`) | v0.19.0 on `dev` | **active group** |
 | `ks-beam` | v1.7.2 | v0.18.4 | paused |
 | `ks-tv-launcher` | `google-tv-v0.12.4` | v0.18.4 | paused |
 | `ks-vault` | `android-v1.4.6` | v0.18.4 | paused |
 | `ks-expense-manager` | `android-v0.5.4` | v0.18.4 | paused |
 | `ks-download-manager` | v0.4.1 | v0.18.4 | paused |
 | `ks-forge` | v0.2.3 | v0.18.4 | paused |
-| `ks-streamflix` | v1.3.1 | v0.18.4 on `dev` | paused; **v1.4.0 not released** |
+| `ks-streamflix` | v1.3.1 | v0.18.4 on `dev` | **active group**; **v1.4.0 not released** |
 
-The initial rollout on ks-utility v0.18.4 (no approval needed) finished for seven apps. StreamFlix's `v1.4.0` run stopped at "the tagged commit is not on `main`", so nothing was published. The tag stays (tags are never moved); releasing it needs `main` fast-forwarded to the tagged commit and the run re-run, or a new tag, and waits for the owner to make StreamFlix active or to say otherwise.
+The initial rollout on ks-utility v0.18.4 (no approval needed) finished for seven apps. StreamFlix's `v1.4.0` run stopped at "the tagged commit is not on `main`", so nothing was published. The tag stays (tags are never moved); releasing it needs `main` fast-forwarded to the tagged commit and the run re-run, or a new tag, and waits for the owner's decision now that StreamFlix is in the active group.
 
 Paused apps' own to-dos (the DEV variant, clean PROD data, the approval wording in their docs) are in each app's notes and are picked up when the app becomes active.
 
